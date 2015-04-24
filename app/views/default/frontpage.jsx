@@ -42,11 +42,11 @@ class FrontPage extends React.Component {
           <li>ES6 (babel)</li>
           <li>Webpack + Hot Module Replacement + React Hot</li>
           <li>ESLint</li>
-          <li>TODO: JSCS</li>
           <li>React A11y</li>
+          <li>Flux</li>
+          <li>Immutable</li>
+          <li>TODO: JSCS</li>
           <li>TODO: Jest</li>
-          <li>TODO: Flux</li>
-          <li>TODO: Immutable</li>
           <li>TODO: Flow</li>
         </ul>
         <div onClick={() => {}}>Oh noes, react-a11y will warn!</div>
