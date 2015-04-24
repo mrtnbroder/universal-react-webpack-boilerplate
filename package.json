@@ -1,0 +1,34 @@
+{
+  "name": "isomorphic-react-webpack-boilerplate",
+  "version": "0.0.1",
+  "description": "Isomorphic React Webpack Boilerplate",
+  "main": "app/server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "parallelshell 'npm run webpack:start' 'npm run server' 'npm run webpack:serve' 'open http://localhost:8080'",
+    "webpack:start": "webpack --watch --config webpack.config.js",
+    "webpack:serve": "webpack-dev-server --config webpack.client.config.js --colors --hot --inline --host localhost --port 2992",
+    "server": "nodemon --watch app --ext jsx build/server/app.js",
+    "webpack:build": "NODE_ENV=batman webpack -p --config webpack.config.js"
+  },
+  "author": "Martin Broder <hello@martinbroder.com>",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.12.3",
+    "flux": "^2.0.1",
+    "immutable": "^3.7.2",
+    "lodash": "^3.7.0",
+    "react": "^0.13.2",
+    "react-router": "^0.13.2"
+  },
+  "devDependencies": {
+    "babel-core": "^5.1.11",
+    "babel-loader": "^5.0.0",
+    "json-loader": "^0.5.1",
+    "nodemon": "^1.3.7",
+    "parallelshell": "^1.1.1",
+    "react-hot-loader": "^1.2.5",
+    "webpack": "^1.8.9",
+    "webpack-dev-server": "^1.8.2"
+  }
+}
