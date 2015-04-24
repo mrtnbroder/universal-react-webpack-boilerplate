@@ -1,0 +1,27 @@
+{
+  "preset": "airbnb",
+  "fileExtensions": [ ".js", ".jsx" ],
+
+  "requireParenthesesAroundIIFE": true,
+  "maximumLineLength": 80,
+  "validateLineBreaks": "LF",
+  "validateIndentation": 2,
+
+  "disallowSpacesInAnonymousFunctionExpression": {
+    "beforeOpeningRoundBrace": true,
+    "beforeOpeningCurlyBrace": false
+  },
+
+  "disallowAnonymousFunctions": true,
+  "disallowFunctionDeclarations": true,
+  "disallowCommaBeforeLineBreak": false,
+  "disallowEmptyBlocks": true,
+  "disallowSemicolons": true,
+
+  "excludeFiles": [
+    "build/**",
+    "node_modules/**"
+  ],
+
+  "esprima": "esprima-fb"
+}
