@@ -1,12 +1,41 @@
 
 import React from 'react'
+import AppActionCreators from '../../lib/actions/AppActionCreators'
+import AppStore from '../../lib/stores/AppStore'
 
 class FrontPage extends React.Component {
 
+  static getStateFromStores() {
+    return {
+      appstore: AppStore.getState()
+    }
+  }
+
+  constructor(props) {
+    super(props)
+    this.state = FrontPage.getStateFromStores()
+  }
+
+  _onAppStoreChange() {
+    this.setState(FrontPage.getStateFromStores())
+  }
+
+  componentWillMount() {
+    AppStore.onChange(this._onAppStoreChange.bind(this))
+  }
+
+  componentWillUnmount() {
+    AppStore.offChange(this._onAppStoreChange.bind(this))
+  }
+
   render() {
+
     return (
       <div>
         <p>Hello from FrontPage Component!</p>
+        <p>Flux: {'' + this.state.appstore.get('flux')}</p>
+        <button onClick={AppActionCreators.foo.bind(this, 'HELLO')}>Hello</button>
+        <button onClick={AppActionCreators.bar.bind(this, 'STORE')}>Store</button>
         <ul>
           <li>Isomorphic</li>
           <li>React + React Router</li>

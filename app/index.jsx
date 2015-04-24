@@ -1,5 +1,5 @@
 
-import React from 'react';
+import React from 'react'
 
 class IndexPage extends React.Component {
 
@@ -46,9 +46,9 @@ class IndexPage extends React.Component {
           <script src={this.props.app}></script>
         </body>
       </html>
-    );
+    )
   }
 
 }
 
-module.exports = IndexPage;
+module.exports = IndexPage

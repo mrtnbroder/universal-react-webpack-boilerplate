@@ -6,12 +6,12 @@ import routes from './routes'
 import indexPage from './index'
 import { host, expressPort, getClientAppPath } from '../defaults'
 
-// Initialise
 var app = express()
 
 //
 // Express Configuration
 // -----------------------------------------------------------------------------
+
 app.use(express.static('public'))
 
 app.get('/*', (req, res) => {
@@ -28,10 +28,12 @@ app.get('/*', (req, res) => {
 })
 
 //
-// Start Express
+// Initialise Express
 // -----------------------------------------------------------------------------
-app.listen(expressPort, () => {
-  // if ( err ) return console.error('[server.js]: app.listen: ', err)
+
+app.listen(expressPort, host, (err) => {
+  if ( err ) return console.error('[server.js]: app.listen: ', err)
+
   console.log('Express server listening on port ', expressPort)
   console.log(`\nhttp://${host}:${expressPort}'\n`)
 })
