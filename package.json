@@ -6,10 +6,10 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "parallelshell 'npm run webpack:start' 'npm run server' 'npm run webpack:serve' 'open http://localhost:8080'",
-    "webpack:start": "webpack --watch --config webpack.config.js",
+    "webpack:start": "webpack --watch",
     "webpack:serve": "webpack-dev-server --config webpack.client.config.js --colors --hot --inline --host localhost --port 2992",
     "server": "nodemon --watch app --ext jsx build/server/app.js",
-    "webpack:build": "NODE_ENV=batman webpack -p --config webpack.config.js"
+    "webpack:build": "NODE_ENV=batman webpack -p"
   },
   "author": "Martin Broder <hello@martinbroder.com>",
   "license": "ISC",
