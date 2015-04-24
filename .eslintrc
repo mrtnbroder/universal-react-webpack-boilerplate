@@ -24,6 +24,20 @@
     "quotes": [2, "single"],
     "curly": [2, "multi"],
     "semi": [2, "never"],
-    "no-multi-spaces": 0
+    "no-multi-spaces": 0,
+    "no-underscore-dangle": 0,
+
+    "max-len": [1, 80, 2],
+    "max-params": [1, 4],
+
+    "react/no-multi-comp": 1,
+    "react/prop-types": 1,
+    "react/display-name": 0,
+    "react/wrap-multilines": 1,
+    "react/self-closing-comp": 1,
+    "react/no-did-mount-set-state": 0,
+    "react/no-did-update-set-state": 1,
+    "react/jsx-uses-react": 1,
+    "react/react-in-jsx-scope": 1
   }
 }
