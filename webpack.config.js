@@ -1,7 +1,7 @@
 
-var path    = require('path')
-var webpack = require('webpack')
-var _       = require('lodash')
+var path     = require('path')
+var webpack  = require('webpack')
+var _        = require('lodash')
 var defaults = require('./defaults')
 
 var DEBUG = process.env.NODE_ENV !== 'production'
@@ -29,18 +29,22 @@ var plugins = [
   new webpack.PrefetchPlugin('react/lib/ReactComponentBrowserEnvironment')
 ]
 
-// if ( !DEBUG ) {
-//   plugins.push(
-//     new webpack.optimize.DedupePlugin(),
-//     new webpack.optimize.OccurenceOrderPlugin(true),
-//     new webpack.optimize.UglifyJsPlugin({
-//       sourceMap: false,
-//       compress: {
-//         warnings: false
-//       }
-//     })
-//   )
-// }
+var aliases = {}
+
+if ( !DEBUG ) {
+  aliases['react-a11y'] = 'lodash/utility/noop'
+
+  plugins.push(
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(true),
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: false,
+      compress: {
+        warnings: false
+      }
+    })
+  )
+}
 
 var webpackConfig = {
   cache: DEBUG,
@@ -76,7 +80,8 @@ var webpackConfig = {
       '.web.js',
       '.js',
       '.jsx'
-    ]
+    ],
+    alias: aliases
   },
   resolveLoader: {
     root: path.join(__dirname, 'node_modules')
@@ -92,7 +97,7 @@ var webpackClientConfig = _.merge({}, webpackConfig, {
   target: 'web',
   entry: { app: DEBUG ? './app/app' : './build/client/app' },
   output: {
-    path: clientOutputPath,
+    path: clientOutputPath
   },
   plugins: webpackConfig.plugins.concat(
     new webpack.DefinePlugin(_.assign({}, GLOBALS, {__BROWSER__: true}))
@@ -112,7 +117,8 @@ var webpackServerConfig = _.merge({}, webpackConfig, {
   },
   plugins: webpackConfig.plugins.concat(
     new webpack.DefinePlugin(_.assign({}, GLOBALS, {__BROWSER__: false}))
-  )
+  ),
+  externals: /^[a-z][a-z\.\-0-9]*$/
 })
 
 module.exports = [webpackClientConfig, webpackServerConfig]
