@@ -12,14 +12,33 @@ var app = express()
 // Express Configuration
 // -----------------------------------------------------------------------------
 
+// Static Assets
 app.use(express.static('public'))
 
-app.get('/*', (req, res) => {
+// 404
+function render404() {}
 
-  Router.run(routes, req.url, (Handler) => {
+// Page
+function createRouter(location) {
+  return Router.create({
+    routes,
+    location,
+    onError: (err) => {
+      console.error('onError', err)
+    },
+    onAbort: (abortReason) => {
+      console.error('onAbort', abortReason)
+    }
+  })
+}
+
+app.get('/*', (req, res) => {
+  let router = createRouter(req.url)
+
+  router.run((Handler) => {
     let content = React.renderToString(React.createElement(Handler))
     let html = indexPage.renderToStaticMarkup({
-      content: content,
+      content,
       app: getClientAppPath()
     })
 
@@ -35,5 +54,5 @@ app.listen(expressPort, host, (err) => {
   if ( err ) return console.error('[server.js]: app.listen: ', err)
 
   console.log('Express server listening on port ', expressPort)
-  console.log(`\nhttp://${host}:${expressPort}'\n`)
+  console.log('\nhttp://%s:%s\n', host, expressPort)
 })
