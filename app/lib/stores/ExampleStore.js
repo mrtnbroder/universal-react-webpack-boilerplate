@@ -1,21 +1,21 @@
 
-import AppDispatcher from '../dispatcher/AppDispatcher'
+import Dispatcher from '../dispatcher/Dispatcher'
 import Immutable from 'immutable'
-import { ViewActions, ServerActions } from '../constants/AppConstants'
+import { ViewActions, ServerActions } from '../constants/ExampleConstants'
 import { EventEmitter } from 'events'
 import { assign } from 'lodash'
 
 var CHANGE_EVENT = 'change'
 
-var _defaults = new Immutable.Map({
+var _defaults = {
   flux: true,
   react: true
-})
+}
 
-var AppStore = assign({}, EventEmitter.prototype, {
+var ExampleStore = assign({}, EventEmitter.prototype, {
 
   init() {
-    this._state = _defaults
+    this._state = Immutable.fromJS(_defaults)
   },
 
   getState() {
@@ -40,19 +40,19 @@ var AppStore = assign({}, EventEmitter.prototype, {
 
 })
 
-AppStore.dispatchToken = AppDispatcher.register(function(action) {
-  if ( __DEV__ ) console.log('AppStore:', action.type, action.payload)
+ExampleStore.dispatchToken = Dispatcher.register(function(action) {
+  if ( __DEV__ ) console.log('ExampleStore:', action.type, action.payload)
 
-  var currState = AppStore.getState()
+  var currState = ExampleStore.getState()
 
   switch (action.type) {
 
     case ViewActions.CREATE:
       let newState = currState.update('flux', (val) => { return !val } )
 
-      AppStore.setState(newState)
+      ExampleStore.setState(newState)
 
-      AppStore.emitChange()
+      ExampleStore.emitChange()
       break
 
     case ServerActions.RECEIVE:
@@ -67,6 +67,6 @@ AppStore.dispatchToken = AppDispatcher.register(function(action) {
 
 })
 
-AppStore.init()
+ExampleStore.init()
 
-module.exports = AppStore
+export default ExampleStore

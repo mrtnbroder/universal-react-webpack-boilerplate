@@ -24,4 +24,4 @@ module.exports = {
            '/' + this.webpackVirtualDir + '/' + this.appName + '.js'
   }
 
-};
+}

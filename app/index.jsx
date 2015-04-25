@@ -1,7 +1,12 @@
 
-import React from 'react'
+import React, { PropTypes } from 'react'
 
-class IndexPage extends React.Component {
+export default class IndexPage extends React.Component {
+
+  static propTypes = {
+    content: PropTypes.string.isRequired,
+    app: PropTypes.string.isRequired
+  }
 
   static getDoctype() {
     return '<!doctype html>'
@@ -50,5 +55,3 @@ class IndexPage extends React.Component {
   }
 
 }
-
-module.exports = IndexPage

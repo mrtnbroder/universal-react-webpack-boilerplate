@@ -1,13 +1,13 @@
 
 import React from 'react'
-import AppActionCreators from '../../lib/actions/AppActionCreators'
-import AppStore from '../../lib/stores/AppStore'
+import ExampleViewActionCreators from '../../lib/actions/ExampleViewActionCreators'
+import ExampleStore from '../../lib/stores/ExampleStore'
 
-class FrontPage extends React.Component {
+export default class FrontPage extends React.Component {
 
   static getStateFromStores() {
     return {
-      appstore: AppStore.getState()
+      examplestore: ExampleStore.getState()
     }
   }
 
@@ -16,29 +16,27 @@ class FrontPage extends React.Component {
     this.state = FrontPage.getStateFromStores()
   }
 
-  _onAppStoreChange() {
-    this.setState(FrontPage.getStateFromStores())
-  }
-
   componentWillMount() {
-    AppStore.onChange(this._onAppStoreChange.bind(this))
+    ExampleStore.onChange(this._onAppStoreChange.bind(this))
   }
 
   componentWillUnmount() {
-    AppStore.offChange(this._onAppStoreChange.bind(this))
+    ExampleStore.offChange(this._onAppStoreChange.bind(this))
   }
 
   render() {
+    var { examplestore } = this.state
 
     return (
       <div>
         <p>Hello from FrontPage Component!</p>
-        <p>Flux: {'' + this.state.appstore.get('flux')}</p>
-        <button onClick={AppActionCreators.foo.bind(this, 'HELLO')}>Hello</button>
-        <button onClick={AppActionCreators.bar.bind(this, 'STORE')}>Store</button>
+        <p>Flux: {String(examplestore.get('flux'))}</p>
+        <button onClick={ExampleViewActionCreators.foo.bind(this, 'HELLO')}>
+          View Action!
+        </button>
         <ul>
           <li>Isomorphic</li>
-          <li>React + React Router</li>
+          <li>React + React Router {String(examplestore.get('react'))}</li>
           <li>ES6 (babel)</li>
           <li>Webpack + Hot Module Replacement + React Hot</li>
           <li>ESLint</li>
@@ -50,10 +48,12 @@ class FrontPage extends React.Component {
           <li>TODO: Flow</li>
         </ul>
         <div onClick={() => {}}>Oh noes, react-a11y will warn!</div>
-        <img src='/images/react-logo.png' alt='React Rocks!'/>
+        <img alt='React Rocks!' src='/images/react-logo.png'/>
       </div>
     )
   }
-}
 
-module.exports = FrontPage
+  _onAppStoreChange() {
+    this.setState(FrontPage.getStateFromStores())
+  }
+}

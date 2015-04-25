@@ -1,7 +1,7 @@
 
 import keyMirror from 'keymirror'
 
-module.exports = {
+export default {
 
   ViewActions: keyMirror({
     CREATE: null,
@@ -13,4 +13,4 @@ module.exports = {
     RECEIVE: null
   })
 
-};
+}
