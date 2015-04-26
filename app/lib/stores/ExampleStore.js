@@ -40,15 +40,15 @@ var ExampleStore = assign({}, EventEmitter.prototype, {
 
 })
 
-ExampleStore.dispatchToken = Dispatcher.register(function(action) {
-  if ( __DEV__ ) console.log('ExampleStore:', action.type, action.payload)
-
+ExampleStore.dispatchToken = Dispatcher.register(function register(action) {
   var currState = ExampleStore.getState()
+
+  if (__DEV__) console.log('ExampleStore:', action.type, action.payload)
 
   switch (action.type) {
 
     case ViewActions.CREATE:
-      let newState = currState.update('flux', (val) => { return !val } )
+      let newState = currState.update('flux', (val) => { return !val })
 
       ExampleStore.setState(newState)
 

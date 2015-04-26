@@ -19,9 +19,9 @@ module.exports = {
   appName: 'app',
 
   // Get the path to the clients app file
-  getClientAppPath: function() {
-    return 'http://' + this.host + ':' + this.webpackDevServerPort +
-           '/' + this.webpackVirtualDir + '/' + this.appName + '.js'
+  getClientAppPath: function getClientAppPath() {
+    return 'http://' + this.host + ':' + this.webpackDevServerPort
+         + '/' + this.webpackVirtualDir + '/' + this.appName + '.js'
   }
 
 }

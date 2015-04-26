@@ -4,8 +4,8 @@ import React, { PropTypes } from 'react'
 export default class IndexPage extends React.Component {
 
   static propTypes = {
-    content: PropTypes.string.isRequired,
-    app: PropTypes.string.isRequired
+    app: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired
   }
 
   static getDoctype() {

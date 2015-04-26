@@ -1,15 +1,18 @@
 
-var path     = require('path')
-var webpack  = require('webpack')
-var _        = require('lodash')
+var path = require('path')
+var webpack = require('webpack')
+var _ = require('lodash')
 var defaults = require('./defaults')
 
 var DEBUG = process.env.NODE_ENV !== 'production'
 var SERVER = process.env.SERVER || true
+var webpackConfig
+var webpackClientConfig
+var webpackServerConfig
 
 var publicPath = SERVER
-  ? 'http://' + defaults.host + ':' + defaults.webpackDevServerPort +
-    '/' + defaults.webpackVirtualDir + '/'
+  ? 'http://' + defaults.host + ':' + defaults.webpackDevServerPort
+  + '/' + defaults.webpackVirtualDir + '/'
   : '/' + defaults.webpackVirtualDir + '/'
 
 var buildPath = path.join(__dirname, 'build')
@@ -31,7 +34,7 @@ var plugins = [
 
 var aliases = {}
 
-if ( !DEBUG ) {
+if (!DEBUG) {
   aliases['react-a11y'] = 'lodash/utility/noop'
 
   plugins.push(
@@ -46,7 +49,7 @@ if ( !DEBUG ) {
   )
 }
 
-var webpackConfig = {
+webpackConfig = {
   cache: DEBUG,
   context: __dirname,
   // bail: true,
@@ -92,7 +95,7 @@ var webpackConfig = {
 //
 // Client Config
 // -----------------------------------------------------------------------------
-var webpackClientConfig = _.merge({}, webpackConfig, {
+webpackClientConfig = _.merge({}, webpackConfig, {
   name: 'browser',
   target: 'web',
   entry: { app: DEBUG ? './app/app' : './build/client/app' },
@@ -100,14 +103,14 @@ var webpackClientConfig = _.merge({}, webpackConfig, {
     path: clientOutputPath
   },
   plugins: webpackConfig.plugins.concat(
-    new webpack.DefinePlugin(_.assign({}, GLOBALS, {__BROWSER__: true}))
+    new webpack.DefinePlugin(_.assign({}, GLOBALS, { __BROWSER__: true }))
   )
 })
 
 //
 // Server Config
 // -----------------------------------------------------------------------------
-var webpackServerConfig = _.merge({}, webpackConfig, {
+webpackServerConfig = _.merge({}, webpackConfig, {
   name: 'server',
   target: 'node',
   entry: { app: DEBUG ? './app/server' : './build/server/app' },
@@ -116,7 +119,7 @@ var webpackServerConfig = _.merge({}, webpackConfig, {
     libraryTarget: 'commonjs2'
   },
   plugins: webpackConfig.plugins.concat(
-    new webpack.DefinePlugin(_.assign({}, GLOBALS, {__BROWSER__: false}))
+    new webpack.DefinePlugin(_.assign({}, GLOBALS, { __BROWSER__: false }))
   ),
   externals: /^[a-z][a-z\.\-0-9]*$/
 })

@@ -51,7 +51,7 @@ app.get('/*', (req, res) => {
 // -----------------------------------------------------------------------------
 
 app.listen(expressPort, host, (err) => {
-  if ( err ) return console.error('[server.js]: app.listen: ', err)
+  if (err) return console.error('[server.js]: app.listen: ', err)
 
   console.log('Express server listening on port ', expressPort)
   console.log('\nhttp://%s:%s\n', host, expressPort)
