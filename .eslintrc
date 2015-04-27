@@ -6,11 +6,13 @@
   "env": {
     "browser": true,
     "node": true,
-    "es6": true
+    "es6": true,
+    "jasmine": true
   },
   "globals": {
     "__DEV__": true,
-    "__BROWSER__": true
+    "__BROWSER__": true,
+    "jest": true
   },
   "ecmaFeatures": {
     "jsx": true,
@@ -106,8 +108,8 @@
     "comma-spacing": [2, {"before": false, "after": true}],
     "comma-style": [2, "last"],
     "consistent-this": 2,
-    "eol-last": 2,
-    "func-names": 2,
+    "eol-last": 1,
+    "func-names": 1,
     "func-style": [2, "declaration"],
     "key-spacing": [2, { "beforeColon": false, "afterColon": true }],
     "max-nested-callbacks": [2, 2],
@@ -159,7 +161,7 @@
     "no-undef-init": 0,
     "no-undefined": 0,
     "no-unused-vars": 1,
-    "no-use-before-define": [2, {"nofunc": true}],
+    "no-use-before-define": [2, "nofunc"],
 
     // ECMAScript 6
     "generator-star-spacing": [2, "before"],

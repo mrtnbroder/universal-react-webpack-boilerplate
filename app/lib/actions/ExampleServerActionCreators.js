@@ -5,7 +5,7 @@ import { ServerActions } from '../constants/ExampleConstants'
 export default {
 
   bar(baz) {
-    Dispatcher.dispatch({
+    Dispatcher.handleServerAction({
       type: ServerActions.RECEIVE,
       payload: baz
     })

@@ -3,59 +3,64 @@ import Dispatcher from '../dispatcher/Dispatcher'
 import Immutable from 'immutable'
 import { ViewActions, ServerActions } from '../constants/ExampleConstants'
 import { EventEmitter } from 'events'
-import { assign } from 'lodash'
 
-var CHANGE_EVENT = 'change'
+const CHANGE_EVENT = 'change'
 
-var _defaults = {
+const _defaults = {
   flux: true,
   react: true
 }
 
-var ExampleStore = assign({}, EventEmitter.prototype, {
+class ExampleStore extends EventEmitter {
 
-  init() {
+  constructor() {
+    super()
     this._state = Immutable.fromJS(_defaults)
-  },
+  }
 
   getState() {
     return this._state
-  },
+  }
 
   setState(state) {
-    this._state = state
-  },
+    if (this._state !== state) this._state = state
+  }
 
   emitChange() {
     this.emit(CHANGE_EVENT)
-  },
-
-  onChange(callback) {
-    this.on(CHANGE_EVENT, callback)
-  },
-
-  offChange(callback) {
-    this.off(CHANGE_EVENT, callback)
   }
 
-})
+  addChangeListener(callback) {
+    this.on(CHANGE_EVENT, callback)
+  }
 
-ExampleStore.dispatchToken = Dispatcher.register(function register(action) {
-  var currState = ExampleStore.getState()
+  removeChangeListener(callback) {
+    this.removeListener(CHANGE_EVENT, callback)
+  }
 
-  if (__DEV__) console.log('ExampleStore:', action.type, action.payload)
+}
+
+const _ExampleStore = new ExampleStore()
+
+export default _ExampleStore
+
+ExampleStore.dispatchToken = Dispatcher.register(function dispatchToken(source) {
+  var currState = _ExampleStore.getState()
+  var action = source.action
+
+  if (__DEV__) console.log('ExampleStore:', source.source, action)
 
   switch (action.type) {
 
     case ViewActions.CREATE:
-      let newState = currState.update('flux', (val) => { return !val })
+      const newState = currState.update('flux', (val) => { return !val })
 
-      ExampleStore.setState(newState)
+      _ExampleStore.setState(newState)
 
-      ExampleStore.emitChange()
+      _ExampleStore.emitChange()
       break
 
-    case ServerActions.RECEIVE:
+    case ViewActions.RECEIVE:
 
       break
 
@@ -66,7 +71,3 @@ ExampleStore.dispatchToken = Dispatcher.register(function register(action) {
   return true
 
 })
-
-ExampleStore.init()
-
-export default ExampleStore

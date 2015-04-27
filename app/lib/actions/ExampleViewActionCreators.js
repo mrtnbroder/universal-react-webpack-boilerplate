@@ -5,7 +5,7 @@ import { ViewActions } from '../constants/ExampleConstants'
 export default {
 
   foo(bar) {
-    Dispatcher.dispatch({
+    Dispatcher.handleViewAction({
       type: ViewActions.CREATE,
       payload: bar
     })

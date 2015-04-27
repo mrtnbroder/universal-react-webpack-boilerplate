@@ -11,17 +11,22 @@ export default class FrontPage extends React.Component {
     }
   }
 
-  constructor(props) {
-    super(props)
+  constructor() {
+    super()
     this.state = FrontPage.getStateFromStores()
+    this._onExampleStoreChange = this._onExampleStoreChange.bind(this)
   }
 
   componentWillMount() {
-    ExampleStore.onChange(this._onAppStoreChange.bind(this))
+    ExampleStore.addChangeListener(this._onExampleStoreChange)
   }
 
   componentWillUnmount() {
-    ExampleStore.offChange(this._onAppStoreChange.bind(this))
+    ExampleStore.removeChangeListener(this._onExampleStoreChange)
+  }
+
+  _onExampleStoreChange() {
+    this.setState(FrontPage.getStateFromStores())
   }
 
   render() {
@@ -53,7 +58,4 @@ export default class FrontPage extends React.Component {
     )
   }
 
-  _onAppStoreChange() {
-    this.setState(FrontPage.getStateFromStores())
-  }
 }
