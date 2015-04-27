@@ -4,7 +4,8 @@
   "description": "Isomorphic React Webpack Boilerplate",
   "main": "app/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest",
+    "coverage": "jest --coverage",
     "start": "parallelshell 'npm run webpack:start' 'npm run server' 'npm run webpack:serve' 'open http://localhost:8080'",
     "webpack:start": "webpack --watch",
     "webpack:serve": "webpack-dev-server --config webpack.client.config.js --colors --hot --inline --host localhost --port 2992",
@@ -36,5 +37,11 @@
     "react-hot-loader": "^1.2.5",
     "webpack": "^1.8.9",
     "webpack-dev-server": "^1.8.2"
+  },
+  "jest": {
+    "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
+    "unmockedModulePathPatterns": [
+      "<rootDir>/node_modules/"
+    ]
   }
 }
