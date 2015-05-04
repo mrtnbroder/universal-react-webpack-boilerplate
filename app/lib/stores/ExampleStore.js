@@ -11,19 +11,16 @@ const _defaults = {
   react: true
 }
 
+var _state = Immutable.fromJS(_defaults)
+
 class ExampleStore extends EventEmitter {
 
   constructor() {
     super()
-    this._state = Immutable.fromJS(_defaults)
   }
 
   getState() {
-    return this._state
-  }
-
-  setState(state) {
-    if (this._state !== state) this._state = state
+    return _state
   }
 
   emitChange() {
@@ -44,8 +41,7 @@ const _ExampleStore = new ExampleStore()
 
 export default _ExampleStore
 
-ExampleStore.dispatchToken = Dispatcher.register(function dispatchToken(source) {
-  var currState = _ExampleStore.getState()
+_ExampleStore.dispatchToken = Dispatcher.register((source) => {
   var action = source.action
 
   if (__DEV__) console.log('ExampleStore:', source.source, action)
@@ -53,9 +49,9 @@ ExampleStore.dispatchToken = Dispatcher.register(function dispatchToken(source) 
   switch (action.type) {
 
     case ViewActions.CREATE:
-      const newState = currState.update('flux', (val) => { return !val })
+      let newState = _state.update('flux', (val) => { return !val })
 
-      _ExampleStore.setState(newState)
+      _state = newState
 
       _ExampleStore.emitChange()
       break
