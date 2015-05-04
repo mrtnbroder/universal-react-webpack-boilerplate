@@ -69,8 +69,8 @@ webpackConfig = {
       {
         test: /\.(js|jsx)$/,
         loaders: DEBUG
-          ? ['react-hot', 'babel-loader?stage=0']
-          : ['babel-loader?stage=0'],
+          ? ['react-hot', 'babel-loader?stage=0&optional=runtime']
+          : ['babel-loader?stage=0&optional=runtime'],
         // include: path.join(__dirname, 'app'),
         exclude: /node_modules/
       }
