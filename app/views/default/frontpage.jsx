@@ -1,47 +1,48 @@
 
 import React from 'react'
-import ExampleViewActionCreators from '../../lib/actions/ExampleViewActionCreators'
-import ExampleStore from '../../lib/stores/ExampleStore'
+// import ExampleViewActionCreators from '../../lib/actions/ExampleViewActionCreators'
+import ExampleModel from '../../lib/models/ExampleModel'
+import ExampleIntent from '../../lib/intents/example.intent'
 
 export default class FrontPage extends React.Component {
 
-  static getStateFromStores() {
-    return {
-      examplestore: ExampleStore.getState()
-    }
-  }
-
   constructor() {
     super()
-    this.state = FrontPage.getStateFromStores()
-    this._onExampleStoreChange = this._onExampleStoreChange.bind(this)
+    this.getState()
+    this.toggleFlux = ExampleIntent.toggleFlux
+  }
+
+  getState() {
+    ExampleModel.subject.subscribe((state) => {
+      this.state = state
+      this.forceUpdate()
+    })
   }
 
   componentWillMount() {
-    ExampleStore.addChangeListener(this._onExampleStoreChange)
+    // ExampleStore.addChangeListener(this._onExampleStoreChange)
   }
 
   componentWillUnmount() {
-    ExampleStore.removeChangeListener(this._onExampleStoreChange)
+    // ExampleStore.removeChangeListener(this._onExampleStoreChange)
   }
 
   _onExampleStoreChange() {
-    this.setState(FrontPage.getStateFromStores())
+    // this.setState(FrontPage.getStateFromStores())
   }
 
   render() {
-    var { examplestore } = this.state
 
     return (
       <div>
         <p>Hello from FrontPage Component!</p>
-        <p>Flux: {String(examplestore.get('flux'))}</p>
-        <button onClick={ExampleViewActionCreators.foo.bind(this, 'HELLO')}>
+        <p>Flux: {String(this.state.get('flux'))}</p>
+        <button onClick={this.toggleFlux}>
           View Action!
         </button>
         <ul>
           <li>Isomorphic</li>
-          <li>React + React Router {String(examplestore.get('react'))}</li>
+          <li>React + React Router {String(this.state.get('react'))}</li>
           <li>ES6 (babel)</li>
           <li>Webpack + Hot Module Replacement + React Hot</li>
           <li>ESLint</li>
