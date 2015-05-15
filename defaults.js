@@ -1,5 +1,5 @@
 
-module.exports = {
+var defaults = {
 
   // Port used by the express server
   expressPort: 8080,
@@ -19,9 +19,15 @@ module.exports = {
   appName: 'app',
 
   // Get the path to the clients app file
+  getDevClientAppPath: function getDevClientAppPath() {
+    return 'http://' + defaults.host + ':' + defaults.webpackDevServerPort
+         + '/' + defaults.webpackVirtualDir + '/' + defaults.appName + '.js'
+  },
+
   getClientAppPath: function getClientAppPath() {
-    return 'http://' + this.host + ':' + this.webpackDevServerPort
-         + '/' + this.webpackVirtualDir + '/' + this.appName + '.js'
+    return '/' + defaults.appName + '.js'
   }
 
 }
+
+module.exports = defaults

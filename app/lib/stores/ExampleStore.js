@@ -1,19 +1,27 @@
 
 import Dispatcher from '../dispatcher/Dispatcher'
 import Immutable from 'immutable'
-import { ViewActions, ServerActions } from '../constants/ExampleConstants'
+import { ViewActions, ServerActions } from '../constants/ExampleConstants.js'
 import { EventEmitter } from 'events'
 
 const CHANGE_EVENT = 'change'
 
-const _defaults = {
+// -----------------------------------------------------------------------------
+// STORE STATE
+// -----------------------------------------------------------------------------
+
+var _state = Immutable.fromJS({
   flux: true,
   react: true
-}
+})
 
-var _state = Immutable.fromJS(_defaults)
+// -----------------------------------------------------------------------------
+// ACTIONS
+// -----------------------------------------------------------------------------
 
-class ExampleStore extends EventEmitter {
+// ...
+
+class TemplateStore extends EventEmitter {
 
   constructor() {
     super()
@@ -37,33 +45,43 @@ class ExampleStore extends EventEmitter {
 
 }
 
-const _ExampleStore = new ExampleStore()
+const _TemplateStore = new TemplateStore()
 
-export default _ExampleStore
+export default _TemplateStore
 
-_ExampleStore.dispatchToken = Dispatcher.register((source) => {
-  var action = source.action
+// -----------------------------------------------------------------------------
+// STORE
+// -----------------------------------------------------------------------------
 
-  if (__DEV__) console.log('ExampleStore:', source.source, action)
+_TemplateStore.dispatchToken = Dispatcher.register((source) => {
+  const action = source.action
 
   switch (action.type) {
+
+    // -------------------------------------------------------------------------
+    // VIEW ACTIONS
+    // -------------------------------------------------------------------------
 
     case ViewActions.CREATE:
       let newState = _state.update('flux', (val) => { return !val })
 
       _state = newState
 
-      _ExampleStore.emitChange()
+      _TemplateStore.emitChange()
       break
 
-    case ViewActions.RECEIVE:
+    // -------------------------------------------------------------------------
+    // SERVER ACTIONS
+    // -------------------------------------------------------------------------
 
-      break
+    // ...
+
+    // -------------------------------------------------------------------------
+    // INIT
+    // -------------------------------------------------------------------------
 
     default:
-      return true
+      // Nothing
   }
-
-  return true
 
 })

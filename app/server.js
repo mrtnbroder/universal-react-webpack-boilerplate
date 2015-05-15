@@ -4,10 +4,10 @@ import React from 'react'
 import Router from 'react-router'
 import routes from './routes'
 import indexPage from './index'
-import { host, expressPort, getClientAppPath } from '../defaults'
+import { host, expressPort, getClientAppPath, getDevClientAppPath } from '../defaults'
 
+const DEBUG = process.env.NODE_ENV !== 'production'
 var app = express()
-
 //
 // Express Configuration
 // -----------------------------------------------------------------------------
@@ -39,7 +39,7 @@ app.get('/*', (req, res) => {
     let content = React.renderToString(React.createElement(Handler))
     let html = indexPage.renderToStaticMarkup({
       content,
-      app: getClientAppPath()
+      app: DEBUG ? getDevClientAppPath() : getClientAppPath()
     })
 
     return res.end(html)

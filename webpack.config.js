@@ -15,9 +15,13 @@ var publicPath = SERVER
   + '/' + defaults.webpackVirtualDir + '/'
   : '/' + defaults.webpackVirtualDir + '/'
 
-var buildPath = path.join(__dirname, 'build')
-var clientOutputPath = path.join(buildPath, 'client')
+var baseDir = path.join(__dirname)
+var buildPath = path.join(baseDir, 'build')
+
+var clientOutputPath = path.join(baseDir, 'public')
+var devClientOutputPath = path.join(baseDir, '_tmp', 'client')
 var serverOutputPath = path.join(buildPath, 'server')
+var devServerOutputPath = path.join(baseDir, '_tmp', 'server')
 
 var GLOBALS = {
   __DEV__: DEBUG,
@@ -41,7 +45,6 @@ if (!DEBUG) {
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(true),
     new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
       compress: {
         warnings: false
       }
@@ -98,9 +101,9 @@ webpackConfig = {
 webpackClientConfig = _.merge({}, webpackConfig, {
   name: 'browser',
   target: 'web',
-  entry: { app: DEBUG ? './app/app' : './build/client/app' },
+  entry: { app: './app/app' },
   output: {
-    path: clientOutputPath
+    path: DEBUG ? devClientOutputPath : clientOutputPath
   },
   plugins: webpackConfig.plugins.concat(
     new webpack.DefinePlugin(_.assign({}, GLOBALS, { __BROWSER__: true }))
@@ -113,9 +116,9 @@ webpackClientConfig = _.merge({}, webpackConfig, {
 webpackServerConfig = _.merge({}, webpackConfig, {
   name: 'server',
   target: 'node',
-  entry: { app: DEBUG ? './app/server' : './build/server/app' },
+  entry: { app: './app/server' },
   output: {
-    path: serverOutputPath,
+    path: DEBUG ? devServerOutputPath : serverOutputPath,
     libraryTarget: 'commonjs2'
   },
   plugins: webpackConfig.plugins.concat(

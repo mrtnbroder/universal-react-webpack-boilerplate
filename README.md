@@ -4,13 +4,27 @@ WIP
 
 ## Get started
 
-Install all dependencies
+Install dependencies
 
 ```shell
 $ npm i
 ```
 
-Start the development server with
+Then start development with
+
+```shell
+$ npm run dev
+```
+
+## Production Build
+
+Compile build files with
+
+```shell
+$ npm run build
+```
+
+Then run production server with
 
 ```shell
 $ npm start
