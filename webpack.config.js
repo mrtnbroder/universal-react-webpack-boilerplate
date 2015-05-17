@@ -15,13 +15,11 @@ var publicPath = SERVER
   + '/' + defaults.webpackVirtualDir + '/'
   : '/' + defaults.webpackVirtualDir + '/'
 
-var baseDir = path.join(__dirname)
-var buildPath = path.join(baseDir, 'build')
-
-var clientOutputPath = path.join(baseDir, 'public')
-var devClientOutputPath = path.join(baseDir, '_tmp', 'client')
+var buildPath = path.join(__dirname, 'build')
+var clientOutputPath = path.join(__dirname, 'public')
+var devClientOutputPath = path.join(__dirname, '_tmp', 'client')
 var serverOutputPath = path.join(buildPath, 'server')
-var devServerOutputPath = path.join(baseDir, '_tmp', 'server')
+var devServerOutputPath = path.join(__dirname, '_tmp', 'server')
 
 var GLOBALS = {
   __DEV__: DEBUG,
@@ -32,15 +30,12 @@ var GLOBALS = {
 
 var plugins = [
   new webpack.NoErrorsPlugin(),
-  new webpack.PrefetchPlugin('react'),
-  new webpack.PrefetchPlugin('react/lib/ReactComponentBrowserEnvironment')
+  new webpack.PrefetchPlugin('react')
 ]
 
 var aliases = {}
 
 if (!DEBUG) {
-  aliases['react-a11y'] = 'lodash/utility/noop'
-
   plugins.push(
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(true),
