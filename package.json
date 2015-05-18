@@ -11,7 +11,8 @@
     "webpack:start": "webpack --watch",
     "webpack:serve": "webpack-dev-server --config webpack.client.config.js --colors --hot --inline --host localhost --port 2992",
     "server": "nodemon --watch app --ext jsx _tmp/server/app.js",
-    "build": "NODE_ENV=production webpack -p",
+    "cleanup": "rm -rf ./build/* ./public/app.js ./_tmp",
+    "build": "npm run cleanup && NODE_ENV=production webpack -p",
     "postinstall": "webpack"
   },
   "author": "Martin Broder <hello@martinbroder.com>",
