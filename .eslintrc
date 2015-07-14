@@ -15,8 +15,7 @@
     "jest": true
   },
   "ecmaFeatures": {
-    "jsx": true,
-    "generators": true
+    "jsx": true
   },
   "rules": {
 
@@ -128,7 +127,7 @@
     "no-ternary": 0,
     "no-trailing-spaces": 1,
     "no-underscore-dangle": 0,
-    "no-wrap-func": 1,
+    "object-curly-spacing": [2, "always"],
     "one-var": [1, "never"],
     "operator-assignment": [2, "always"],
     "operator-linebreak": [2, "before"],
@@ -137,7 +136,7 @@
     "quotes": [2, "single"],
     "semi": [2, "never"],
     "sort-vars": 0,
-    "space-after-keywords": [2, "awlays"],
+    "space-after-keywords": [2, "always"],
     "space-before-blocks": [2, "always"],
     "space-before-function-paren": [2, {"anonymous": "always", "named": "never"}],
     "space-in-brackets": 0,
@@ -164,7 +163,11 @@
     "no-use-before-define": [2, "nofunc"],
 
     // ECMAScript 6
+    "constructor-super": 2,
+    "no-this-before-super": 2,
+    "object-shorthand": [2, "always"],
     "generator-star-spacing": [2, "before"],
+    "prefer-const": 2,
 
     // Legacy
     "max-depth": [2, 5],
@@ -181,13 +184,16 @@
     "react/jsx-sort-props": 2,
     "react/jsx-uses-react": 1,
     "react/jsx-uses-vars": 1,
+    "react/no-danger": 0,
     "react/no-did-mount-set-state": 1,
     "react/no-did-update-set-state": 1,
     "react/no-multi-comp": 0,
     "react/no-unknown-property": 1,
     "react/prop-types": 1,
     "react/react-in-jsx-scope": 1,
+    "react/require-extension": [1, { "extensions": [".js"] }],
     "react/self-closing-comp": 1,
+    "react/sort-comp": 1,
     "react/wrap-multilines": 1
   }
 }
