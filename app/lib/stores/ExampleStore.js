@@ -63,7 +63,7 @@ _TemplateStore.dispatchToken = Dispatcher.register((source) => {
     // -------------------------------------------------------------------------
 
     case ViewActions.CREATE:
-      let newState = _state.update('flux', (val) => { return !val })
+      const newState = _state.update('flux', (val) => { return !val })
 
       _state = newState
 

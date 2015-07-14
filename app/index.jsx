@@ -22,30 +22,30 @@ export default class IndexPage extends React.Component {
       <html className='no-js' lang='en_US'>
         <head>
           <meta charSet='utf-8'/>
-          <meta httpEquiv='X-UA-Compatible' content='IE=edge,chrome=1'/>
+          <meta content='IE=edge,chrome=1' httpEquiv='X-UA-Compatible'/>
 
           <title>Isomorphic React Webpack Boilerplate</title>
 
-          <meta name='description' content=''/>
-          <meta name='keywords' content=''/>
+          <meta content='' name='description'/>
+          <meta content='' name='keywords'/>
 
           {/* Spiders must use meta description */}
-          <meta name='robots' content='noodp, noydir'/>
+          <meta content='noodp, noydir' name='robots'/>
 
           {/* No Google Translate toolbar */}
-          <meta name='google' content='notranslate'/>
+          <meta content='notranslate' name='google'/>
 
           {/* Viewport and mobile */}
-          <meta name='viewport' content='width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, minimum-scale=1'/>
-          <meta name='HandheldFriendly' content='true'/>
-          <meta name='MobileOptimized' content='320'/>
+          <meta content='width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, minimum-scale=1' name='viewport'/>
+          <meta content='true' name='HandheldFriendly'/>
+          <meta content='320' name='MobileOptimized'/>
 
           {/*<link rel='stylesheet' href={this.props.mainCSS}/>*/}
 
         </head>
         <body>
           <div id='app'>
-            <div dangerouslySetInnerHTML={{__html: this.props.content}}></div>
+            <div dangerouslySetInnerHTML={ { __html: this.props.content } }/>
           </div>
 
           <script src={this.props.app}></script>
