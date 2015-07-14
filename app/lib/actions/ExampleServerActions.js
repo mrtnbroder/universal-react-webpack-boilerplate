@@ -1,14 +1,12 @@
 
-import Dispatcher from '../dispatcher/Dispatcher'
-import { ServerActions } from '../constants/TemplateConstants'
+import alt from '../dispatcher/alt'
 
-export default {
+class ExampleServerActions {
 
-  bar(baz) {
-    Dispatcher.handleServerAction({
-      type: ServerActions.RECEIVE,
-      payload: baz
-    })
+  updateReact(val) {
+    this.dispatch(val)
   }
 
 }
+
+export default alt.createActions(ExampleServerActions)

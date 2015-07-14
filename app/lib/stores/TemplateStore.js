@@ -1,87 +1,28 @@
 
-import Dispatcher from '../dispatcher/Dispatcher'
-import Immutable from 'immutable'
-import { ViewActions, ServerActions } from '../constants/TemplateConstants.js'
-import { EventEmitter } from 'events'
+import alt from '../dispatcher/alt'
+import ExampleViewActions from '../actions/ExampleViewActions'
+import ExampleServerActions from '../actions/ExampleServerActions'
 
-const CHANGE_EVENT = 'change'
-
-// -----------------------------------------------------------------------------
-// STORE STATE
-// -----------------------------------------------------------------------------
-
-var _state = Immutable.fromJS({
-  flux: true,
-  react: true
-})
-
-// -----------------------------------------------------------------------------
-// ACTIONS
-// -----------------------------------------------------------------------------
-
-// ...
-
-class TemplateStore extends EventEmitter {
+class TemplateStore {
 
   constructor() {
-    super()
+    this.flux = true
+    this.react = true
+
+    this.bindListeners({
+      handleFluxUpdate: ExampleViewActions.UPDATE_FLUX,
+      handleReactUpdate: ExampleServerActions.UPDATE_REACT
+    })
   }
 
-  getState() {
-    return _state
+  handleFluxUpdate(val) {
+    this.flux = val
   }
 
-  emitChange() {
-    this.emit(CHANGE_EVENT)
-  }
-
-  addChangeListener(callback) {
-    this.on(CHANGE_EVENT, callback)
-  }
-
-  removeChangeListener(callback) {
-    this.removeListener(CHANGE_EVENT, callback)
+  handleReactUpdate(val) {
+    this.react = val
   }
 
 }
 
-const _TemplateStore = new TemplateStore()
-
-export default _TemplateStore
-
-// -----------------------------------------------------------------------------
-// STORE
-// -----------------------------------------------------------------------------
-
-_TemplateStore.dispatchToken = Dispatcher.register((source) => {
-  const action = source.action
-
-  switch (action.type) {
-
-    // -------------------------------------------------------------------------
-    // VIEW ACTIONS
-    // -------------------------------------------------------------------------
-
-    case ViewActions.CREATE:
-      const newState = _state.update('flux', (val) => { return !val })
-
-      _state = newState
-
-      _TemplateStore.emitChange()
-      break
-
-    // -------------------------------------------------------------------------
-    // SERVER ACTIONS
-    // -------------------------------------------------------------------------
-
-    // ...
-
-    // -------------------------------------------------------------------------
-    // INIT
-    // -------------------------------------------------------------------------
-
-    default:
-      // Nothing
-  }
-
-})
+export default alt.createStore(TemplateStore, 'TemplateStore')

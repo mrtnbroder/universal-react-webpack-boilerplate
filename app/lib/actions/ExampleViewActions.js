@@ -1,14 +1,12 @@
 
-import Dispatcher from '../dispatcher/Dispatcher'
-import { ViewActions } from '../constants/TemplateConstants'
+import alt from '../dispatcher/alt'
 
-export default {
+class ExampleViewActions {
 
-  foo(bar) {
-    Dispatcher.handleViewAction({
-      type: ViewActions.CREATE,
-      payload: bar
-    })
+  updateFlux(val) {
+    this.dispatch(val)
   }
 
 }
+
+export default alt.createActions(ExampleViewActions)

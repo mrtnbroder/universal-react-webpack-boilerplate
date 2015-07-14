@@ -18,10 +18,9 @@
   "author": "Martin Broder <hello@martinbroder.com>",
   "license": "MIT",
   "dependencies": {
+    "alt": "^0.17.1",
     "express": "^4.13.1",
-    "flux": "^2.0.3",
     "immutable": "^3.7.4",
-    "keymirror": "^0.1.1",
     "lodash": "^3.10.0",
     "react": "^0.13.3",
     "react-router": "^0.13.3"

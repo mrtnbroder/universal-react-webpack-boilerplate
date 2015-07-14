@@ -5,7 +5,7 @@ import TemplateStore from '../../lib/stores/TemplateStore'
 
 export default class FrontPage extends React.Component {
 
-  static getStateFromStores() {
+  static getState() {
     return {
       templatestore: TemplateStore.getState()
     }
@@ -13,20 +13,20 @@ export default class FrontPage extends React.Component {
 
   constructor(props) {
     super(props)
-    this.state = FrontPage.getStateFromStores()
+    this.state = FrontPage.getState()
     this._onTemplateStoreChange = this._onTemplateStoreChange.bind(this)
   }
 
   componentWillMount() {
-    TemplateStore.addChangeListener(this._onTemplateStoreChange)
+    TemplateStore.listen(this._onTemplateStoreChange)
   }
 
   componentWillUnmount() {
-    TemplateStore.removeChangeListener(this._onTemplateStoreChange)
+    TemplateStore.unlisten(this._onTemplateStoreChange)
   }
 
-  _onTemplateStoreChange() {
-    this.setState(FrontPage.getStateFromStores())
+  _onTemplateStoreChange(state) {
+    this.setState({ templatestore: state })
   }
 
   render() {
@@ -35,9 +35,10 @@ export default class FrontPage extends React.Component {
     return (
       <div>
         <p>Hello from FrontPage Component!</p>
+        <button onClick={ExampleViewActions.updateFlux.bind(this, !templatestore.flux)}>Blaa</button>
         <ul>
-          <li>Flux: {String(templatestore.get('flux'))}</li>
-          <li>React: {String(templatestore.get('react'))}</li>
+          <li>Flux: {String(templatestore.flux)}</li>
+          <li>React: {String(templatestore.react)}</li>
         </ul>
       </div>
     )
