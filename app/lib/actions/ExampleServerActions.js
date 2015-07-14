@@ -1,6 +1,6 @@
 
 import Dispatcher from '../dispatcher/Dispatcher'
-import { ServerActions } from '../constants/ExampleConstants'
+import { ServerActions } from '../constants/TemplateConstants'
 
 export default {
 

@@ -1,6 +1,6 @@
 
 import Dispatcher from '../dispatcher/Dispatcher'
-import { ViewActions } from '../constants/ExampleConstants'
+import { ViewActions } from '../constants/TemplateConstants'
 
 export default {
 

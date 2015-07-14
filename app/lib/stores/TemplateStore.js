@@ -1,7 +1,7 @@
 
 import Dispatcher from '../dispatcher/Dispatcher'
 import Immutable from 'immutable'
-import { ViewActions, ServerActions } from '../constants/ExampleConstants.js'
+import { ViewActions, ServerActions } from '../constants/TemplateConstants.js'
 import { EventEmitter } from 'events'
 
 const CHANGE_EVENT = 'change'

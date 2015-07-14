@@ -10,7 +10,7 @@ if (__DEV__) {
   // Export React and Performance Utility for debugging
   window.React = React
   window.Perf = Perf
-  a11y()
+  a11y(React)
 }
 
 Router.run(routes, Router.HistoryLocation, function renderApp(Handler) {
