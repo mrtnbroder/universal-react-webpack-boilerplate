@@ -35,10 +35,10 @@ export default class FrontPage extends React.Component {
     return (
       <div>
         <p>Hello from FrontPage Component!</p>
-        <button onClick={ExampleViewActions.updateFlux.bind(this, !templatestore.flux)}>Blaa</button>
+        <button onClick={ExampleViewActions.updateFlux.bind(this, !templatestore.data.get('flux'))}>Blaa</button>
         <ul>
-          <li>Flux: {String(templatestore.flux)}</li>
-          <li>React: {String(templatestore.react)}</li>
+          <li>Flux: {String(templatestore.data.get('flux'))}</li>
+          <li>React: {String(templatestore.data.get('react'))}</li>
         </ul>
       </div>
     )

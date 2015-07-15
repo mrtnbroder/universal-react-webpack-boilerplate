@@ -1,13 +1,16 @@
 
 import alt from '../dispatcher/alt'
+import Immutable from 'immutable'
 import ExampleViewActions from '../actions/ExampleViewActions'
 import ExampleServerActions from '../actions/ExampleServerActions'
 
 class TemplateStore {
 
   constructor() {
-    this.flux = true
-    this.react = true
+    this.data = Immutable.fromJS({
+      react: true,
+      flux: true
+    })
 
     this.bindListeners({
       handleFluxUpdate: ExampleViewActions.UPDATE_FLUX,
@@ -16,11 +19,11 @@ class TemplateStore {
   }
 
   handleFluxUpdate(val) {
-    this.flux = val
+    this.data = this.data.set('flux', val)
   }
 
   handleReactUpdate(val) {
-    this.react = val
+    this.data = this.data.set('react', val)
   }
 
 }
