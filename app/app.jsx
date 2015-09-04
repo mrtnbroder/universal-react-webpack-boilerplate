@@ -1,7 +1,8 @@
 
 import React from 'react'
-import routes from './routes'
-import Router from 'react-router'
+import { Provider } from 'react-redux'
+import FrontPage from './views/default/frontpage'
+import configureStore from './lib/stores/configureStore'
 
 if (__DEV__) {
   const Perf = require('react/lib/ReactPerf')
@@ -13,6 +14,12 @@ if (__DEV__) {
   a11y(React)
 }
 
-Router.run(routes, Router.HistoryLocation, function renderApp(Handler) {
-  React.render(<Handler/>, document.getElementById('app'))
-})
+const store = configureStore()
+const rootEl = document.getElementById('app')
+
+React.render(
+  <Provider store={store}>
+    {() => <FrontPage/>}
+  </Provider>,
+  rootEl
+)

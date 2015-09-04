@@ -30,7 +30,7 @@
     "no-dupe-keys": 1,
     "no-duplicate-case": 1,
     "no-empty": 1,
-    "no-empty-class": 1,
+    "no-empty-character-class": 1,
     "no-ex-assign": 1,
     "no-extra-boolean-cast": 1,
     "no-extra-parens": 0,
@@ -42,7 +42,7 @@
     "no-negated-in-lhs": 1,
     "no-obj-calls": 1,
     "no-regex-spaces": 1,
-    "no-reserved-keys": 1,
+    "quote-props": 1,
     "no-sparse-arrays": 1,
     "no-unreachable": 1,
     "use-isnan": 1,
@@ -144,7 +144,7 @@
     "space-infix-ops": 2,
     "space-return-throw-case": 1,
     "space-unary-ops": 1,
-    "spaced-line-comment": [1, "always"],
+    "spaced-comment": [2, "always"],
     "wrap-regex": 2,
 
     // Strict Mode

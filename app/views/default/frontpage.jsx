@@ -1,46 +1,42 @@
 
-import React from 'react'
-import ExampleViewActions from '../../lib/actions/ExampleViewActions'
-import TemplateStore from '../../lib/stores/TemplateStore'
+import React, { Component } from 'react'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
+import * as CounterActions from '../../lib/actions/counterActions'
+import Counter from './components/Counter'
 
-export default class FrontPage extends React.Component {
-
-  static getStateFromStores() {
-    return {
-      templatestore: TemplateStore.getState()
-    }
-  }
+class FrontPage extends Component {
 
   constructor(props) {
     super(props)
-    this.state = FrontPage.getStateFromStores()
-    this._onTemplateStoreChange = this._onTemplateStoreChange.bind(this)
-  }
-
-  componentWillMount() {
-    TemplateStore.addChangeListener(this._onTemplateStoreChange)
-  }
-
-  componentWillUnmount() {
-    TemplateStore.removeChangeListener(this._onTemplateStoreChange)
-  }
-
-  _onTemplateStoreChange() {
-    this.setState(FrontPage.getStateFromStores())
   }
 
   render() {
-    const { templatestore } = this.state
+    const { increment, decrement, counter } = this.props
 
     return (
       <div>
         <p>Hello from FrontPage Component!</p>
+        <span>{counter}</span>
+        <Counter increment={decrement}/>
         <ul>
-          <li>Flux: {String(templatestore.get('flux'))}</li>
-          <li>React: {String(templatestore.get('react'))}</li>
+          <li>Fluxxxxxxxx: </li>
+          <li>React: </li>
         </ul>
       </div>
     )
   }
 
 }
+
+function mapStateToProps(state) {
+  return {
+    counter: state.counter
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return bindActionCreators(CounterActions, dispatch)
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(FrontPage)

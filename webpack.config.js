@@ -1,31 +1,21 @@
+/* eslint-disable no-trailing-spaces, no-process-env, object-shorthand */
 
 var path = require('path')
 var webpack = require('webpack')
-var _ = require('lodash')
-var defaults = require('./defaults')
+var merge = require('lodash').merge
+var assign = require('lodash').assign
+var config = require('./config')
 
 var DEBUG = process.env.NODE_ENV !== 'production'
-var SERVER = process.env.SERVER || true
-var webpackConfig
-var webpackClientConfig
-var webpackServerConfig
-
-var publicPath = SERVER
-  ? 'http://' + defaults.host + ':' + defaults.webpackDevServerPort
-  + '/' + defaults.webpackVirtualDir + '/'
-  : '/' + defaults.webpackVirtualDir + '/'
 
 var buildPath = path.join(__dirname, 'build')
 var clientOutputPath = path.join(__dirname, 'public')
-var devClientOutputPath = path.join(__dirname, '_tmp', 'client')
 var serverOutputPath = path.join(buildPath, 'server')
 var devServerOutputPath = path.join(__dirname, '_tmp', 'server')
 
 var GLOBALS = {
   __DEV__: DEBUG,
-  'process.env': {
-    NODE_ENV: JSON.stringify(DEBUG ? 'development' : 'production')
-  }
+  'process.env.NODE_ENV': JSON.stringify(DEBUG ? 'development' : 'production')
 }
 
 var plugins = [
@@ -35,26 +25,14 @@ var plugins = [
 
 var aliases = {}
 
-if (!DEBUG) {
-  plugins.push(
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(true),
-    new webpack.optimize.UglifyJsPlugin({
-      compress: {
-        warnings: false
-      }
-    })
-  )
-}
-
-webpackConfig = {
+var webpackConfig = {
   cache: DEBUG,
   context: __dirname,
-  // bail: true,
+  bail: true,
   debug: DEBUG,
   devtool: DEBUG ? 'eval' : undefined,
   output: {
-    publicPath: publicPath,
+    publicPath: DEBUG ? config.getDevPublicPath() : config.getPublicPath(),
     filename: '[name].js',
     chunkFilename: '[id].[chunkhash].js'
   },
@@ -69,7 +47,6 @@ webpackConfig = {
         loaders: DEBUG
           ? ['react-hot', 'babel-loader?stage=0&optional=runtime']
           : ['babel-loader?stage=0&optional=runtime'],
-        // include: path.join(__dirname, 'app'),
         exclude: /node_modules/
       }
     ]
@@ -80,6 +57,7 @@ webpackConfig = {
       '',
       '.web.js',
       '.js',
+      '.json',
       '.jsx'
     ],
     alias: aliases
@@ -87,28 +65,42 @@ webpackConfig = {
   resolveLoader: {
     root: path.join(__dirname, 'node_modules')
   },
-  plugins: plugins
+  plugins: plugins,
+  devServer: {
+    noInfo: true,
+    quiet: true,
+    host: config.host,
+    port: config.webpackDevServerPort
+  }
 }
 
 //
 // Client Config
 // -----------------------------------------------------------------------------
-webpackClientConfig = _.merge({}, webpackConfig, {
+var webpackClientConfig = merge({}, webpackConfig, {
   name: 'browser',
   target: 'web',
   entry: { app: './app/app' },
   output: {
-    path: DEBUG ? devClientOutputPath : clientOutputPath
+    path: clientOutputPath
   },
   plugins: webpackConfig.plugins.concat(
-    new webpack.DefinePlugin(_.assign({}, GLOBALS, { __BROWSER__: true }))
-  )
+    new webpack.DefinePlugin(assign({}, GLOBALS, { __BROWSER__: true }))
+  ).concat(DEBUG ? [] : [
+    new webpack.optimize.DedupePlugin(),
+    new webpack.optimize.OccurenceOrderPlugin(true),
+    new webpack.optimize.UglifyJsPlugin({
+      compress: {
+        warnings: false
+      }
+    })
+  ])
 })
 
 //
 // Server Config
 // -----------------------------------------------------------------------------
-webpackServerConfig = _.merge({}, webpackConfig, {
+var webpackServerConfig = merge({}, webpackConfig, {
   name: 'server',
   target: 'node',
   entry: { app: './app/server' },
@@ -117,7 +109,7 @@ webpackServerConfig = _.merge({}, webpackConfig, {
     libraryTarget: 'commonjs2'
   },
   plugins: webpackConfig.plugins.concat(
-    new webpack.DefinePlugin(_.assign({}, GLOBALS, { __BROWSER__: false }))
+    new webpack.DefinePlugin(assign({}, GLOBALS, { __BROWSER__: false }))
   ),
   externals: /^[a-z][a-z\.\-0-9]*$/
 })
