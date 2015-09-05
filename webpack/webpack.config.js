@@ -4,14 +4,14 @@ var path = require('path')
 var webpack = require('webpack')
 var merge = require('lodash').merge
 var assign = require('lodash').assign
-var config = require('./config')
+var config = require('../config')
 
 var DEBUG = process.env.NODE_ENV !== 'production'
 
-var buildPath = path.join(__dirname, 'build')
-var clientOutputPath = path.join(__dirname, 'public')
+var buildPath = path.join(__dirname, '..', 'build')
+var clientOutputPath = path.join(__dirname, '..', 'public')
 var serverOutputPath = path.join(buildPath, 'server')
-var devServerOutputPath = path.join(__dirname, '_tmp', 'server')
+var devServerOutputPath = path.join(__dirname, '..', '_tmp', 'server')
 
 var GLOBALS = {
   __DEV__: DEBUG,
@@ -27,7 +27,7 @@ var aliases = {}
 
 var webpackConfig = {
   cache: DEBUG,
-  context: __dirname,
+  context: path.join(__dirname, '..'),
   bail: true,
   debug: DEBUG,
   devtool: DEBUG ? 'eval' : undefined,
@@ -52,7 +52,7 @@ var webpackConfig = {
     ]
   },
   resolve: {
-    root: path.join(__dirname, 'app'),
+    root: path.join(__dirname, '..', 'app'),
     extensions: [
       '',
       '.web.js',
@@ -63,15 +63,9 @@ var webpackConfig = {
     alias: aliases
   },
   resolveLoader: {
-    root: path.join(__dirname, 'node_modules')
+    root: path.join(__dirname, '..', 'node_modules')
   },
-  plugins: plugins,
-  devServer: {
-    noInfo: true,
-    quiet: true,
-    host: config.host,
-    port: config.webpackDevServerPort
-  }
+  plugins: plugins
 }
 
 //
@@ -94,7 +88,13 @@ var webpackClientConfig = merge({}, webpackConfig, {
         warnings: false
       }
     })
-  ])
+  ]),
+  devServer: {
+    noInfo: true,
+    quiet: true,
+    host: config.host,
+    port: config.webpackDevServerPort
+  }
 })
 
 //
@@ -114,4 +114,7 @@ var webpackServerConfig = merge({}, webpackConfig, {
   externals: /^[a-z][a-z\.\-0-9]*$/
 })
 
-module.exports = [webpackClientConfig, webpackServerConfig]
+module.exports = {
+  client: webpackClientConfig,
+  server: webpackServerConfig
+}

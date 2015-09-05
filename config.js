@@ -16,12 +16,12 @@ var config = {
   },
 
   getDevPublicPath: function getDevPublicPath() {
-    return '/' + config.webpackVirtualDir
+    return 'http://' + config.host + ':' + config.webpackDevServerPort + '/'
+          + config.webpackVirtualDir
   },
 
   getDevClientApp: function getDevClientApp() {
-    return 'http://' + config.host + ':' + config.webpackDevServerPort
-          + config.getDevPublicPath() + config.getClientApp()
+    return config.getDevPublicPath() + config.getClientApp()
   },
 
   getClientApp: function getClientApp() {
