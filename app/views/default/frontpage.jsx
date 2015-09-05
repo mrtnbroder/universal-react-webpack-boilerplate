@@ -1,5 +1,5 @@
 
-import React, { Component } from 'react'
+import React, { Component, PropTypes } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as CounterActions from '../../lib/actions/counterActions'
@@ -7,12 +7,18 @@ import Counter from './components/Counter'
 
 class FrontPage extends Component {
 
+  static propTypes = {
+    counter: PropTypes.number,
+    decrement: PropTypes.func,
+    increment: PropTypes.func
+  }
+
   constructor(props) {
     super(props)
   }
 
   render() {
-    const { increment, decrement, counter } = this.props
+    const { decrement, counter } = this.props
 
     return (
       <div>
@@ -20,7 +26,7 @@ class FrontPage extends Component {
         <span>{counter}</span>
         <Counter increment={decrement}/>
         <ul>
-          <li>Fluxxxxxxxx: </li>
+          <li>Fluxxxxx: </li>
           <li>React: </li>
         </ul>
       </div>
