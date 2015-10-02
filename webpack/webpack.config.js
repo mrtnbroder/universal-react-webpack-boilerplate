@@ -14,7 +14,7 @@ var serverOutputPath = path.join(buildPath, 'server')
 var devServerOutputPath = path.join(__dirname, '..', '_tmp', 'server')
 
 var GLOBALS = {
-  __DEV__: DEBUG,
+  '__DEV__': DEBUG,
   'process.env.NODE_ENV': JSON.stringify(DEBUG ? 'development' : 'production')
 }
 
@@ -44,9 +44,11 @@ var webpackConfig = {
       },
       {
         test: /\.(js|jsx)$/,
-        loaders: DEBUG
-          ? ['react-hot', 'babel-loader?stage=0&optional=runtime']
-          : ['babel-loader?stage=0&optional=runtime'],
+        loader: 'babel',
+        query: {
+          stage: 0,
+          optional: 'runtime'
+        },
         exclude: /node_modules/
       }
     ]

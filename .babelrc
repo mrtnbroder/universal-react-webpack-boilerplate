@@ -1,0 +1,17 @@
+{
+  "stage": 0,
+  "env": {
+    "webpack": {
+      "plugins": ["react-transform"],
+      "extra": {
+        "react-transform": {
+          "transforms": [{
+            "transform": "react-transform-hmr",
+            "imports": ["react"],
+            "locals": ["module"]
+          }]
+        }
+      }
+    }
+  }
+}

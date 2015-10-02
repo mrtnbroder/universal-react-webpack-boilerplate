@@ -22,7 +22,7 @@ class FrontPage extends Component {
 
     return (
       <div>
-        <p>Hello from FrontPage Component!</p>
+        <p>Live! from FrontPage Component!</p>
         <span>{counter}</span>
         <Counter increment={decrement}/>
         <ul>
