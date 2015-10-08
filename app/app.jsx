@@ -1,5 +1,6 @@
 
 import React from 'react'
+import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import FrontPage from './views/default/frontpage'
 import configureStore from './lib/stores/configureStore'
@@ -17,9 +18,9 @@ if (__DEV__) {
 const store = configureStore()
 const rootEl = document.getElementById('app')
 
-React.render(
+render(
   <Provider store={store}>
-    {() => <FrontPage/>}
+    <FrontPage/>
   </Provider>,
   rootEl
 )

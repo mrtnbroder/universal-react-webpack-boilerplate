@@ -1,11 +1,14 @@
 
-import React from 'react'
-import { RouteHandler } from 'react-router'
+import React, { Component, PropTypes as T } from 'react'
 
-export default class Handler extends React.Component {
+export default class Handler extends Component {
+
+  static propTypes = {
+    children: T.any
+  }
 
   render() {
-    return <RouteHandler {...this.props}/>
+    return this.props.children
   }
 
 }

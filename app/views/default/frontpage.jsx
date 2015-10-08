@@ -1,5 +1,5 @@
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes as T } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as CounterActions from '../../lib/actions/counterActions'
@@ -8,9 +8,9 @@ import Counter from './components/Counter'
 class FrontPage extends Component {
 
   static propTypes = {
-    counter: PropTypes.number,
-    decrement: PropTypes.func,
-    increment: PropTypes.func
+    counter: T.number,
+    decrement: T.func,
+    increment: T.func
   }
 
   constructor(props) {

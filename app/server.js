@@ -1,7 +1,8 @@
-/* eslint-disable no-console, no-process-env */
+/* eslint-disable no-console */
 
 import express from 'express'
 import React from 'react'
+import { renderToString } from 'react-dom/server'
 import { Provider } from 'react-redux'
 import configureStore from './lib/stores/configureStore'
 import FrontPage from './views/default/frontpage'
@@ -17,7 +18,7 @@ import {
 const PORT = process.env.PORT || expressPort
 const DEBUG = process.env.NODE_ENV !== 'production'
 const app = express()
-const store = configureStore()
+const store = configureStore({counter: 5})
 
 //
 // Express Configuration
@@ -29,10 +30,10 @@ app.use(express.static('public'))
 app.get('/*', (req, res) => {
   const provider = (
     <Provider store={store}>
-      {() => <FrontPage/>}
+      <FrontPage/>
     </Provider>
   )
-  const content = React.renderToString(provider)
+  const content = renderToString(provider)
   const html = indexPage.renderToStaticMarkup({
     content,
     app: DEBUG ? getDevClientApp() : getClientApp()

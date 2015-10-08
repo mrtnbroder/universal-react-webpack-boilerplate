@@ -1,11 +1,12 @@
 
-import React, { Component, PropTypes } from 'react'
+import React, { Component, PropTypes as T } from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
 
 export default class IndexPage extends Component {
 
   static propTypes = {
-    app: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired
+    app: T.string.isRequired,
+    content: T.string.isRequired
   }
 
   static getDoctype() {
@@ -13,8 +14,7 @@ export default class IndexPage extends Component {
   }
 
   static renderToStaticMarkup(props) {
-    return IndexPage.getDoctype()
-      + React.renderToStaticMarkup(<IndexPage {...props} />)
+    return IndexPage.getDoctype() + renderToStaticMarkup(<IndexPage {...props}/>)
   }
 
   render() {
