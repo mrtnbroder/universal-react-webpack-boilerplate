@@ -5,9 +5,9 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { match, RoutingContext } from 'react-router'
 import { Provider } from 'react-redux'
-import { getStore } from './lib/stores'
+import { getRootStore } from './lib/stores'
 import routes from './routes'
-import indexPage from './index'
+import IndexPage from './views/IndexPage'
 import {
   host,
   expressPort,
@@ -42,13 +42,14 @@ app.get('/*', (req, res) => {
 })
 
 function renderIndex(nextProps) {
+  const store = getRootStore()
   const provider = (
-    <Provider store={getStore()}>
+    <Provider store={store}>
       <RoutingContext {...nextProps}/>
     </Provider>
   )
   const content = renderToString(provider)
-  const html = indexPage.renderToStaticMarkup({
+  const html = IndexPage.renderToStaticMarkup({
     content,
     app: DEBUG ? getDevClientApp() : getClientApp()
   })

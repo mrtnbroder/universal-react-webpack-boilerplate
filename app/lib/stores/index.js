@@ -1,7 +1,7 @@
 
 import configureStore from './configureStore'
 
-const initalState = { counter: 5 }
-const store = configureStore(initalState)
+const rootState = { counter: 10 }
+const rootStore = configureStore(rootState)
 
-export const getStore = () => store
+export const getRootStore = () => rootStore
