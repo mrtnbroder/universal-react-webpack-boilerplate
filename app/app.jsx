@@ -2,7 +2,7 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import configureStore from './lib/stores/configureStore'
+import { getStore } from './lib/stores'
 import createBrowserHistory from 'history/lib/createBrowserHistory'
 import { Router } from 'react-router'
 import routes from './routes'
@@ -17,12 +17,11 @@ if (__DEV__) {
   a11y(React)
 }
 
-const store = configureStore()
 const history = createBrowserHistory()
 const rootEl = document.getElementById('app')
 
 render(
-  <Provider store={store}>
+  <Provider store={getStore()}>
     <Router history={history}>
       {routes}
     </Router>

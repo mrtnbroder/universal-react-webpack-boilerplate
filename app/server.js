@@ -5,7 +5,7 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { match, RoutingContext } from 'react-router'
 import { Provider } from 'react-redux'
-import configureStore from './lib/stores/configureStore'
+import { getStore } from './lib/stores'
 import routes from './routes'
 import indexPage from './index'
 import {
@@ -18,7 +18,6 @@ import {
 const PORT = process.env.PORT || expressPort
 const DEBUG = process.env.NODE_ENV !== 'production'
 const app = express()
-const store = configureStore({ counter: 5 })
 //
 // Express Configuration
 // -----------------------------------------------------------------------------
@@ -44,7 +43,7 @@ app.get('/*', (req, res) => {
 
 function renderIndex(nextProps) {
   const provider = (
-    <Provider store={store}>
+    <Provider store={getStore()}>
       <RoutingContext {...nextProps}/>
     </Provider>
   )
