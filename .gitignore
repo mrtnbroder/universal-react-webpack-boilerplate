@@ -27,4 +27,4 @@ build/Release
 node_modules
 build
 _tmp
-public/app.js
+public
