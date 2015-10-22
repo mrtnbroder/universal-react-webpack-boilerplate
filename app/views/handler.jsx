@@ -1,10 +1,10 @@
 
-import React, { Component, PropTypes as T } from 'react'
+import React, { Component, PropTypes as PT } from 'react'
 
 export default class Handler extends Component {
 
   static propTypes = {
-    children: T.any
+    children: PT.any
   }
 
   render() {

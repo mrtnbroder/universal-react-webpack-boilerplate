@@ -2,8 +2,10 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import FrontPage from './views/default/frontpage'
 import configureStore from './lib/stores/configureStore'
+import createBrowserHistory from 'history/lib/createBrowserHistory'
+import { Router } from 'react-router'
+import routes from './routes'
 
 if (__DEV__) {
   const Perf = require('react/lib/ReactPerf')
@@ -16,11 +18,14 @@ if (__DEV__) {
 }
 
 const store = configureStore()
+const history = createBrowserHistory()
 const rootEl = document.getElementById('app')
 
 render(
   <Provider store={store}>
-    <FrontPage/>
+    <Router history={history}>
+      {routes}
+    </Router>
   </Provider>,
   rootEl
 )

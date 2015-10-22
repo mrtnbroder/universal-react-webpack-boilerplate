@@ -1,4 +1,4 @@
-/* eslint-disable no-trailing-spaces, no-process-env, object-shorthand */
+/* eslint-disable no-undefined, object-shorthand */
 
 var path = require('path')
 var webpack = require('webpack')
@@ -20,7 +20,8 @@ var GLOBALS = {
 
 var plugins = [
   new webpack.NoErrorsPlugin(),
-  new webpack.PrefetchPlugin('react')
+  new webpack.PrefetchPlugin('react'),
+  new webpack.PrefetchPlugin('react-dom')
 ]
 
 var aliases = {}
@@ -86,6 +87,7 @@ var webpackClientConfig = merge({}, webpackConfig, {
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(true),
     new webpack.optimize.UglifyJsPlugin({
+      sourceMap: false,
       compress: {
         warnings: false
       }
