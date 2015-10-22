@@ -39,7 +39,6 @@
     "eslint": "^1.7.3",
     "eslint-plugin-react": "^3.6.3",
     "jest-cli": "^0.6.0",
-    "json-loader": "^0.5.3",
     "parallelshell": "^2.0.0",
     "react-a11y": "^0.2.6",
     "react-transform-hmr": "^1.0.1",

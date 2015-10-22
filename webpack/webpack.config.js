@@ -40,10 +40,6 @@ var webpackConfig = {
   module: {
     loaders: [
       {
-        test: /\.json$/,
-        loader: 'json-loader'
-      },
-      {
         test: /\.(js|jsx)$/,
         loader: 'babel',
         query: {
