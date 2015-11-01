@@ -25,6 +25,7 @@ class FrontPage extends Component {
         <span>{counter}</span>
         <button onClick={increment}>+</button>
         <button onClick={decrement}>-</button>
+        <a href="/about">About</a>
         <ul>
           <li>Fluxxxxx: </li>
           <li>React: </li>
