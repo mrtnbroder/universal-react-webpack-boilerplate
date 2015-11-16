@@ -1,5 +1,6 @@
 
 import React, { Component } from 'react'
+import { Link } from 'react-router'
 
 class AboutPage extends Component {
 
@@ -11,7 +12,7 @@ class AboutPage extends Component {
     return (
       <div>
         <h2>About Page!</h2>
-        <a href="/">Home</a>
+        <Link to='/'>Home</Link>
       </div>
     )
   }

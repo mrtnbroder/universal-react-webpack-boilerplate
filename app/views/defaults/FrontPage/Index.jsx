@@ -3,6 +3,7 @@ import React, { Component, PropTypes as PT } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as CounterActions from '../../../lib/actions/counterActions'
+import { Link } from 'react-router'
 
 class FrontPage extends Component {
 
@@ -25,7 +26,7 @@ class FrontPage extends Component {
         <span>{counter}</span>
         <button onClick={increment}>+</button>
         <button onClick={decrement}>-</button>
-        <a href="/about">About</a>
+        <Link to='/about'>About</Link>
         <ul>
           <li>Fluxxxxx: </li>
           <li>React: </li>
