@@ -3,7 +3,6 @@
 var path = require('path')
 var webpack = require('webpack')
 var merge = require('lodash').merge
-var assign = require('lodash').assign
 var config = require('../config')
 
 var DEBUG = process.env.NODE_ENV !== 'production'
@@ -43,8 +42,8 @@ var webpackConfig = {
         test: /\.(js|jsx)$/,
         loader: 'babel',
         query: {
-          stage: 0,
-          optional: 'runtime'
+          presets: ['react', 'es2015', 'stage-0'],
+          plugins: ['transform-runtime']
         },
         exclude: /node_modules/
       }
@@ -78,7 +77,7 @@ var webpackClientConfig = merge({}, webpackConfig, {
     path: clientOutputPath
   },
   plugins: webpackConfig.plugins.concat(
-    new webpack.DefinePlugin(assign({}, GLOBALS, { __BROWSER__: true }))
+    new webpack.DefinePlugin(Object.assign({}, GLOBALS, { __BROWSER__: true }))
   ).concat(DEBUG ? [] : [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(true),
@@ -109,7 +108,7 @@ var webpackServerConfig = merge({}, webpackConfig, {
     libraryTarget: 'commonjs2'
   },
   plugins: webpackConfig.plugins.concat(
-    new webpack.DefinePlugin(assign({}, GLOBALS, { __BROWSER__: false }))
+    new webpack.DefinePlugin(Object.assign({}, GLOBALS, { __BROWSER__: false }))
   ),
   externals: /^[a-z][a-z\.\-0-9]*$/
 })
