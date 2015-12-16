@@ -2,7 +2,7 @@
   "name": "isomorphic-react-webpack-boilerplate",
   "version": "0.0.1",
   "description": "Isomorphic React Webpack Boilerplate",
-  "main": "app/server.js",
+  "main": "src/server.js",
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",

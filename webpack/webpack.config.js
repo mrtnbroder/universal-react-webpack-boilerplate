@@ -72,7 +72,7 @@ var webpackConfig = {
 var webpackClientConfig = merge({}, webpackConfig, {
   name: 'browser',
   target: 'web',
-  entry: { app: './app/app' },
+  entry: { app: './src/app' },
   output: {
     path: clientOutputPath
   },
@@ -102,7 +102,7 @@ var webpackClientConfig = merge({}, webpackConfig, {
 var webpackServerConfig = merge({}, webpackConfig, {
   name: 'server',
   target: 'node',
-  entry: { app: './app/server' },
+  entry: { app: './src/server' },
   output: {
     path: DEBUG ? devServerOutputPath : serverOutputPath,
     libraryTarget: 'commonjs2'
