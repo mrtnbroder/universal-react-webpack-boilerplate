@@ -27,10 +27,6 @@ class FrontPage extends Component {
         <button onClick={increment}>+</button>
         <button onClick={decrement}>-</button>
         <Link to='/about'>About</Link>
-        <ul>
-          <li>Fluxxxxx: </li>
-          <li>React: </li>
-        </ul>
       </div>
     )
   }
