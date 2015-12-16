@@ -6,7 +6,7 @@
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",
-    "start": "node build/server/app",
+    "start": "NODE_ENV=production node build/server/app",
     "dev": "npm run prebuild && parallelshell 'npm run webpack:watch:client' 'npm run webpack:watch:server' 'npm run server:watch'",
     "webpack:watch:server": "webpack --watch --quiet --no-info --config webpack/webpack.server.config.js",
     "webpack:watch:client": "NODE_ENV=webpack webpack-dev-server --hot --inline --config webpack/webpack.client.config.js",
