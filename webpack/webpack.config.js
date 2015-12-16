@@ -2,7 +2,7 @@
 
 var path = require('path')
 var webpack = require('webpack')
-var merge = require('lodash').merge
+var merge = require('lodash.merge')
 var config = require('../config')
 
 var DEBUG = process.env.NODE_ENV !== 'production'
