@@ -1,9 +1,12 @@
 
 import React from 'react'
-import { Route, DefaultRoute } from 'react-router'
+import { Route, IndexRoute } from 'react-router'
+import Handler from './views/Handler'
+import { FrontPage, AboutPage } from './views/defaults'
 
 export default (
-  <Route handler={require('./views/handler')}>
-    <DefaultRoute handler={require('./views/default/frontpage')}/>
+  <Route component={Handler} path='/'>
+    <IndexRoute component={FrontPage}/>
+    <Route component={AboutPage} path='/about'/>
   </Route>
 )

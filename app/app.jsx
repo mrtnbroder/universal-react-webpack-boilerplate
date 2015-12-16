@@ -1,7 +1,11 @@
 
 import React from 'react'
+import { render } from 'react-dom'
+import { Provider } from 'react-redux'
+import { getRootStore } from './lib/stores'
+import { createHistory } from 'history'
+import { Router } from 'react-router'
 import routes from './routes'
-import Router from 'react-router'
 
 if (__DEV__) {
   const Perf = require('react/lib/ReactPerf')
@@ -13,6 +17,15 @@ if (__DEV__) {
   a11y(React)
 }
 
-Router.run(routes, Router.HistoryLocation, function renderApp(Handler) {
-  React.render(<Handler/>, document.getElementById('app'))
-})
+const store = getRootStore()
+const history = createHistory()
+const rootEl = document.getElementById('app')
+
+render(
+  <Provider store={store}>
+    <Router history={history}>
+      {routes}
+    </Router>
+  </Provider>,
+  rootEl
+)

@@ -1,11 +1,12 @@
 
-import React, { PropTypes } from 'react'
+import React, { Component, PropTypes as PT } from 'react'
+import { renderToStaticMarkup } from 'react-dom/server'
 
-export default class IndexPage extends React.Component {
+export default class IndexPage extends Component {
 
   static propTypes = {
-    app: PropTypes.string.isRequired,
-    content: PropTypes.string.isRequired
+    app: PT.string.isRequired,
+    content: PT.string.isRequired
   }
 
   static getDoctype() {
@@ -14,12 +15,15 @@ export default class IndexPage extends React.Component {
 
   static renderToStaticMarkup(props) {
     return IndexPage.getDoctype()
-      + React.renderToStaticMarkup(<IndexPage {...props} />)
+      + renderToStaticMarkup(<IndexPage {...props}/>)
   }
 
   render() {
     return (
-      <html className='no-js' lang='en_US'>
+      <html
+        className='no-js'
+        lang='en_US'
+        >
         <head>
           <meta charSet='utf-8'/>
           <meta content='IE=edge,chrome=1' httpEquiv='X-UA-Compatible'/>
@@ -36,16 +40,22 @@ export default class IndexPage extends React.Component {
           <meta content='notranslate' name='google'/>
 
           {/* Viewport and mobile */}
-          <meta content='width=device-width, initial-scale=1, user-scalable=no, maximum-scale=1, minimum-scale=1' name='viewport'/>
+          <meta content='width = device-width,
+                         initial-scale = 1,
+                         user-scalable = no,
+                         maximum-scale = 1,
+                         minimum-scale = 1'
+            name='viewport'
+            />
           <meta content='true' name='HandheldFriendly'/>
           <meta content='320' name='MobileOptimized'/>
 
-          {/*<link rel='stylesheet' href={this.props.mainCSS}/>*/}
+          {/* <link rel='stylesheet' href={this.props.mainCSS}/> */}
 
         </head>
         <body>
           <div id='app'>
-            <div dangerouslySetInnerHTML={ { __html: this.props.content } }/>
+            <div dangerouslySetInnerHTML={{ __html: this.props.content }}/>
           </div>
 
           <script src={this.props.app}></script>
