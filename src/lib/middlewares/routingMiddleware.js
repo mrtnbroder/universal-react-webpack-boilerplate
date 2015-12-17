@@ -6,7 +6,7 @@ import { Provider } from 'react-redux'
 import { getRootStore } from '../stores'
 import routes from '../../routes'
 import IndexPage from '../../views/IndexPage'
-import { getClientApp, getDevClientApp } from '../../../config'
+import { getClientApp, getDevClientApp, getClientVendor, getDevClientVendor } from '../../../config'
 
 const DEBUG = process.env.NODE_ENV !== 'production'
 
@@ -37,7 +37,8 @@ export default function(app) {
     const content = renderToString(provider)
     const html = IndexPage.renderToStaticMarkup({
       content,
-      app: DEBUG ? getDevClientApp() : getClientApp()
+      app: DEBUG ? getDevClientApp() : getClientApp(),
+      vendor: DEBUG ? getDevClientVendor() : getClientVendor()
     })
 
     return html

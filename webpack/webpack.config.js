@@ -9,8 +9,9 @@ var DEBUG = process.env.NODE_ENV !== 'production'
 
 var buildPath = path.join(__dirname, '..', 'build')
 var clientOutputPath = path.join(__dirname, '..', 'public')
+var devClientOutputPath = path.join(__dirname, '..', config.webpackVirtualDir, 'client')
 var serverOutputPath = path.join(buildPath, 'server')
-var devServerOutputPath = path.join(__dirname, '..', '_tmp', 'server')
+var devServerOutputPath = path.join(__dirname, '..', config.webpackVirtualDir, 'server')
 
 var GLOBALS = {
   '__DEV__': DEBUG,
@@ -32,9 +33,9 @@ var webpackConfig = {
   debug: DEBUG,
   devtool: DEBUG ? 'eval' : undefined,
   output: {
-    publicPath: DEBUG ? config.getDevPublicPath() : config.getPublicPath(),
-    filename: '[name].js',
-    chunkFilename: '[id].[chunkhash].js'
+    publicPath: DEBUG ? config.getDevPublicPath() + '/' : config.getPublicPath(),
+    filename: DEBUG ? '[name].js' : '[name].[chunkhash].js',
+    chunkFilename: DEBUG ? '[name].js' : '[name].[chunkhash].js'
   },
   module: {
     loaders: [
@@ -63,7 +64,13 @@ var webpackConfig = {
   resolveLoader: {
     root: path.join(__dirname, '..', 'node_modules')
   },
-  plugins: plugins
+  plugins: plugins,
+  devServer: {
+    noInfo: true,
+    quiet: true,
+    host: config.host,
+    port: config.webpackDevServerPort
+  }
 }
 
 //
@@ -72,12 +79,23 @@ var webpackConfig = {
 var webpackClientConfig = merge({}, webpackConfig, {
   name: 'browser',
   target: 'web',
-  entry: { app: './src/app' },
+  entry: {
+    [config.appName]: './src/app',
+    [config.vendorName]: [
+      'history',
+      'react',
+      'react-dom',
+      'react-redux',
+      'react-router',
+      'redux'
+    ]
+  },
   output: {
-    path: clientOutputPath
+    path: DEBUG ? devClientOutputPath : clientOutputPath
   },
   plugins: webpackConfig.plugins.concat(
-    new webpack.DefinePlugin(Object.assign({}, GLOBALS, { __BROWSER__: true }))
+    new webpack.DefinePlugin(Object.assign({}, GLOBALS, { __BROWSER__: true })),
+    new webpack.optimize.CommonsChunkPlugin(config.vendorName, DEBUG ? '[name].js' : '[name].[chunkhash].js')
   ).concat(DEBUG ? [] : [
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(true),
@@ -87,13 +105,7 @@ var webpackClientConfig = merge({}, webpackConfig, {
         warnings: false
       }
     })
-  ]),
-  devServer: {
-    noInfo: true,
-    quiet: true,
-    host: config.host,
-    port: config.webpackDevServerPort
-  }
+  ])
 })
 
 //
@@ -102,8 +114,11 @@ var webpackClientConfig = merge({}, webpackConfig, {
 var webpackServerConfig = merge({}, webpackConfig, {
   name: 'server',
   target: 'node',
-  entry: { app: './src/server' },
+  entry: {
+    [config.appName]: './src/server'
+  },
   output: {
+    filename: '[name].js',
     path: DEBUG ? devServerOutputPath : serverOutputPath,
     libraryTarget: 'commonjs2'
   },

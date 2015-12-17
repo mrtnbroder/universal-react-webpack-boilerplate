@@ -6,7 +6,12 @@ export default class IndexPage extends Component {
 
   static propTypes = {
     app: PT.string.isRequired,
-    content: PT.string.isRequired
+    content: PT.string.isRequired,
+    vendor: PT.string.isRequired
+  }
+
+  constructor(props, context) {
+    super(props, context)
   }
 
   static getDoctype() {
@@ -19,6 +24,8 @@ export default class IndexPage extends Component {
   }
 
   render() {
+    const { vendor, content, app } = this.props
+
     return (
       <html
         className='no-js'
@@ -55,10 +62,11 @@ export default class IndexPage extends Component {
         </head>
         <body>
           <div id='app'>
-            <div dangerouslySetInnerHTML={{ __html: this.props.content }}/>
+            <div dangerouslySetInnerHTML={{ __html: content }}/>
           </div>
 
-          <script src={this.props.app}></script>
+          <script src={vendor}></script>
+          <script src={app}></script>
         </body>
       </html>
     )
