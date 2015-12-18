@@ -7,6 +7,7 @@ export default class IndexPage extends Component {
   static propTypes = {
     app: PT.string.isRequired,
     content: PT.string.isRequired,
+    inline: PT.oneOfType([PT.string, PT.bool]),
     vendor: PT.string.isRequired
   }
 
@@ -24,7 +25,7 @@ export default class IndexPage extends Component {
   }
 
   render() {
-    const { vendor, content, app } = this.props
+    const { app, content, inline, vendor } = this.props
 
     return (
       <html
@@ -57,16 +58,15 @@ export default class IndexPage extends Component {
           <meta content='true' name='HandheldFriendly'/>
           <meta content='320' name='MobileOptimized'/>
 
-          {/* <link rel='stylesheet' href={this.props.mainCSS}/> */}
-
         </head>
         <body>
           <div id='app'>
             <div dangerouslySetInnerHTML={{ __html: content }}/>
           </div>
 
-          <script src={vendor}></script>
-          <script src={app}></script>
+          {inline && <script dangerouslySetInnerHTML={{ __html: inline }}/>}
+          <script src={vendor}/>
+          <script src={app}/>
         </body>
       </html>
     )

@@ -7,13 +7,15 @@
     "test": "jest",
     "coverage": "jest --coverage",
     "start": "NODE_ENV=production node build/server/app",
-    "dev": "npm run prebuild && parallelshell 'npm run webpack:watch:client' 'npm run webpack:watch:server' 'npm run server:watch'",
+    "dev": "npm run webpack:prebuild && parallelshell 'npm run webpack:watch:client' 'npm run webpack:watch:server' 'npm run server:watch'",
     "webpack:watch:server": "webpack --watch --config webpack/webpack.server.config.js",
     "webpack:watch:client": "NODE_ENV=webpack webpack-dev-server --hot --inline --config webpack/webpack.client.config.js",
-    "webpack:build": "NODE_ENV=production webpack --config webpack",
-    "prebuild": "webpack --config webpack -s",
+    "webpack:build": "npm run webpack:build:client && npm run webpack:build:server",
+    "webpack:prebuild": "webpack --config webpack",
+    "webpack:build:client": "NODE_ENV=production webpack --config webpack/webpack.client.config.js",
+    "webpack:build:server": "NODE_ENV=production webpack --config webpack/webpack.server.config.js",
     "server:watch": "node_modules/supervisor/lib/cli-wrapper.js -w _tmp/server -n exit _tmp/server/app.js",
-    "cleanup": "rm -rf ./build ./public/app.js ./_tmp",
+    "cleanup": "rm -rf ./build ./public/{app,vendor}*.js ./_tmp",
     "build": "npm run cleanup && npm run webpack:build"
   },
   "author": "Martin Broder <hello@martinbroder.com>",
@@ -48,7 +50,8 @@
     "react-transform-hmr": "^1.0.1",
     "supervisor": "^0.9.1",
     "webpack": "^1.12.9",
-    "webpack-dev-server": "^1.14.0"
+    "webpack-dev-server": "^1.14.0",
+    "webpack-stats-plugin": "^0.1.1"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",

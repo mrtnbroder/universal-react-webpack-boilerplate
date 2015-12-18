@@ -4,14 +4,15 @@ var path = require('path')
 var webpack = require('webpack')
 var merge = require('lodash.merge')
 var config = require('../config')
+var StatsWriterPlugin = require('webpack-stats-plugin').StatsWriterPlugin
 
 var DEBUG = process.env.NODE_ENV !== 'production'
 
 var buildPath = path.join(__dirname, '..', 'build')
 var clientOutputPath = path.join(__dirname, '..', 'public')
-var devClientOutputPath = path.join(__dirname, '..', config.webpackVirtualDir, 'client')
+var devClientOutputPath = path.join(__dirname, '..', config.tmpDir, 'client')
 var serverOutputPath = path.join(buildPath, 'server')
-var devServerOutputPath = path.join(__dirname, '..', config.webpackVirtualDir, 'server')
+var devServerOutputPath = path.join(__dirname, '..', config.tmpDir, 'server')
 
 var GLOBALS = {
   '__DEV__': DEBUG,
@@ -24,18 +25,18 @@ var plugins = [
   new webpack.PrefetchPlugin('react-dom')
 ]
 
-var aliases = {}
+var filename = DEBUG ? '[name].js' : '[name].[chunkhash].js'
 
 var webpackConfig = {
   cache: DEBUG,
   context: path.join(__dirname, '..'),
-  bail: true,
+  bail: !DEBUG,
   debug: DEBUG,
   devtool: DEBUG ? 'eval' : undefined,
   output: {
-    publicPath: DEBUG ? config.getDevPublicPath() + '/' : config.getPublicPath(),
-    filename: DEBUG ? '[name].js' : '[name].[chunkhash].js',
-    chunkFilename: DEBUG ? '[name].js' : '[name].[chunkhash].js'
+    publicPath: DEBUG ? config.getDevPublicPath() + '/' : config.publicPath,
+    filename: filename,
+    chunkFilename: filename
   },
   module: {
     loaders: [
@@ -51,15 +52,14 @@ var webpackConfig = {
     ]
   },
   resolve: {
-    root: path.join(__dirname, '..', 'app'),
+    root: path.join(__dirname, '..', 'src'),
     extensions: [
       '',
       '.web.js',
       '.js',
       '.json',
       '.jsx'
-    ],
-    alias: aliases
+    ]
   },
   resolveLoader: {
     root: path.join(__dirname, '..', 'node_modules')
@@ -95,8 +95,9 @@ var webpackClientConfig = merge({}, webpackConfig, {
   },
   plugins: webpackConfig.plugins.concat(
     new webpack.DefinePlugin(Object.assign({}, GLOBALS, { __BROWSER__: true })),
-    new webpack.optimize.CommonsChunkPlugin(config.vendorName, DEBUG ? '[name].js' : '[name].[chunkhash].js')
+    new webpack.optimize.CommonsChunkPlugin(config.vendorName, filename)
   ).concat(DEBUG ? [] : [
+    new webpack.optimize.CommonsChunkPlugin(config.inlineName, config.inlineName + '.js'),
     new webpack.optimize.DedupePlugin(),
     new webpack.optimize.OccurenceOrderPlugin(true),
     new webpack.optimize.UglifyJsPlugin({
@@ -104,7 +105,8 @@ var webpackClientConfig = merge({}, webpackConfig, {
       compress: {
         warnings: false
       }
-    })
+    }),
+    new StatsWriterPlugin({ filename: config.statsName + '.json' })
   ])
 })
 

@@ -22,7 +22,7 @@ class FrontPage extends Component {
 
     return (
       <div>
-        <p>Live! from FrontPage Component!</p>
+        <p>CCCombobreaker!!</p>
         <span>{counter}</span>
         <button onClick={increment}>+</button>
         <button onClick={decrement}>-</button>

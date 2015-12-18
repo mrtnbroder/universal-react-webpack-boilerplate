@@ -2,40 +2,38 @@
 var config = {
   // Port used by express
   expressPort: 8080,
+  // webpack + server
+  host: 'localhost',
   // Port used by the webpack-dev-server
   webpackDevServerPort: 2992,
   // temp dir created by webpack-dev-server
-  webpackVirtualDir: '_tmp',
-  // webpack + server
-  host: 'localhost',
+  tmpDir: '_tmp',
   // app.js
   appName: 'app',
   // vendor.js
   vendorName: 'vendor',
+  // inline.js
+  inlineName: 'inline',
+  // stats.json
+  statsName: 'stats',
+  // public path
+  publicPath: './public',
 
-  getPublicPath: function getPublicPath() {
-    return './public'
+  getDevAsset: function getDevAsset(name) {
+    return config.getDevPublicPath() + '/' + name + '.js'
   },
 
   getDevPublicPath: function getDevPublicPath() {
     return 'http://' + config.host + ':' + config.webpackDevServerPort + '/'
-          + config.webpackVirtualDir
+          + config.tmpDir
   },
 
-  getDevClientApp: function getDevClientApp() {
-    return config.getDevPublicPath() + config.getClientApp()
+  getInlineFile: function getInlineFile() {
+    return config.publicPath + '/' + config.inlineName + '.js'
   },
 
-  getClientApp: function getClientApp() {
-    return '/' + config.appName + '.js'
-  },
-
-  getDevClientVendor: function getDevClientVendor() {
-    return config.getDevPublicPath() + config.getClientVendor()
-  },
-
-  getClientVendor: function getClientVendor() {
-    return '/' + config.vendorName + '.js'
+  getStatsFile: function getStatsFile() {
+    return config.publicPath + '/' + config.statsName + '.json'
   }
 
 }
