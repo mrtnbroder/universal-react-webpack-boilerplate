@@ -1,8 +1,8 @@
 /* eslint-disable no-console */
 
 import express from 'express'
-import * as m from './lib/middlewares'
-import { host, expressPort } from '../config'
+import * as m from './middlewares'
+import { host, expressPort } from '../../config'
 
 const PORT = process.env.PORT || expressPort
 const app = express()
@@ -10,6 +10,8 @@ const app = express()
 //
 // Express Configuration
 // -----------------------------------------------------------------------------
+
+app.disable('x-powered-by')
 
 m.staticMiddleware(app)
 m.routingMiddleware(app)

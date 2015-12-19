@@ -11,6 +11,7 @@ var DEBUG = process.env.NODE_ENV !== 'production'
 var buildPath = path.join(__dirname, '..', 'build')
 var clientOutputPath = path.join(__dirname, '..', 'public')
 var devClientOutputPath = path.join(__dirname, '..', config.tmpDir, 'client')
+var clientRecordsPath = path.join(buildPath, 'client')
 var serverOutputPath = path.join(buildPath, 'server')
 var devServerOutputPath = path.join(__dirname, '..', config.tmpDir, 'server')
 
@@ -22,7 +23,9 @@ var GLOBALS = {
 var plugins = [
   new webpack.NoErrorsPlugin(),
   new webpack.PrefetchPlugin('react'),
-  new webpack.PrefetchPlugin('react-dom')
+  new webpack.PrefetchPlugin('react-dom'),
+  new webpack.optimize.DedupePlugin(),
+  new webpack.optimize.OccurenceOrderPlugin(true)
 ]
 
 var filename = DEBUG ? '[name].js' : '[name].[chunkhash].js'
@@ -80,7 +83,7 @@ var webpackClientConfig = merge({}, webpackConfig, {
   name: 'browser',
   target: 'web',
   entry: {
-    [config.appName]: './src/app',
+    [config.appName]: './src/client',
     [config.vendorName]: [
       'history',
       'react',
@@ -93,13 +96,12 @@ var webpackClientConfig = merge({}, webpackConfig, {
   output: {
     path: DEBUG ? devClientOutputPath : clientOutputPath
   },
+  recordsPath: path.join(clientRecordsPath, 'records.json'),
   plugins: webpackConfig.plugins.concat(
     new webpack.DefinePlugin(Object.assign({}, GLOBALS, { __BROWSER__: true })),
     new webpack.optimize.CommonsChunkPlugin(config.vendorName, filename)
   ).concat(DEBUG ? [] : [
     new webpack.optimize.CommonsChunkPlugin(config.inlineName, config.inlineName + '.js'),
-    new webpack.optimize.DedupePlugin(),
-    new webpack.optimize.OccurenceOrderPlugin(true),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
       compress: {

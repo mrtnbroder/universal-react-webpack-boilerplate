@@ -5,8 +5,8 @@ import path from 'path'
 import { renderToString } from 'react-dom/server'
 import { match, RoutingContext } from 'react-router'
 import { Provider } from 'react-redux'
-import { getRootStore } from '../stores'
-import routes from '../../routes'
+import { getRootStore } from '../../lib/stores'
+import routes from '../../lib/routes'
 import IndexPage from '../../views/IndexPage'
 import config from '../../../config'
 
@@ -49,11 +49,12 @@ export default function(app) {
 }
 
 function getScript(name) {
+  if (DEBUG) return config.getDevAsset(name)
+
   const options = { encoding: 'utf8' }
   const file = fs.readFileSync(path.resolve(config.getStatsFile()), options)
   const stats = JSON.parse(file)
 
-  if (DEBUG) return config.getDevAsset(name)
   return stats.assetsByChunkName[name]
 }
 

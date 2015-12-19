@@ -2,7 +2,7 @@
   "name": "isomorphic-react-webpack-boilerplate",
   "version": "0.0.1",
   "description": "Isomorphic React Webpack Boilerplate",
-  "main": "src/server.js",
+  "main": "src/server/index.js",
   "scripts": {
     "test": "jest",
     "coverage": "jest --coverage",
@@ -15,7 +15,7 @@
     "webpack:build:client": "NODE_ENV=production webpack --config webpack/webpack.client.config.js",
     "webpack:build:server": "NODE_ENV=production webpack --config webpack/webpack.server.config.js",
     "server:watch": "node_modules/supervisor/lib/cli-wrapper.js -w _tmp/server -n exit _tmp/server/app.js",
-    "cleanup": "rm -rf ./build ./public/{app,vendor}*.js ./_tmp",
+    "cleanup": "rm -rf ./public/{app,vendor}*.js ./_tmp",
     "build": "npm run cleanup && npm run webpack:build"
   },
   "author": "Martin Broder <hello@martinbroder.com>",

@@ -2,10 +2,10 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { getRootStore } from './lib/stores'
+import { getRootStore } from '../lib/stores'
 import { createHistory } from 'history'
 import { Router } from 'react-router'
-import routes from './routes'
+import routes from '../lib/routes'
 
 if (__DEV__) {
   const Perf = require('react/lib/ReactPerf')
