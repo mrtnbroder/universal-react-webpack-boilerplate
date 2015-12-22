@@ -1,13 +1,14 @@
 
 import React, { Component, PropTypes as PT } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
+import { DEBUG } from '../../config'
 
 export default class IndexPage extends Component {
 
   static propTypes = {
     app: PT.string.isRequired,
     content: PT.string.isRequired,
-    inline: PT.oneOfType([PT.string, PT.bool]),
+    inline: DEBUG ? PT.bool : PT.string,
     vendor: PT.string.isRequired
   }
 

@@ -1,19 +1,19 @@
 
 import React from 'react'
 import fs from 'fs'
+import path from 'path'
 import { renderToString } from 'react-dom/server'
 import { match, RoutingContext } from 'react-router'
 import { Provider } from 'react-redux'
 import { getRootStore } from '../../lib/stores'
 import routes from '../../lib/routes'
 import IndexPage from '../../views/IndexPage'
-import config from '../../../config'
-
-const DEBUG = process.env.NODE_ENV !== 'production'
+import { DEBUG, appName, vendorName, statsName, inlineName } from '../../../config'
+import paths from '../../../paths'
 
 export default function(app) {
-  const appScript = getScript(config.appName)
-  const vendorScript = getScript(config.vendorName)
+  const appScript = getScript(appName)
+  const vendorScript = getScript(vendorName)
   const inlineScript = getWebpackJsonpInlineScript()
 
   // Routing
@@ -52,9 +52,9 @@ export default function(app) {
 }
 
 function getScript(name) {
-  if (DEBUG) return config.getDevAsset(name)
+  if (DEBUG) return `${paths.devPublicDir()}/${name}.js`
 
-  const file = fs.readFileSync(config.getStatsFile(), { encoding: 'utf8' })
+  const file = fs.readFileSync(path.join(paths.publicDir(), `${statsName}.json`), { encoding: 'utf8' })
   const stats = JSON.parse(file)
 
   return stats.assetsByChunkName[name]
@@ -62,5 +62,5 @@ function getScript(name) {
 
 function getWebpackJsonpInlineScript() {
   if (DEBUG) return false
-  return fs.readFileSync(config.getInlineFile(), { encoding: 'utf8' })
+  return fs.readFileSync(path.join(paths.publicDir(), `${inlineName}.js`), { encoding: 'utf8' })
 }

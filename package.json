@@ -15,7 +15,7 @@
     "webpack:build:client": "NODE_ENV=production webpack --config webpack/webpack.client.config.js",
     "webpack:build:server": "NODE_ENV=production webpack --config webpack/webpack.server.config.js",
     "server:watch": "node_modules/supervisor/lib/cli-wrapper.js -w _tmp/server -n exit _tmp/server/app.js",
-    "cleanup": "rm -rf ./public/{app,vendor}*.js ./_tmp",
+    "cleanup": "rm -rf ./build ./public/{app,vendor}*.js ./_tmp",
     "build": "npm run cleanup && npm run webpack:build"
   },
   "author": "Martin Broder <hello@martinbroder.com>",
@@ -52,6 +52,9 @@
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0",
     "webpack-stats-plugin": "^0.1.1"
+  },
+  "engines": {
+    "node": ">=4.0.0"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
