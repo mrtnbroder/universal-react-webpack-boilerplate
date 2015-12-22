@@ -12,6 +12,10 @@ import config from '../../../config'
 const DEBUG = process.env.NODE_ENV !== 'production'
 
 export default function(app) {
+  const appScript = getScript(config.appName)
+  const vendorScript = getScript(config.vendorName)
+  const inlineScript = getWebpackJsonpInlineScript()
+
   // Routing
   app.get('/*', handleRequests)
 
@@ -39,10 +43,10 @@ export default function(app) {
     )
 
     return IndexPage.renderToStaticMarkup({
-      app: getScript(config.appName),
+      app: appScript,
       content: renderToString(provider),
-      inline: getWebpackJsonpInlineScript(),
-      vendor: getScript(config.vendorName)
+      inline: inlineScript,
+      vendor: vendorScript
     })
   }
 }
