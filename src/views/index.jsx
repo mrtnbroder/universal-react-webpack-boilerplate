@@ -1,15 +1,25 @@
 
 import React, { Component, PropTypes as PT } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { DEBUG } from '../../config'
+import fs from 'fs'
+import paths from '../../paths'
+import { DEBUG, appName, vendorName, statsName, inlineName } from '../../config'
 
-export default class IndexPage extends Component {
+const encoding = { encoding: 'utf8' }
+
+export default class Index extends Component {
 
   static propTypes = {
     app: PT.string.isRequired,
     content: PT.string.isRequired,
     inline: DEBUG ? PT.bool : PT.string,
     vendor: PT.string.isRequired
+  }
+
+  static defaultProps = {
+    app: Index.getScript(appName),
+    vendor: Index.getScript(vendorName),
+    inline: Index.getWebpackJsonpInlineScript()
   }
 
   constructor(props, context) {
@@ -20,9 +30,22 @@ export default class IndexPage extends Component {
     return '<!doctype html>'
   }
 
+  static getScript(name) {
+    if (DEBUG) return `${paths.devPublicDir()}/${name}.js`
+
+    const file = fs.readFileSync(`${paths.publicDir()}/${statsName}.json`, encoding)
+    const stats = JSON.parse(file)
+
+    return stats.assetsByChunkName[name]
+  }
+
+  static getWebpackJsonpInlineScript() {
+    if (DEBUG) return false
+    return fs.readFileSync(`${paths.publicDir()}/${inlineName}.js`, encoding)
+  }
+
   static renderToStaticMarkup(props) {
-    return IndexPage.getDoctype()
-      + renderToStaticMarkup(<IndexPage {...props}/>)
+    return Index.getDoctype() + renderToStaticMarkup(<Index {...props}/>)
   }
 
   render() {
@@ -72,5 +95,4 @@ export default class IndexPage extends Component {
       </html>
     )
   }
-
 }

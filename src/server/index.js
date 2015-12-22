@@ -10,7 +10,10 @@ const app = express()
 // Express Configuration
 // -----------------------------------------------------------------------------
 
+// remove x-powered-by header
 app.disable('x-powered-by')
+// remove etag header (force browser to rely on our cache-control)
+app.disable('etag')
 
 m.staticMiddleware(app)
 m.routingMiddleware(app)
