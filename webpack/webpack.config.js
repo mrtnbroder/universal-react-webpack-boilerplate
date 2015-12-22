@@ -129,6 +129,9 @@ var webpackServerConfig = merge({}, webpackConfig, {
   plugins: webpackConfig.plugins.concat(
     new webpack.DefinePlugin(Object.assign({}, GLOBALS, { __BROWSER__: false }))
   ),
+  node: {
+    __dirname: true
+  },
   externals: /^[a-z][a-z\.\-0-9]*$/
 })
 

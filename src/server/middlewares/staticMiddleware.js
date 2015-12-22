@@ -1,6 +1,7 @@
 
 import express from 'express'
 import compression from 'compression'
+import { publicPath } from '../../../config'
 
 const DEBUG = process.env.NODE_ENV !== 'production'
 const MAX_AGE = DEBUG ? 0 : '1 year'
@@ -14,5 +15,5 @@ export default function(app) {
   // Compression
   if (!DEBUG) app.use(compression())
   // Assets
-  app.use(express.static('public', staticCache))
+  app.use(express.static(publicPath, staticCache))
 }

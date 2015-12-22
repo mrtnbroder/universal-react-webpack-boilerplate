@@ -4,7 +4,6 @@ import express from 'express'
 import * as m from './middlewares'
 import { host, expressPort } from '../../config'
 
-const PORT = process.env.PORT || expressPort
 const app = express()
 
 //
@@ -20,9 +19,9 @@ m.routingMiddleware(app)
 // Initialise Express
 // -----------------------------------------------------------------------------
 
-app.listen(PORT, host, (err) => {
+app.listen(expressPort, host, (err) => {
   if (err) return console.error('[server.js]: app.listen: ', err)
 
-  console.log('Express server listening on port ', PORT)
-  console.log('\nhttp://%s:%s\n', host, PORT)
+  console.log('Express server listening on port ', expressPort)
+  console.log('\nhttp://%s:%s\n', host, expressPort)
 })

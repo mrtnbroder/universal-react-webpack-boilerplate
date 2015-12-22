@@ -1,7 +1,6 @@
 
 import React from 'react'
 import fs from 'fs'
-import path from 'path'
 import { renderToString } from 'react-dom/server'
 import { match, RoutingContext } from 'react-router'
 import { Provider } from 'react-redux'
@@ -51,8 +50,7 @@ export default function(app) {
 function getScript(name) {
   if (DEBUG) return config.getDevAsset(name)
 
-  const options = { encoding: 'utf8' }
-  const file = fs.readFileSync(path.resolve(config.getStatsFile()), options)
+  const file = fs.readFileSync(config.getStatsFile(), { encoding: 'utf8' })
   const stats = JSON.parse(file)
 
   return stats.assetsByChunkName[name]
@@ -60,7 +58,5 @@ function getScript(name) {
 
 function getWebpackJsonpInlineScript() {
   if (DEBUG) return false
-  return fs.readFileSync(path.resolve(config.getInlineFile()), {
-    encoding: 'utf8'
-  })
+  return fs.readFileSync(config.getInlineFile(), { encoding: 'utf8' })
 }

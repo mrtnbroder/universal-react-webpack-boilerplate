@@ -1,9 +1,11 @@
 
+var path = require('path')
+
 var config = {
   // Port used by express
-  expressPort: 8080,
+  expressPort: process.env.PORT || 8080,
   // webpack + server
-  host: 'localhost',
+  host: process.env.HOST || 'localhost',
   // Port used by the webpack-dev-server
   webpackDevServerPort: 2992,
   // temp dir created by webpack-dev-server
@@ -17,7 +19,7 @@ var config = {
   // stats.json
   statsName: 'stats',
   // public path
-  publicPath: './public',
+  publicPath: path.join(__dirname, 'public'),
 
   getDevAsset: function getDevAsset(name) {
     return config.getDevPublicPath() + '/' + name + '.js'
@@ -29,11 +31,15 @@ var config = {
   },
 
   getInlineFile: function getInlineFile() {
-    return config.publicPath + '/' + config.inlineName + '.js'
+    var inline = path.join(config.publicPath, config.inlineName + '.js')
+    console.log("inline", inline);
+    return inline
   },
 
   getStatsFile: function getStatsFile() {
-    return config.publicPath + '/' + config.statsName + '.json'
+    var stats = path.join(config.publicPath, config.statsName + '.json')
+    console.log("stats", stats);
+    return stats
   }
 
 }
