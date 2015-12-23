@@ -3,7 +3,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { getRootStore } from '../lib/stores'
-import createHistory from 'history/lib/createHistory'
+import createBrowserHistory from 'history/lib/createBrowserHistory'
 import { Router } from 'react-router'
 import routes from '../lib/routes'
 
@@ -18,7 +18,7 @@ if (__DEV__) {
 }
 
 const store = getRootStore()
-const history = createHistory()
+const history = createBrowserHistory()
 const rootEl = document.getElementById('app')
 
 render(

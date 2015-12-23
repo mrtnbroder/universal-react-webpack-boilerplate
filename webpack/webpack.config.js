@@ -73,7 +73,7 @@ var webpackClientConfig = merge({}, webpackConfig, {
   entry: {
     [config.appName]: './src/client',
     [config.vendorName]: [
-      'history/lib/createHistory',
+      'history/lib/createBrowserHistory',
       'react',
       'react-dom',
       'react-redux',
