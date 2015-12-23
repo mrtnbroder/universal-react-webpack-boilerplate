@@ -1,10 +1,8 @@
 /* eslint-disable no-undefined, object-shorthand */
 
 var webpack = require('webpack')
-var merge = require('lodash.merge')
 var config = require('../config')
 var paths = require('../paths')
-var StatsWriterPlugin = require('webpack-stats-plugin').StatsWriterPlugin
 var DEBUG = config.DEBUG
 
 var GLOBALS = {
@@ -17,10 +15,9 @@ var plugins = [
   new webpack.PrefetchPlugin('react'),
   new webpack.PrefetchPlugin('react-dom'),
   new webpack.optimize.DedupePlugin(),
-  new webpack.optimize.OccurenceOrderPlugin(true)
+  new webpack.optimize.OccurenceOrderPlugin(true),
+  new webpack.DefinePlugin(GLOBALS)
 ]
-
-var filename = DEBUG ? '[name].js' : '[name].[chunkhash].js'
 
 var webpackConfig = {
   cache: DEBUG,
@@ -29,9 +26,7 @@ var webpackConfig = {
   debug: DEBUG,
   devtool: DEBUG ? 'eval' : undefined,
   output: {
-    publicPath: DEBUG ? `${paths.devPublicDir}/` : paths.publicDir,
-    filename: filename,
-    chunkFilename: filename
+    publicPath: DEBUG ? `${paths.devPublicDir}/` : paths.publicDir
   },
   module: {
     loaders: [
@@ -64,65 +59,4 @@ var webpackConfig = {
   }
 }
 
-//
-// Client Config
-// -----------------------------------------------------------------------------
-var webpackClientConfig = merge({}, webpackConfig, {
-  name: 'browser',
-  target: 'web',
-  entry: {
-    [config.appName]: './src/client',
-    [config.vendorName]: [
-      'history/lib/createBrowserHistory',
-      'react',
-      'react-dom',
-      'react-redux',
-      'react-router',
-      'redux'
-    ]
-  },
-  output: {
-    path: DEBUG ? paths.devClientOutputDir : paths.clientOutputDir
-  },
-  plugins: webpackConfig.plugins.concat(
-    new webpack.DefinePlugin(Object.assign({}, GLOBALS, { __BROWSER__: true })),
-    new webpack.optimize.CommonsChunkPlugin(config.vendorName, filename)
-  ).concat(DEBUG ? [] : [
-    new webpack.optimize.CommonsChunkPlugin(config.inlineName, `${config.inlineName}.js`),
-    new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
-      compress: {
-        warnings: false
-      }
-    }),
-    new StatsWriterPlugin({ filename: `${config.statsName}.json` })
-  ])
-})
-
-//
-// Server Config
-// -----------------------------------------------------------------------------
-var webpackServerConfig = merge({}, webpackConfig, {
-  name: 'server',
-  target: 'node',
-  entry: {
-    [config.appName]: './src/server'
-  },
-  output: {
-    filename: '[name].js',
-    path: DEBUG ? paths.devServerOutputDir : paths.serverOutputDir,
-    libraryTarget: 'commonjs2'
-  },
-  plugins: webpackConfig.plugins.concat(
-    new webpack.DefinePlugin(Object.assign({}, GLOBALS, { __BROWSER__: false }))
-  ),
-  node: {
-    __dirname: true
-  },
-  externals: /^[a-z][a-z\.\-0-9]*$/
-})
-
-module.exports = {
-  client: webpackClientConfig,
-  server: webpackServerConfig
-}
+module.exports = webpackConfig
