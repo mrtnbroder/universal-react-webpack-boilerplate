@@ -3,7 +3,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
 import { getRootStore } from '../lib/stores'
-import { createHistory } from 'history'
+import createHistory from 'history/lib/createHistory'
 import { Router } from 'react-router'
 import routes from '../lib/routes'
 
