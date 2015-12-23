@@ -1,8 +1,9 @@
 /* eslint-disable no-console */
 
 import express from 'express'
+import compression from 'compression'
 import * as m from './middlewares'
-import { host, expressPort } from '../../config'
+import { DEBUG, host, expressPort } from '../../config'
 
 const app = express()
 
@@ -12,6 +13,9 @@ const app = express()
 
 // disable x-powered-by header
 app.disable('x-powered-by')
+
+// Compression
+if (!DEBUG) app.use(compression())
 
 m.staticMiddleware(app)
 m.routingMiddleware(app)

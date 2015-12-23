@@ -1,5 +1,5 @@
 
-import React, { Component, PropTypes as PT } from 'react'
+import { Component, PropTypes as PT } from 'react'
 
 export default class Handler extends Component {
 
