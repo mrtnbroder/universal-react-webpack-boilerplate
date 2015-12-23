@@ -1,5 +1,5 @@
 
-var config = {
+module.exports = {
   DEBUG: process.env.NODE_ENV !== 'production',
   // Port used by express
   expressPort: process.env.PORT || 8080,
@@ -18,5 +18,3 @@ var config = {
   // stats.json
   statsName: 'stats'
 }
-
-module.exports = config

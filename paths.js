@@ -3,26 +3,16 @@ var path = require('path')
 var config = require('./config')
 
 // Root Dir
-var contextDir = path.join(__dirname)
+exports.contextDir = path.join(__dirname)
 
 // production
-var publicDir = path.join(contextDir, 'public')
-var buildDir = path.join(contextDir, 'build')
-var serverOutputDir = path.join(buildDir, 'server')
-var clientOutputDir = publicDir
+exports.publicDir = path.join(exports.contextDir, 'public')
+exports.buildDir = path.join(exports.contextDir, 'build')
+exports.serverOutputDir = path.join(exports.buildDir, 'server')
+exports.clientOutputDir = exports.publicDir
 
 // development
-var webpackDir = path.join(contextDir, config.tmpDir)
-var devPublicDir = `http://${config.host}:${config.webpackDevServerPort}/${config.tmpDir}`
-var devServerOutputDir = path.join(webpackDir, 'server')
-var devClientOutputDir = path.join(webpackDir, 'client')
-
-exports.contextDir = contextDir
-exports.publicDir = publicDir
-exports.buildDir = buildDir
-exports.serverOutputDir = serverOutputDir
-exports.clientOutputDir = clientOutputDir
-exports.webpackDir = webpackDir
-exports.devPublicDir = devPublicDir
-exports.devServerOutputDir = devServerOutputDir
-exports.devClientOutputDir = devClientOutputDir
+exports.webpackDir = path.join(exports.contextDir, config.tmpDir)
+exports.devPublicDir = `http://${config.host}:${config.webpackDevServerPort}/${config.tmpDir}`
+exports.devServerOutputDir = path.join(exports.webpackDir, 'server')
+exports.devClientOutputDir = path.join(exports.webpackDir, 'client')
