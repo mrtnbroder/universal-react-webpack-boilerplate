@@ -24,12 +24,12 @@ var filename = DEBUG ? '[name].js' : '[name].[chunkhash].js'
 
 var webpackConfig = {
   cache: DEBUG,
-  context: paths.contextDir(),
+  context: paths.contextDir,
   bail: !DEBUG,
   debug: DEBUG,
   devtool: DEBUG ? 'eval' : undefined,
   output: {
-    publicPath: DEBUG ? `${paths.devPublicDir()}/` : paths.publicDir(),
+    publicPath: DEBUG ? `${paths.devPublicDir}/` : paths.publicDir,
     filename: filename,
     chunkFilename: filename
   },
@@ -82,7 +82,7 @@ var webpackClientConfig = merge({}, webpackConfig, {
     ]
   },
   output: {
-    path: DEBUG ? paths.devClientOutputDir() : paths.clientOutputDir()
+    path: DEBUG ? paths.devClientOutputDir : paths.clientOutputDir
   },
   plugins: webpackConfig.plugins.concat(
     new webpack.DefinePlugin(Object.assign({}, GLOBALS, { __BROWSER__: true })),
@@ -110,7 +110,7 @@ var webpackServerConfig = merge({}, webpackConfig, {
   },
   output: {
     filename: '[name].js',
-    path: DEBUG ? paths.devServerOutputDir() : paths.serverOutputDir(),
+    path: DEBUG ? paths.devServerOutputDir : paths.serverOutputDir,
     libraryTarget: 'commonjs2'
   },
   plugins: webpackConfig.plugins.concat(

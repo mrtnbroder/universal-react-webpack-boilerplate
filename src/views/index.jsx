@@ -2,7 +2,7 @@
 import React, { Component, PropTypes as PT } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import fs from 'fs'
-import paths from '../../paths'
+import { devPublicDir, publicDir } from '../../paths'
 import { DEBUG, appName, vendorName, statsName, inlineName } from '../../config'
 
 const encoding = { encoding: 'utf8' }
@@ -31,9 +31,9 @@ export default class Index extends Component {
   }
 
   static getScript(name) {
-    if (DEBUG) return `${paths.devPublicDir()}/${name}.js`
+    if (DEBUG) return `${devPublicDir}/${name}.js`
 
-    const file = fs.readFileSync(`${paths.publicDir()}/${statsName}.json`, encoding)
+    const file = fs.readFileSync(`${publicDir}/${statsName}.json`, encoding)
     const stats = JSON.parse(file)
 
     return stats.assetsByChunkName[name]
@@ -41,7 +41,7 @@ export default class Index extends Component {
 
   static getWebpackJsonpInlineScript() {
     if (DEBUG) return false
-    return fs.readFileSync(`${paths.publicDir()}/${inlineName}.js`, encoding)
+    return fs.readFileSync(`${publicDir}/${inlineName}.js`, encoding)
   }
 
   static renderToStaticMarkup(props) {
