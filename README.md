@@ -1,11 +1,13 @@
 # isoreact
 
+https://david-dm.org/mrtnbroder/isomorphic-react-webpack-boilerplate.svg
+
 isoreact is an isomorphic react webpack boilerplate that features
 an awesome dev environment with hot-reload, a lean dependency tree and the ability to quickly start your own projects.
 
 I've mainly created this for myself, to bootstrap my own applications (so it
 is somewhat opinionated), but I try to stay as lean as possible with my
-dependency choices, so everyone can easily plug-in their own favorite libraries instead of mine.
+dependency choices, so everyone can easily plug-in their own favorite libraries.
 
 ## Table of Contents
 * [Get started](#get-started)
