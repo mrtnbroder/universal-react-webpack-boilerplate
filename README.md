@@ -30,13 +30,13 @@ $ npm run dev
 
 ### Production Build
 
-Compile build files with
+Build the production version with
 
 ```shell
 $ npm run build
 ```
 
-Then run production server with
+Then run the production server with
 
 ```shell
 $ npm start
