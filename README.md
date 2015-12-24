@@ -1,6 +1,6 @@
 # isoreact
 
-https://david-dm.org/mrtnbroder/isomorphic-react-webpack-boilerplate.svg
+![dependency badge](https://david-dm.org/mrtnbroder/isomorphic-react-webpack-boilerplate.svg)
 
 isoreact is an isomorphic react webpack boilerplate that features
 an awesome dev environment with hot-reload, a lean dependency tree and the ability to quickly start your own projects.
