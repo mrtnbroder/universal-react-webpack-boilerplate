@@ -7,6 +7,48 @@ I've mainly created this for myself, to bootstrap my own applications (so it
 is somewhat opinionated), but I try to stay as lean as possible with my
 dependency choices, so everyone can easily plug-in their own favorite libraries instead of mine.
 
+## Table of Contents
+* [Get started](#get-started)
+  * [Production build](#production-build)
+  * [Development Architecture](#development-architecture)
+* [Directory Structure](#directory-structure)
+  * [Component Structure](#component-structure)
+
+## Get started
+
+Install dependencies
+
+```shell
+$ npm i
+```
+
+Then start development with
+
+```shell
+$ npm run dev
+```
+
+### Production Build
+
+Compile build files with
+
+```shell
+$ npm run build
+```
+
+Then run production server with
+
+```shell
+$ npm start
+```
+
+### Development Architecture
+
+* `webpack-dev-server` serves the client lib with hot-reload enabled
+* `webpack` watches src/server for changes and compiles to `_tmp/server/`
+* `supervisor` watches `_tmp/server/` for server builds and restarts when a change happens.
+
+
 ## Directory Structure
 
 ```bash
@@ -40,36 +82,26 @@ dependency choices, so everyone can easily plug-in their own favorite libraries 
 └── paths.js      # build paths for webpack but also for the entire app
 ```
 
-## Development Architecture
+### Component Structure
 
-* `webpack-dev-server` serves the client lib with hot-reload enabled
-* `webpack` watches src/server for changes and compiles to `_tmp/server/`
-* `supervisor` watches `_tmp/server/` for server builds and restarts when a change happens.
+To make components shareable and contained, components that need to expose
+their state within a reducer should follow this structure:
 
-## Get started
-
-Install dependencies
-
-```shell
-$ npm i
+```bash
+├── components # pure components *only*
+│   ├── image.jsx # pure component that renders the product image
+│   ├── price.jsx # pure component that renders the product price
+│   └── product.jsx # pure component that renders the product page
+├── actions
+│   ├── productActions.js # actions only used within this directory
+├── constants
+│   ├── productConstants.js # constants only used within this directory
+├── reducers
+│   ├── index.js # exports all reducers within this directory, so we can easily import it by our root reducer
+│   └── products.js # reducer only used by products.jsx
+└── products.jsx # this is our container component that imports from components
 ```
 
-Then start development with
+When following this structure, you makes things easier to reason about and your component stays contained. It will only ever reach out to whats inside this directory and not touch anything else.
 
-```shell
-$ npm run dev
-```
-
-## Production Build
-
-Compile build files with
-
-```shell
-$ npm run build
-```
-
-Then run production server with
-
-```shell
-$ npm start
-```
+When other components need to interact with your local state, you should move your actions and reducers one level up (until they reach the top level lib directory).
