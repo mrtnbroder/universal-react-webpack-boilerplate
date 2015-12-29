@@ -7,10 +7,10 @@ const MAX_AGE = DEBUG ? 0 : '1 year'
 const staticCache = { maxAge: MAX_AGE, etag: true, lastModified: false }
 
 //
-// Static Assets
+// Static Middleware
 //
 
 export default function(app) {
-  // Assets
+  // root dir assets
   app.use(express.static(publicDir, staticCache))
 }

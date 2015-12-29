@@ -1,3 +1,3 @@
 
 export { default as staticMiddleware } from './staticMiddleware'
-export { default as routingMiddleware } from './routingMiddleware'
+export { default as viewMiddleware } from './viewMiddleware'

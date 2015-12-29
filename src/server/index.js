@@ -17,8 +17,12 @@ app.disable('x-powered-by')
 // Compression
 if (!DEBUG) app.use(compression())
 
+// I. Static Assets
 m.staticMiddleware(app)
-m.routingMiddleware(app)
+// II. API
+// m.apiMiddleware(app)
+// III. Views
+m.viewMiddleware(app)
 
 //
 // Initialise Express

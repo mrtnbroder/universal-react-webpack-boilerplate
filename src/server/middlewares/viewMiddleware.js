@@ -7,8 +7,13 @@ import { getRootStore } from '../../lib/stores'
 import routes from '../../lib/routes'
 import Index from '../../views'
 
+//
+// View Middleware
+//
+
 export default function(app) {
-  app.get('/*', handleRequests)
+  // match everything else
+  app.get('*', handleRequests)
 
   function handleRequests(req, res) {
     match({ routes, location: req.url }, (err, redirect, renderProps) => {
