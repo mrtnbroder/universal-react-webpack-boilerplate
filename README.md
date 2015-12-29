@@ -64,7 +64,7 @@ $ npm start
 │   │   ├── reducers        # redux reducers
 │   │   ├── stores          # redux store configuration
 │   │   ├── utils           # utils (e.g. WebAPIUtil)
-│   │   └── routes.jsx      # self-explanatory
+│   │   └── routes          # view routes (server + client router)
 │   ├── server      # server side stuff
 │   │   ├── middlewares     # middlewares for express (you may want to add your api endpoints here)
 │   │   └── index.js        # starts the express server
