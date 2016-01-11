@@ -20,7 +20,7 @@ if (!DEBUG) app.use(compression())
 // I. Static Assets
 m.staticMiddleware(app)
 // II. API
-// m.apiMiddleware(app)
+m.apiMiddleware(app)
 // III. Views
 m.viewMiddleware(app)
 

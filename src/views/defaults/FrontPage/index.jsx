@@ -2,31 +2,32 @@
 import React, { Component, PropTypes as PT } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import * as CounterActions from '../../../lib/actions/counterActions'
+import * as todoActions from '../../../lib/actions/todoActions'
 import { Link } from 'react-router'
 
 class FrontPage extends Component {
 
   static propTypes = {
-    counter: PT.number,
-    decrement: PT.func,
-    increment: PT.func
-  }
-
-  constructor(props) {
-    super(props)
-  }
+    getTodos: PT.func.isRequired,
+    todos: PT.shape({
+      userId: PT.number,
+      id: PT.number,
+      title: PT.string,
+      completed: PT.bool
+    }).isRequired
+  };
 
   render() {
-    const { decrement, increment, counter } = this.props
+    const { todos, getTodos } = this.props
 
     return (
       <div>
-        <p>CCCombobreaker!!</p>
-        <span>{counter}</span>
-        <button onClick={increment}>+</button>
-        <button onClick={decrement}>-</button>
+        <h2>FrontPage</h2>
+        <button onClick={getTodos}>Fetch Todos</button>
         <Link to='/about'>About</Link>
+        <ul>
+          {todos.todos.map(t => <li key={t.id}>{t.title} {t.completed}</li>)}
+        </ul>
       </div>
     )
   }
@@ -35,12 +36,12 @@ class FrontPage extends Component {
 
 function mapStateToProps(state) {
   return {
-    counter: state.counter
+    todos: state.todos
   }
 }
 
 function mapDispatchToProps(dispatch) {
-  return bindActionCreators(CounterActions, dispatch)
+  return bindActionCreators(todoActions, dispatch)
 }
 
 export default connect(mapStateToProps, mapDispatchToProps)(FrontPage)

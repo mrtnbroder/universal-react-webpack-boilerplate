@@ -1,7 +1,6 @@
 
 import configureStore from './configureStore'
 
-const rootState = { counter: 10 }
-const rootStore = configureStore(rootState)
+const rootStore = configureStore()
 
 export const getRootStore = () => rootStore

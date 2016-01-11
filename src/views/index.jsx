@@ -14,13 +14,13 @@ export default class Index extends Component {
     content: PT.string.isRequired,
     inline: DEBUG ? PT.bool : PT.string,
     vendor: PT.string.isRequired
-  }
+  };
 
   static defaultProps = {
     app: Index.getScript(appName),
     vendor: Index.getScript(vendorName),
     inline: Index.getWebpackJsonpInlineScript()
-  }
+  };
 
   constructor(props, context) {
     super(props, context)
