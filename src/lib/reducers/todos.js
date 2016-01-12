@@ -3,7 +3,7 @@ import { handleActions } from 'redux-actions'
 import * as types from '../constants/todoTypes'
 
 const initalState = {
-  error: null,
+  error: '',
   isPending: false,
   todos: []
 }

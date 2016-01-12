@@ -10,11 +10,15 @@ class FrontPage extends Component {
   static propTypes = {
     getTodos: PT.func.isRequired,
     todos: PT.shape({
-      userId: PT.number,
-      id: PT.number,
-      title: PT.string,
-      completed: PT.bool
-    }).isRequired
+      error: PT.string.isRequired,
+      isPending: PT.bool.isRequired,
+      todos: PT.arrayOf(PT.shape({
+        userId: PT.number.isRequired,
+        id: PT.number.isRequired,
+        title: PT.string.isRequired,
+        completed: PT.bool.isRequired
+      })).isRequired
+    })
   };
 
   render() {
@@ -26,7 +30,7 @@ class FrontPage extends Component {
         <button onClick={getTodos}>Fetch Todos</button>
         <Link to='/about'>About</Link>
         <ul>
-          {todos.todos.map(t => <li key={t.id}>{t.title} {t.completed}</li>)}
+          {todos.todos.map((t) => <li key={t.id}>{t.title}</li>)}
         </ul>
       </div>
     )
@@ -34,9 +38,9 @@ class FrontPage extends Component {
 
 }
 
-function mapStateToProps(state) {
+function mapStateToProps({ todos }) {
   return {
-    todos: state.todos
+    todos
   }
 }
 
