@@ -1,7 +1,7 @@
 
 import React from 'react'
 import { renderToString } from 'react-dom/server'
-import { match, RoutingContext } from 'react-router'
+import { match, RouterContext } from 'react-router'
 import { Provider } from 'react-redux'
 import { getRootStore } from '../../lib/stores'
 import routes from '../../lib/routes'
@@ -34,7 +34,7 @@ export default function(app) {
     const store = getRootStore()
     const provider = (
       <Provider store={store}>
-        <RoutingContext {...nextProps}/>
+        <RouterContext {...nextProps}/>
       </Provider>
     )
     const content = renderToString(provider)
