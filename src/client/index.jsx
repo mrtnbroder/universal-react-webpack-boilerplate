@@ -8,7 +8,7 @@ import { Router } from 'react-router'
 import routes from '../shared/routes'
 
 if (__DEV__) {
-  const Perf = require('react/shared/ReactPerf')
+  const Perf = require('react/lib/ReactPerf')
   const a11y = require('react-a11y')
 
   // Export React and Performance Utility for debugging
