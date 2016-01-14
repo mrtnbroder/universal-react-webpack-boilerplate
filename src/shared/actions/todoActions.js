@@ -1,5 +1,5 @@
 
-import { fetchTodos } from '../utils/todosAPIUtil'
+import { fetchTodos } from '../utils/WebAPIUtil'
 import * as types from '../constants/todoTypes'
 
 export const getTodos = () => ({
