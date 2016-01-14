@@ -3,9 +3,9 @@ import React from 'react'
 import { renderToString } from 'react-dom/server'
 import { match, RouterContext } from 'react-router'
 import { Provider } from 'react-redux'
-import { getRootStore } from '../../lib/stores'
-import routes from '../../lib/routes'
-import Index from '../../views'
+import { getRootStore } from '../../shared/stores'
+import routes from '../../shared/routes'
+import Html from '../../views/root'
 
 //
 // View Middleware
@@ -22,7 +22,7 @@ export default function(app) {
       else if (redirect)
         res.status(302).redirect(redirect.pathname + redirect.search)
       else if (renderProps) {
-        const html = renderIndex(renderProps)
+        const html = renderHtml(renderProps)
 
         res.status(200).send(html)
       } else
@@ -30,7 +30,7 @@ export default function(app) {
     })
   }
 
-  function renderIndex(nextProps) {
+  function renderHtml(nextProps) {
     const store = getRootStore()
     const provider = (
       <Provider store={store}>
@@ -39,6 +39,6 @@ export default function(app) {
     )
     const content = renderToString(provider)
 
-    return Index.renderToStaticMarkup({ content })
+    return Html.renderToStaticMarkup({ content })
   }
 }

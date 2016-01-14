@@ -7,7 +7,7 @@ import { DEBUG, appName, vendorName, statsName, inlineName } from '../../config'
 
 const encoding = { encoding: 'utf8' }
 
-export default class Index extends Component {
+export default class Html extends Component {
 
   static propTypes = {
     app: PT.string.isRequired,
@@ -17,9 +17,9 @@ export default class Index extends Component {
   };
 
   static defaultProps = {
-    app: Index.getScript(appName),
-    vendor: Index.getScript(vendorName),
-    inline: Index.getWebpackJsonpInlineScript()
+    app: Html.getScript(appName),
+    vendor: Html.getScript(vendorName),
+    inline: Html.getWebpackJsonpInlineScript()
   };
 
   constructor(props, context) {
@@ -45,7 +45,7 @@ export default class Index extends Component {
   }
 
   static renderToStaticMarkup(props) {
-    return Index.getDoctype() + renderToStaticMarkup(<Index {...props}/>)
+    return Html.getDoctype() + renderToStaticMarkup(<Html {...props}/>)
   }
 
   render() {

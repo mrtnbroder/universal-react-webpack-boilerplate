@@ -2,7 +2,7 @@
 import React from 'react'
 import { Route, IndexRoute } from 'react-router'
 import Handler from '../../views/handler'
-import { FrontPage, AboutPage } from '../../views/defaults'
+import { FrontPage, AboutPage } from '../../views'
 
 export default (
   <Route component={Handler} path='/'>

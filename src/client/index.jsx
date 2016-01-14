@@ -2,13 +2,13 @@
 import React from 'react'
 import { render } from 'react-dom'
 import { Provider } from 'react-redux'
-import { getRootStore } from '../lib/stores'
+import { getRootStore } from '../shared/stores'
 import { browserHistory } from 'react-router'
 import { Router } from 'react-router'
-import routes from '../lib/routes'
+import routes from '../shared/routes'
 
 if (__DEV__) {
-  const Perf = require('react/lib/ReactPerf')
+  const Perf = require('react/shared/ReactPerf')
   const a11y = require('react-a11y')
 
   // Export React and Performance Utility for debugging
