@@ -3,17 +3,16 @@
 ![dependency badge](https://david-dm.org/mrtnbroder/isomorphic-react-webpack-boilerplate.svg)
 [![devDependency Status](https://david-dm.org/mrtnbroder/isomorphic-react-webpack-boilerplate/dev-status.svg)](https://david-dm.org/mrtnbroder/isomorphic-react-webpack-boilerplate#info=devDependencies)
 
-isoreact is an isomorphic react webpack boilerplate that features
-an awesome dev environment with hot-reload, a lean dependency tree and the ability to quickly start your own projects.
-
-I've mainly created this for myself, to bootstrap my own applications (so it
-is somewhat opinionated), but I try to stay as lean as possible with my
-dependency choices, so everyone can easily plug-in their own favorite libraries.
+isoreact is an isomorphic react boilerplate that features
+an awesome dev environment with hot-reload, a lean dependency tree and the
+ability to quickly bootstrap your own applications.
 
 ## Table of Contents
 * [Get started](#get-started)
   * [Production build](#production-build)
   * [Development Architecture](#development-architecture)
+* [Dependencies](#dependencies)
+* [Babel](#babel)
 * [Directory Structure](#directory-structure)
   * [Component Structure](#component-structure)
 
@@ -51,6 +50,22 @@ $ npm start
 * `webpack` watches src/server for changes and compiles to `_tmp/server/`
 * `supervisor` watches `_tmp/server/` for server builds and restarts when a change happens.
 
+## Dependencies
+
+isoreact is depending several libraries to handle things like async actions, routing, state management etc. Please get to each of them first when you have questions about how to work with them.
+
+* [express](https://github.com/strongloop/express/)
+* [react](https://github.com/facebook/react)
+* [react-redux](https://github.com/rackt/react-redux) (redux bindings for react)
+* [react-router](https://github.com/rackt/react-router)
+* [redux](https://github.com/rackt/redux/) (predictable state container)
+* [redux-actions](https://github.com/acdlite/redux-actions) (human friendly standard for flux actions)
+* [redux-promise-middleware](https://github.com/pburtchaell/redux-promise-middleware) (handle promises for optimistic updates)
+* [redux-thunk](https://github.com/gaearon/redux-thunk) (allow async actions)
+
+## Babel
+
+You can start writing ES 2015/16 within the src directory, as everything in there will be transpiled with [babel](https://babeljs.io/). Currently included is the preset for [es2015](https://babeljs.io/docs/plugins/preset-es2015/) (allows jsx syntax) and [stage-0](https://babeljs.io/docs/plugins/preset-stage-0/) (async/await).
 
 ## Directory Structure
 
