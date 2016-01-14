@@ -1,4 +1,4 @@
-# isoreact
+# ![isoreact](http://martinbroder.com/isoreact.svg)
 
 ![dependency badge](https://david-dm.org/mrtnbroder/isomorphic-react-webpack-boilerplate.svg)
 
