@@ -4,7 +4,7 @@ module.exports = {
   // Port used by express
   expressPort: process.env.PORT || 8080,
   // webpack + server
-  host: process.env.HOST || 'localhost',
+  host: process.env.HOST || '0.0.0.0',
   // Port used by the webpack-dev-server
   webpackDevServerPort: 2992,
   // webpack tmp dir
