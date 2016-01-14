@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "jest",
+    "lint": "eslint src webpack config.js paths.js",
     "coverage": "jest --coverage",
     "start": "NODE_ENV=production node -r 'babel-register' src/server",
     "dev": "npm run webpack:prebuild && parallelshell 'npm run webpack:watch:client' 'npm run webpack:watch:server' 'npm run server:watch'",
