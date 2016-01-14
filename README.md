@@ -1,4 +1,4 @@
-# ![isoreact](http://martinbroder.com/isoreact.svg)
+# ![isoreact](http://martinbroder.com/isoreact-logo.svg)
 
 [![Build Status](https://travis-ci.org/mrtnbroder/isomorphic-react-webpack-boilerplate.svg?branch=master)](https://travis-ci.org/mrtnbroder/isomorphic-react-webpack-boilerplate)
 ![dependency badge](https://david-dm.org/mrtnbroder/isomorphic-react-webpack-boilerplate.svg)
