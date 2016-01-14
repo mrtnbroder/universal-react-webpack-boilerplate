@@ -5,7 +5,7 @@ import { match, RouterContext } from 'react-router'
 import { Provider } from 'react-redux'
 import { getRootStore } from '../../shared/stores'
 import routes from '../../shared/routes'
-import Html from '../../views/root'
+import Html from '../../views/html'
 
 //
 // View Middleware

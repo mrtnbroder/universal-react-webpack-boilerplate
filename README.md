@@ -56,22 +56,21 @@ $ npm start
 ```bash
 .
 ├── src
-│   ├── client      # code that only lives on the client
+│   ├── client              # code that only lives on the client
 │   │   └── index.jsx       # renders the react app and has some dev stuff
-│   ├── lib         # contains things that are shared between the client and the server
+│   ├── shared              # shared code between the client and the server
 │   │   ├── actions         # redux actions
 │   │   ├── constants       # redux constants
 │   │   ├── reducers        # redux reducers
 │   │   ├── stores          # redux store configuration
 │   │   ├── utils           # utils (e.g. WebAPIUtil)
 │   │   └── routes          # view routes (server + client router)
-│   ├── server      # server side stuff
+│   ├── server              # server side stuff
 │   │   ├── middlewares     # middlewares for express (you may want to add your api endpoints here)
 │   │   └── index.js        # starts the express server
-│   └── views
-│       ├── defaults        # contains all the views, e.g. the frontpage
-│       ├── handler.jsx     # root handler that renders all components
-│       └── index.jsx       # renders the <html> page on the server
+│   └── views               # contains all the views, e.g. the frontpage
+│       ├── root.jsx        # root handler that renders all children
+│       └── html.jsx        # renders the <html> page on the server
 ├── webpack
 │   ├── index.js                    # used by webpack-dev-server to serve the client and server when developing
 │   ├── webpack.client.config.js    # client-side webpack configuration
