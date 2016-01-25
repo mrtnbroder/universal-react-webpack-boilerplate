@@ -24,7 +24,14 @@ var webpackServerConfig = merge({}, webpackConfig, {
   },
   plugins: webpackConfig.plugins.concat(
     new webpack.DefinePlugin({ __BROWSER__: false })
-  ),
+  ).concat(DEBUG ? [] : [
+    new webpack.optimize.UglifyJsPlugin({
+      sourceMap: false,
+      compress: {
+        warnings: false
+      }
+    })
+  ]),
   node: {
     __dirname: true
   },
