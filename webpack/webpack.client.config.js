@@ -35,9 +35,15 @@ var webpackClientConfig = merge({}, webpackConfig, {
   },
   plugins: webpackConfig.plugins.concat(
     new webpack.DefinePlugin({ __BROWSER__: true }),
-    new webpack.optimize.CommonsChunkPlugin(config.vendorName, filename)
+    new webpack.optimize.CommonsChunkPlugin({
+      name: config.vendorName,
+      filename: filename
+    })
   ).concat(DEBUG ? [] : [
-    new webpack.optimize.CommonsChunkPlugin(config.inlineName, `${config.inlineName}.js`),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: config.inlineName,
+      filename: `${config.inlineName}.js`
+    }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
       compress: {
