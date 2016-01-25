@@ -10,7 +10,7 @@ import { DEBUG } from '../../../config'
 const MAX_AGE = DEBUG ? 0 : '1 year'
 const staticCache = { maxAge: MAX_AGE, etag: true, lastModified: false }
 
-export default function(app) {
+export default (app) => {
   // root dir assets
   app.use(express.static(publicDir, staticCache))
 }

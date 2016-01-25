@@ -11,7 +11,7 @@ import { getRootStore } from '../../shared/stores'
 import routes from '../../shared/routes'
 import Html from '../../views/html'
 
-export default function(app) {
+export default (app) => {
   // match everything else
   app.get('*', handleRequests)
 
