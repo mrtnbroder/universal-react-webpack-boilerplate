@@ -3,6 +3,6 @@
 // Client Web API
 //
 
-import API from './API'
+const API_URL = '/api/v1'
 
-export const fetchTodos = () => fetch(API.todos).then((r) => r.json())
+export const fetchTodos = () => fetch(`${API_URL}/todos`).then((r) => r.json())

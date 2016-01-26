@@ -3,30 +3,25 @@
 // API Middleware
 //
 
-import API from '../../shared/utils/API'
+import express from 'express'
+import bodyParser from 'body-parser'
+import * as resources from '../resources'
 
-export default function(app) {
-  // Define API Endpoints here
-  app.use(API.todos, (req, res) => res.status(200).json(todos))
-}
+const API_URL = '/api/v1'
 
-const todos = [
-  {
-    userId: 1,
-    id: 1,
-    title: 'delectus aut autem',
-    completed: false
-  },
-  {
-    userId: 1,
-    id: 2,
-    title: 'quis ut nam facilis et officia qui',
-    completed: false
-  },
-  {
-    userId: 1,
-    id: 3,
-    title: 'fugiat veniam minus',
-    completed: false
+export default (app) => {
+  // Parse application/json bodys
+  app.use(bodyParser.json())
+  // Parse application/x-www-form-urlencoded bodys
+  app.use(bodyParser.urlencoded({ extended: true }))
+  // create restful routes
+  Object.keys(resources).forEach(makeResource)
+
+  function makeResource(routeName) {
+    const router = express.Router()
+
+    resources[routeName](router)
+
+    app.use(`${API_URL}/${routeName}`, router)
   }
-]
+}
