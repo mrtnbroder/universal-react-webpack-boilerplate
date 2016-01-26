@@ -1,8 +1,11 @@
 /* eslint-disable no-undefined, object-shorthand */
 
 var webpack = require('webpack')
+var fs = require('fs')
+var path = require('path')
 var config = require('../config')
 var paths = require('../paths')
+var babelrc = JSON.parse(fs.readFileSync(path.join(paths.contextDir, '.babelrc'), 'utf-8'))
 var DEBUG = config.DEBUG
 
 var GLOBALS = {
@@ -12,10 +15,8 @@ var GLOBALS = {
 
 var plugins = [
   new webpack.NoErrorsPlugin(),
-  new webpack.PrefetchPlugin('react'),
-  new webpack.PrefetchPlugin('react-dom'),
   new webpack.optimize.DedupePlugin(),
-  new webpack.optimize.OccurenceOrderPlugin(true),
+  new webpack.optimize.OccurrenceOrderPlugin(true),
   new webpack.DefinePlugin(GLOBALS)
 ]
 
@@ -34,8 +35,8 @@ var webpackConfig = {
         test: /\.(js|jsx)$/,
         loader: 'babel',
         query: {
-          presets: ['react', 'es2015', 'stage-0'],
-          plugins: ['transform-runtime']
+          presets: babelrc.presets,
+          plugins: babelrc.plugins.concat(DEBUG ? ['transform-runtime'] : [])
         },
         exclude: /node_modules/
       }
