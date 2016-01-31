@@ -2,7 +2,7 @@
   "name": "isomorphic-react-webpack-boilerplate",
   "version": "0.0.1",
   "description": "Isomorphic React Webpack Boilerplate",
-  "main": "index.js",
+  "main": "build/server/app.js",
   "scripts": {
     "test": "jest",
     "lint": "eslint src webpack config.js paths.js",
@@ -42,7 +42,7 @@
     "babel-loader": "^6.2.1",
     "babel-plugin-react-transform": "^2.0.0",
     "babel-plugin-transform-runtime": "^6.4.3",
-    "babel-preset-es2015": "^6.3.13",
+    "babel-preset-es2015-rollup": "^1.1.1",
     "babel-preset-react": "^6.3.13",
     "babel-preset-stage-0": "^6.3.13",
     "eslint": "^1.10.3",
@@ -53,12 +53,12 @@
     "parallelshell": "^2.0.0",
     "react-a11y": "^0.2.8",
     "react-transform-hmr": "^1.0.1",
-    "webpack": "^1.12.12",
-    "webpack-dev-server": "^1.14.1",
+    "webpack": "^2.0.6-beta",
+    "webpack-dev-server": "^2.0.0-beta",
     "webpack-stats-plugin": "^0.1.1"
   },
   "engines": {
-    "node": ">=4.0.0"
+    "node": ">=5.0.0"
   },
   "jest": {
     "scriptPreprocessor": "<rootDir>/node_modules/babel-jest",
