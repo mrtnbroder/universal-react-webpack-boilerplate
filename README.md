@@ -9,12 +9,15 @@ an awesome dev environment with hot-reload, a lean dependency tree and the
 ability to quickly bootstrap your own applications.
 
 ## Table of Contents
-* [Get started](#get-started)
-  * [Production build](#production-build)
+* [Get Started](#get-started)
+  * [Production Build](#production-build)
   * [Development Architecture](#development-architecture)
 * [Dependencies](#dependencies)
-* [Babel](#babel)
-* [Directory Structure](#directory-structure)
+* [Features](#features)
+  * [Hot Reload](#hot-reload)
+  * [Babel](#babel)
+* [Ecosystem](#ecosystem)
+  * [Directory Structure](#directory-structure)
   * [Component Structure](#component-structure)
 
 ## Get started
@@ -49,7 +52,7 @@ $ npm start
 
 * `webpack-dev-server` serves the client lib with hot-reload enabled
 * `webpack` watches src/server for changes and compiles to `_tmp/server/`
-* `supervisor` watches `_tmp/server/` for server builds and restarts when a change happens.
+* `nodemon` watches for server rebuilds and automatically restarts when a change happened.
 
 ## Dependencies
 
@@ -64,11 +67,22 @@ isoreact is depending several libraries to handle things like async actions, rou
 * [redux-promise-middleware](https://github.com/pburtchaell/redux-promise-middleware) (handle promises for optimistic updates)
 * [redux-thunk](https://github.com/gaearon/redux-thunk) (allow async actions)
 
-## Babel
+## Features
+
+### Hot Reload
+
+Speed up your development workflow with [webpack](webpack.github.io)'s awesome [Hot Module System](https://webpack.github.io/docs/hot-module-replacement.html). Using [babel-transform-hmr](https://github.com/gaearon/react-transform-hmr)
+you can write your react components and have them updated in an instant without the need to reload your page.
+
+(Note: stateless react components require a full page-reload. webpack takes care of that though.)
+
+### ES2015/16 with Babel
 
 You can start writing ES 2015/16 within the src directory, as everything in there will be transpiled with [babel](https://babeljs.io/). Currently included is the preset for [es2015](https://babeljs.io/docs/plugins/preset-es2015/) (allows jsx syntax) and [stage-0](https://babeljs.io/docs/plugins/preset-stage-0/) (async/await).
 
-## Directory Structure
+## Ecosystem
+
+### Directory Structure
 
 ```bash
 .
