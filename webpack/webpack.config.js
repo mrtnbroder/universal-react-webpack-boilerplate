@@ -3,8 +3,8 @@
 var webpack = require('webpack')
 var fs = require('fs')
 var path = require('path')
-var config = require('../config')
-var paths = require('../paths')
+var config = require('../config/config')
+var paths = require('../config/paths')
 var babelrc = JSON.parse(fs.readFileSync(path.join(paths.contextDir, '.babelrc'), 'utf-8'))
 var DEBUG = config.DEBUG
 

@@ -2,8 +2,8 @@
 
 var webpack = require('webpack')
 var merge = require('lodash.merge')
-var config = require('../config')
-var paths = require('../paths')
+var config = require('../config/config')
+var paths = require('../config/paths')
 var webpackConfig = require('./webpack.config.js')
 var StatsWriterPlugin = require('webpack-stats-plugin').StatsWriterPlugin
 var DEBUG = config.DEBUG

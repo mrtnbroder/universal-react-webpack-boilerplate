@@ -3,7 +3,7 @@
 import express from 'express'
 import compression from 'compression'
 import * as m from './middlewares'
-import { DEBUG, host, expressPort } from '../../config'
+import { DEBUG, host, expressPort } from '../../config/config'
 
 const app = express()
 

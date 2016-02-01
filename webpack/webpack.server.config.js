@@ -1,9 +1,9 @@
 /* eslint-disable no-undefined, object-shorthand */
 
 var webpack = require('webpack')
-var config = require('../config')
+var config = require('../config/config')
 var merge = require('lodash.merge')
-var paths = require('../paths')
+var paths = require('../config/paths')
 var webpackConfig = require('./webpack.config.js')
 var DEBUG = config.DEBUG
 

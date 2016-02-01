@@ -3,7 +3,7 @@ var path = require('path')
 var config = require('./config')
 
 // Root Dir
-exports.contextDir = path.join(__dirname)
+exports.contextDir = path.join(__dirname, '..')
 
 // production
 exports.publicDir = path.join(exports.contextDir, 'public')

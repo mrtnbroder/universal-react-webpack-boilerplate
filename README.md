@@ -86,6 +86,9 @@ You can start writing ES 2015/16 within the src directory, as everything in ther
 
 ```bash
 .
+├── config
+│   ├── config.js           # holds environment variables and some basic configurations like the host, port etc. used by express or webpack-dev-server
+│   └── paths.js            # build paths for webpack but also for the entire app
 ├── src
 │   ├── client              # code that only lives on the client
 │   │   └── index.jsx       # renders the react app and has some dev stuff
@@ -108,10 +111,8 @@ You can start writing ES 2015/16 within the src directory, as everything in ther
 │   ├── webpack.config.js           # shared webpack configuration between server and client
 │   └── webpack.server.config.js    # server-side webpack configuration
 ├── README.md
-├── config.js     # holds environment variables and some basic configurations like the host, port etc. used by express or webpack-dev-server
 ├── index.js      # starts the production server (you need to run `npm run build` first)
 ├── package.json
-└── paths.js      # build paths for webpack but also for the entire app
 ```
 
 ### Component Structure
