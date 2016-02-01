@@ -3,16 +3,18 @@
 // REST /todos
 //
 
+const OK = 200
+
 export default (router) => {
   router.route('/:todoId')
     // .post((req, res) => {})
-    .get(({ params: { todoId } }, res) => res.status(200).json(todos.filter((t) => t.id === +todoId)[0]))
+    .get(({ params: { todoId } }, res) => res.status(OK).json(todos.filter((t) => t.id === +todoId)[0]))
     // .put((req, res) => {})
     // .delete((req, res) => {})
 
   router.route('/')
     // .post((req, res) => {})
-    .get((req, res) => res.status(200).json(todos))
+    .get((req, res) => res.status(OK).json(todos))
     // .put((req, res) => {})
     // .delete((req, res) => {})
 }
