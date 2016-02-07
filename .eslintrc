@@ -15,6 +15,7 @@
     "jest": true
   },
   "ecmaFeatures": {
+    "modules": true,
     "jsx": true,
     "blockBindings": true
   },
