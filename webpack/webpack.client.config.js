@@ -1,11 +1,11 @@
 /* eslint-disable no-undefined, object-shorthand */
 
-var webpack = require('webpack')
-var merge = require('lodash.merge')
 var config = require('../config/config')
+var merge = require('lodash.merge')
 var paths = require('../config/paths')
-var webpackConfig = require('./webpack.config.js')
 var StatsWriterPlugin = require('webpack-stats-plugin').StatsWriterPlugin
+var webpack = require('webpack')
+var webpackConfig = require('./webpack.config.js')
 var DEBUG = config.DEBUG
 var filename = DEBUG ? '[name].js' : '[name].[chunkhash].js'
 
@@ -31,7 +31,22 @@ var webpackClientConfig = merge({}, webpackConfig, {
   output: {
     chunkFilename: filename,
     filename: filename,
-    path: DEBUG ? paths.devClientOutputDir : paths.clientOutputDir
+    path: paths.publicDir
+  },
+  module: {
+    loaders: webpackConfig.module.loaders.concat(DEBUG ? [
+      {
+        test: /\.css$/,
+        loader: 'style!css-loader?modules!postcss',
+        exclude: /node_modules/
+      }
+    ] : [
+      {
+        test: /\.css$/,
+        loader: 'css/locals?modules!postcss',
+        exclude: /node_modules/
+      }
+    ])
   },
   plugins: webpackConfig.plugins.concat(
     new webpack.DefinePlugin({ __BROWSER__: true }),
@@ -47,6 +62,7 @@ var webpackClientConfig = merge({}, webpackConfig, {
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
       compress: {
+        screw_ie8: true, // eslint-disable-line camelcase
         warnings: false
       }
     }),

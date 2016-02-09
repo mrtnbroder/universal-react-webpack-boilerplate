@@ -7,6 +7,7 @@ var config = require('../config/config')
 var paths = require('../config/paths')
 var babelrc = JSON.parse(fs.readFileSync(path.join(paths.contextDir, '.babelrc'), 'utf-8'))
 var DEBUG = config.DEBUG
+var VERBOSE = false
 
 var GLOBALS = {
   '__DEV__': DEBUG,
@@ -14,9 +15,9 @@ var GLOBALS = {
 }
 
 var plugins = [
+  new webpack.optimize.OccurrenceOrderPlugin(true),
   new webpack.NoErrorsPlugin(),
   new webpack.optimize.DedupePlugin(),
-  new webpack.optimize.OccurrenceOrderPlugin(true),
   new webpack.DefinePlugin(GLOBALS)
 ]
 
@@ -27,7 +28,7 @@ var webpackConfig = {
   debug: DEBUG,
   devtool: DEBUG ? 'eval' : undefined,
   output: {
-    publicPath: DEBUG ? `${paths.devPublicDir}/` : paths.publicDir
+    publicPath: '/'
   },
   module: {
     loaders: [
@@ -36,12 +37,15 @@ var webpackConfig = {
         loader: 'babel',
         query: {
           presets: babelrc.presets,
-          plugins: babelrc.plugins.concat(DEBUG ? ['transform-runtime'] : [])
+          plugins: babelrc.plugins.concat('transform-runtime')
         },
         exclude: /node_modules/
       }
     ]
   },
+  postcss: [
+    require('autoprefixer')
+  ],
   resolve: {
     extensions: [
       '',
@@ -51,13 +55,18 @@ var webpackConfig = {
       '.jsx'
     ]
   },
-  plugins: plugins,
-  devServer: {
-    noInfo: true,
-    quiet: true,
-    host: config.host,
-    port: config.webpackDevServerPort
-  }
+  stats: {
+    colors: true,
+    reasons: DEBUG,
+    hash: VERBOSE,
+    version: VERBOSE,
+    timings: true,
+    chunks: VERBOSE,
+    chunkModules: VERBOSE,
+    cached: VERBOSE,
+    cachedAssets: VERBOSE
+  },
+  plugins: plugins
 }
 
 module.exports = webpackConfig

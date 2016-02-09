@@ -1,14 +1,16 @@
 
+var PORT = 8080
+
 module.exports = {
   DEBUG: process.env.NODE_ENV !== 'production',
   // Port used by express
-  expressPort: process.env.PORT || 8080,
+  expressPort: process.env.PORT || PORT,
   // webpack + server
-  host: process.env.HOST || '0.0.0.0',
-  // Port used by the webpack-dev-server
-  webpackDevServerPort: 2992,
-  // webpack tmp dir
-  tmpDir: '_tmp',
+  host: process.env.HOST || 'localhost',
+
+  signal: 'server is running at',
+  // style.css
+  cssName: 'style.css',
   // app.js
   appName: 'app',
   // vendor.js

@@ -1,23 +1,27 @@
 
-import React, { PropTypes as PT } from 'react'
+import React, { Component, PropTypes as PT } from 'react'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import * as todoActions from '../../shared/actions/todoActions'
 import { Link } from 'react-router'
 
-const FrontPage = (props) => {
-  const { todos, getTodos } = props
+import styles from '../html.css'
 
-  return (
-    <div>
-      <h2>FrontPage</h2>
-      <button onClick={getTodos}>Fetch Todos</button>
-      <Link to='/about'>About</Link>
-      <ul>
-        {todos.todos.map((t) => <li key={t.id}>{t.title}</li>)}
-      </ul>
-    </div>
-  )
+class FrontPage extends Component {
+  render() {
+    const { todos, getTodos } = this.props
+
+    return (
+      <div className={styles.bla}>
+        <h2>FrontPage</h2>
+        <button onClick={getTodos}>Fetch Todos</button>
+        <Link to='/about'>About</Link>
+        <ul>
+          {todos.todos.map(t => <li key={t.id}>{t.title}</li>)}
+        </ul>
+      </div>
+    )
+  }
 }
 
 FrontPage.propTypes = {

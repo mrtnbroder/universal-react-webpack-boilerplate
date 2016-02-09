@@ -136,7 +136,7 @@
     "no-magic-numbers": 1,
 
     "array-bracket-spacing": [2, "never"],
-    "arrow-parens": [2, "always"],
+    "arrow-parens": [2, "as-needed"],
     "arrow-spacing": 2,
     # "array-callback-return": 2,
     "arrow-body-style": 0,

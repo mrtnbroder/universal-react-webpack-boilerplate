@@ -2,7 +2,7 @@
 import React, { Component, PropTypes as PT } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import fs from 'fs'
-import { devPublicDir, publicDir } from '../../config/paths'
+import { publicDir } from '../../config/paths'
 import { DEBUG, appName, vendorName, statsName, inlineName } from '../../config/config'
 
 const encoding = { encoding: 'utf8' }
@@ -31,7 +31,7 @@ export default class Html extends Component {
   }
 
   static getScript(name) {
-    if (DEBUG) return `${devPublicDir}/${name}.js`
+    if (DEBUG) return `/${name}.js`
 
     const file = fs.readFileSync(`${publicDir}/${statsName}.json`, encoding)
     const stats = JSON.parse(file)
@@ -81,6 +81,8 @@ export default class Html extends Component {
             />
           <meta content='true' name='HandheldFriendly'/>
           <meta content='320' name='MobileOptimized'/>
+
+        <link rel='stylesheet' href='/style.css'/>
 
         </head>
         <body>

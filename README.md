@@ -11,7 +11,7 @@ ability to quickly bootstrap your own applications.
 ## Table of Contents
 * [Get Started](#get-started)
   * [Production Build](#production-build)
-  * [Development Architecture](#development-architecture)
+  * [Development Flow](#development-flow)
 * [Dependencies](#dependencies)
 * [Features](#features)
   * [Hot Reload](#hot-reload)
@@ -48,11 +48,20 @@ Then run the production server with
 $ npm start
 ```
 
-### Development Architecture
+### Development Flow
+
+# ![development workflow](http://martinbroder.com/devflow.svg)
 
 * `webpack-dev-server` serves the client lib with hot-reload enabled
 * `webpack` watches src/server for changes and compiles to `_tmp/server/`
 * `nodemon` watches for server rebuilds and automatically restarts when a change happened.
+
+#### Hot Reloading
+
+Please note that hot reloading only works when your top-level component is
+a react class component. Hot reloading of stateless components at the top
+doesn't work yet as react-hmr is not able to figure out if your function
+returns a react element.
 
 ## Dependencies
 

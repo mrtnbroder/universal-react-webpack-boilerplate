@@ -3,7 +3,7 @@
 import express from 'express'
 import compression from 'compression'
 import * as m from './middlewares'
-import { DEBUG, host, expressPort } from '../../config/config'
+import { DEBUG, host, expressPort, signal } from '../../config/config'
 
 const app = express()
 
@@ -28,9 +28,8 @@ m.viewMiddleware(app)
 // Initialise Express
 // -----------------------------------------------------------------------------
 
-app.listen(expressPort, host, (err) => {
-  if (err) return console.error('[server.js]: app.listen: ', err)
+app.listen(expressPort, host, err => {
+  if (err) return console.error('[server.js]: Error: ', err)
 
-  console.log('Express server listening on port ', expressPort)
-  console.log('\nhttp://%s:%s\n', host, expressPort)
+  console.log(`${signal} http://%s:%s`, host, expressPort)
 })

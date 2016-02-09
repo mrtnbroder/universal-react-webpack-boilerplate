@@ -4,6 +4,7 @@ var webpack = require('webpack')
 var config = require('../config/config')
 var merge = require('lodash.merge')
 var paths = require('../config/paths')
+var ExtractTextPlugin = require('extract-text-webpack-plugin')
 var webpackConfig = require('./webpack.config.js')
 var DEBUG = config.DEBUG
 
@@ -13,27 +14,40 @@ var DEBUG = config.DEBUG
 var webpackServerConfig = merge({}, webpackConfig, {
   name: 'server',
   target: 'node',
-  entry: {
-    [config.appName]: './src/server'
-  },
+  entry: './src/server',
   output: {
-    chunkFilename: '[name].js',
-    filename: '[name].js',
+    filename: 'server.js',
     libraryTarget: 'commonjs2',
-    path: DEBUG ? paths.devServerOutputDir : paths.serverOutputDir
+    path: paths.buildDir
+  },
+  module: {
+    loaders: webpackConfig.module.loaders.concat([
+      {
+        test: /\.css$/,
+        loader: ExtractTextPlugin.extract('style', 'css?modules&minimize!postcss'),
+        exclude: /node_modules/
+      }
+    ])
   },
   plugins: webpackConfig.plugins.concat(
-    new webpack.DefinePlugin({ __BROWSER__: false })
+    new webpack.DefinePlugin({ __BROWSER__: false }),
+    new ExtractTextPlugin(paths.styleSheet, { allChunks: true })
   ).concat(DEBUG ? [] : [
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
       compress: {
+        screw_ie8: true, // eslint-disable-line camelcase
         warnings: false
       }
     })
   ]),
   node: {
-    __dirname: true
+    __dirname: false,
+    __filename: false,
+    Buffer: false,
+    console: false,
+    global: false,
+    process: false
   },
   externals: /^[a-z][a-z\.\-0-9]*$/
 })
