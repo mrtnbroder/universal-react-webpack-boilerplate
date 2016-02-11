@@ -11,8 +11,9 @@
     "webpack:build": "npm run webpack:build:client && npm run webpack:build:server",
     "webpack:build:client": "NODE_ENV=production webpack --config webpack/webpack.client.config.js",
     "webpack:build:server": "NODE_ENV=production webpack --config webpack/webpack.server.config.js",
+    "copy": "mkdir -p ./build/public && cp -fR ./src/public/* ./build/public",
     "cleanup": "rm -rf ./build",
-    "build": "npm run cleanup && npm run webpack:build",
+    "build": "npm run cleanup && npm run copy && npm run webpack:build",
     "dev": "node scripts/run start"
   },
   "author": "Martin Broder <hello@martinbroder.com>",

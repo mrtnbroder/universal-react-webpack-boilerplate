@@ -37,7 +37,7 @@ var webpackConfig = {
         loader: 'babel',
         query: {
           presets: babelrc.presets,
-          plugins: babelrc.plugins.concat('transform-runtime')
+          plugins: babelrc.plugins.concat(DEBUG ? 'transform-runtime' : [])
         },
         exclude: /node_modules/
       }
