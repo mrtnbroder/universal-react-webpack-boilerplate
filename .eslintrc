@@ -133,7 +133,7 @@
     "no-var": 0,
     "no-warning-comments": [1, { "terms": ["todo", "fixme", "xxx"], "location": "start" }],
     "no-with": 2,
-    "no-magic-numbers": 1,
+    "no-magic-numbers": 0,
 
     "array-bracket-spacing": [2, "never"],
     "arrow-parens": [2, "always"],
