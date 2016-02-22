@@ -19,6 +19,7 @@ ability to quickly bootstrap your own applications.
 * [Ecosystem](#ecosystem)
   * [Directory Structure](#directory-structure)
   * [Component Structure](#component-structure)
+* [Credits](#credits)
 
 ## Get started
 
@@ -49,8 +50,6 @@ $ npm start
 ```
 
 ### Development Flow
-
-# ![development workflow](http://martinbroder.com/devflow.svg)
 
 * `webpack-dev-server` serves the client lib with hot-reload enabled
 * `webpack` watches src/server for changes and compiles to `_tmp/server/`
@@ -147,3 +146,7 @@ their state within a reducer should follow this structure:
 When following this structure, you makes things easier to reason about and your component stays contained. It will only ever reach out to whats inside this directory and not touch anything else.
 
 When other components need to interact with your local state, you should move your actions and reducers one level up (until they reach the top level lib directory).
+
+### Credits
+
+Thanks go out to [kriasoft](https://github.com/kriasoft) and the team of [este](https://github.com/este/este) as I took some inspiration from these awesome guys!
