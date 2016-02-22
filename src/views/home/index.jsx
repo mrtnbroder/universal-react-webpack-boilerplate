@@ -5,14 +5,12 @@ import { connect } from 'react-redux'
 import * as todoActions from '../../shared/actions/todoActions'
 import { Link } from 'react-router'
 
-import styles from '../html.css'
-
 class FrontPage extends Component {
   render() {
     const { todos, getTodos } = this.props
 
     return (
-      <div className={styles.bla}>
+      <div>
         <h2>FrontPage</h2>
         <button onClick={getTodos}>Fetch Todos</button>
         <Link to='/about'>About</Link>

@@ -2,8 +2,8 @@
 import React, { Component, PropTypes as PT } from 'react'
 import { renderToStaticMarkup } from 'react-dom/server'
 import fs from 'fs'
-import { publicDir } from '../../config/paths'
-import { DEBUG, appName, vendorName, statsName, inlineName } from '../../config/config'
+import { publicDir } from '../../../config/paths'
+import { DEBUG, appName, vendorName, statsName, inlineName } from '../../../config/config'
 
 const encoding = { encoding: 'utf8' }
 

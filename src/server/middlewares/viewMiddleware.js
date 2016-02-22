@@ -9,7 +9,7 @@ import { match, RouterContext } from 'react-router'
 import { Provider } from 'react-redux'
 import { getRootStore } from '../../shared/stores'
 import routes from '../../shared/routes'
-import Html from '../../views/html'
+import Html from '../components/Html'
 
 export default (app) => {
   // match everything else
@@ -22,7 +22,8 @@ export default (app) => {
       else if (redirect)
         res.status(302).redirect(redirect.pathname + redirect.search)
       else if (renderProps) {
-        const html = renderHtml(renderProps)
+        const store = getRootStore()
+        const html = renderHtml(renderProps, store)
 
         res.status(200).send(html)
       } else
@@ -30,8 +31,7 @@ export default (app) => {
     })
   }
 
-  function renderHtml(nextProps) {
-    const store = getRootStore()
+  function renderHtml(nextProps, store) {
     const provider = (
       <Provider store={store}>
         <RouterContext {...nextProps}/>
