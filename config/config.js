@@ -1,10 +1,10 @@
 
-var PORT = 8080
+const PORT = 8080
 
 module.exports = {
   DEBUG: process.env.NODE_ENV !== 'production',
   // Port used by express
-  expressPort: process.env.PORT || PORT,
+  port: process.env.PORT || PORT,
   // webpack + server
   host: process.env.HOST || 'localhost',
 
