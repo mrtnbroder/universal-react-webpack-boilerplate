@@ -3,42 +3,54 @@
 // View Middleware
 //
 
-import React from 'react'
-import { renderToString } from 'react-dom/server'
-import { match, RouterContext } from 'react-router'
-import { Provider } from 'react-redux'
-import { getRootStore } from '../../shared/stores'
-import routes from '../../shared/routes'
+import configureStore from 'configureStore'
 import Html from '../components/Html'
+import React from 'react'
+import { route } from '../../views/app'
+import GroundControl, { loadStateOnServer } from 'ground-control'
+import { match } from 'react-router/es6'
+import { renderToString } from 'react-dom/server'
 
 export default (app) => {
   // match everything else
   app.get('*', handleRequests)
 
   function handleRequests(req, res) {
-    match({ routes, location: req.url }, (err, redirect, renderProps) => {
-      if (err)
-        res.status(500).send(err.message)
-      else if (redirect)
-        res.status(302).redirect(redirect.pathname + redirect.search)
-      else if (renderProps) {
-        const store = getRootStore()
-        const html = renderHtml(renderProps, store)
+    match({ routes: route, location: req.url }, (
+      err,
+      redirect,
+      renderProps
+    ) => {
+      const store = configureStore()
 
-        res.status(200).send(html)
-      } else
-        res.status(400).send('404')
+      loadStateOnServer({ props: renderProps, store }, (
+        loadDataErr,
+        loadDataRedirectLocation,
+        initialData
+      ) => {
+        if (loadDataErr)
+          res.status(500).send(loadDataErr.message)
+        else if (loadDataRedirectLocation)
+          res.status(302).redirect(loadDataRedirectLocation.pathname + loadDataRedirectLocation.search)
+        else {
+          const html = renderHtml(renderProps, store, initialData)
+
+          res.status(200).send(html)
+        }
+      })
     })
   }
 
-  function renderHtml(nextProps, store) {
+  function renderHtml(nextProps, store, initialData) {
     const provider = (
-      <Provider store={store}>
-        <RouterContext {...nextProps}/>
-      </Provider>
+      <GroundControl
+        initialData={initialData}
+        store={store}
+        {...nextProps}
+        />
     )
     const content = renderToString(provider)
 
-    return Html.renderToStaticMarkup({ content })
+    return Html.renderToStaticMarkup({ content, initialData })
   }
 }

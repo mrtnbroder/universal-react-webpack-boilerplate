@@ -1,14 +1,26 @@
 
+import { fetchTodos } from 'utils/WebAPIUtil'
 import { handleActions } from 'redux-actions'
-import * as types from '../constants/todoTypes'
+import { initalModel } from './model'
 
-const initalState = {
-  error: '',
-  isPending: false,
-  todos: []
+const FETCH_TODOS = 'FETCH_TODOS'
+
+export const types = {
+  FETCH_TODOS
 }
 
-export default handleActions({
+const getTodos = () => ({
+  type: types.FETCH_TODOS,
+  payload: {
+    promise: fetchTodos()
+  }
+})
+
+export const actions = {
+  getTodos
+}
+
+export const update = handleActions({
 
   [`${types.FETCH_TODOS}_PENDING`]: (state) => {
     return {
@@ -33,4 +45,4 @@ export default handleActions({
     }
   }
 
-}, initalState)
+}, initalModel)

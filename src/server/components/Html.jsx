@@ -12,18 +12,15 @@ export default class Html extends Component {
   static propTypes = {
     app: PT.string.isRequired,
     content: PT.string.isRequired,
+    initialData: PT.object.isRequired,
     inline: DEBUG ? PT.bool : PT.string,
     vendor: PT.string.isRequired
-  };
+  }
 
   static defaultProps = {
     app: Html.getScript(appName),
     vendor: Html.getScript(vendorName),
     inline: Html.getWebpackJsonpInlineScript()
-  };
-
-  constructor(props, context) {
-    super(props, context)
   }
 
   static getDoctype() {
@@ -49,7 +46,7 @@ export default class Html extends Component {
   }
 
   render() {
-    const { app, content, inline, vendor } = this.props
+    const { app, content, inline, vendor, initialData } = this.props
 
     return (
       <html
@@ -91,6 +88,7 @@ export default class Html extends Component {
           </div>
 
           {inline && <script dangerouslySetInnerHTML={{ __html: inline }}/>}
+          <script dangerouslySetInnerHTML={{ __html: `window.__INITIAL_STATE__=${JSON.stringify(initialData.initialState)}` }}/>
           <script src={vendor}/>
           <script src={app}/>
         </body>
