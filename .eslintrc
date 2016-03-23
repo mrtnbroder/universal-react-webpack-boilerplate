@@ -12,6 +12,7 @@
   },
   "globals": {
     "__DEV__": true,
+    "__INITIAL_STATE__": true,
     "__BROWSER__": true,
     "jest": true
   },
@@ -104,7 +105,7 @@
     "no-restricted-imports": 0,
     "no-restricted-modules": 0,
     "no-restricted-syntax": 0,
-    "no-return-assign": 2,
+    "no-return-assign": 0,
     "no-script-url": 2,
     "no-self-compare": 2,
     "no-sequences": 2,
@@ -207,9 +208,9 @@
     "semi": [2, "never"],
     "semi-spacing": [0, {"before": false, "after": true}],
     "sort-vars": 1,
-    "sort-imports": [2, {
+    "sort-imports": [0, {
       "ignoreMemberSort": true,
-      "memberSyntaxSortOrder": ["multiple", "single", "all", "none"]
+      "memberSyntaxSortOrder": ["single", "multiple", "all", "none"]
     }],
     # "space-before-keywords": [2, "always"],
     "space-before-blocks": [2, "always"],
