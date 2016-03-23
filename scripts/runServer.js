@@ -4,14 +4,14 @@ const join = require('path').join
 const spawn = require('child_process').spawn
 const webpackConfig = require('../webpack')
 
-const output = webpackConfig.filter(x => x.target === 'node')[0].output
+const output = webpackConfig.filter((x) => x.target === 'node')[0].output
 const serverFile = join(output.path, output.filename)
 const IS_RUNNING = new RegExp(config.signal, 'g')
 
 function runServer() {
   const pool = []
 
-  return new Promise(accept => {
+  return () => new Promise((accept) => {
     const running = pool.length
     const server = spawn('node', [serverFile])
 
@@ -29,7 +29,7 @@ function runServer() {
   })
 }
 
-const onStdoutData = (server, accept, running) => data => {
+const onStdoutData = (server, accept, running) => (data) => {
   const time = new Date().toTimeString().slice(0, 8) // eslint-disable-line no-magic-numbers
   const match = data.toString('utf8').match(IS_RUNNING)
 
@@ -42,6 +42,6 @@ const onStdoutData = (server, accept, running) => data => {
   }
 }
 
-const killServer = server => () => server.kill('SIGTERM')
+const killServer = (server) => () => server.kill('SIGTERM')
 
 module.exports = runServer
