@@ -1,34 +1,35 @@
 /* eslint-disable no-undefined, object-shorthand */
 
-var webpack = require('webpack')
-var fs = require('fs')
-var path = require('path')
-var config = require('../config/config')
-var paths = require('../config/paths')
-var babelrc = JSON.parse(fs.readFileSync(path.join(paths.contextDir, '.babelrc'), 'utf-8'))
-var DEBUG = config.DEBUG
-var VERBOSE = false
+const webpack = require('webpack')
+const fs = require('fs')
+const path = require('path')
+const config = require('../config/config')
+const paths = require('../config/paths')
+const babelrc = JSON.parse(fs.readFileSync(path.join(paths.contextDir, '.babelrc'), 'utf-8'))
+const DEBUG = config.DEBUG
+const VERBOSE = false
 
-var GLOBALS = {
+const GLOBALS = {
   '__DEV__': DEBUG,
   'process.env.NODE_ENV': JSON.stringify(DEBUG ? 'development' : 'production')
 }
 
-var plugins = [
-  new webpack.optimize.OccurrenceOrderPlugin(true),
+const plugins = [
   new webpack.NoErrorsPlugin(),
-  new webpack.optimize.DedupePlugin(),
+  // new webpack.optimize.OccurrenceOrderPlugin(true),
+  // new webpack.optimize.DedupePlugin(),
   new webpack.DefinePlugin(GLOBALS)
 ]
 
-var webpackConfig = {
+const webpackConfig = {
   cache: DEBUG,
   context: paths.contextDir,
   bail: !DEBUG,
   debug: DEBUG,
   devtool: DEBUG ? 'eval' : undefined,
   output: {
-    publicPath: '/'
+    publicPath: '/',
+    path: paths.publicDir
   },
   module: {
     loaders: [
@@ -36,17 +37,19 @@ var webpackConfig = {
         test: /\.(js|jsx)$/,
         loader: 'babel',
         query: {
+          cacheDirectory: true,
           presets: babelrc.presets,
-          plugins: babelrc.plugins.concat(DEBUG ? 'transform-runtime' : [])
+          plugins: babelrc.plugins
         },
         exclude: /node_modules/
       }
     ]
   },
   postcss: [
-    require('autoprefixer')
+    require('autoprefixer')({ browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'IE 10'] }),
   ],
   resolve: {
+    modules: ['shared', 'node_modules'],
     extensions: [
       '',
       '.web.js',

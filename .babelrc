@@ -1,4 +1,12 @@
 {
-  "presets": ["react", "es2015", "stage-0"],
-  "plugins": []
+  "presets": ["es2015-webpack", "react"],
+  "plugins": [
+    "kneden",
+    "transform-function-bind",
+    "transform-class-constructor-call",
+    "transform-class-properties",
+    "transform-export-extensions",
+    "syntax-trailing-function-commas",
+    "transform-object-rest-spread"
+  ]
 }

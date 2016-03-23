@@ -24,7 +24,7 @@ var webpackServerConfig = merge({}, webpackConfig, {
     loaders: webpackConfig.module.loaders.concat([
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style', 'css?modules&minimize!postcss'),
+        loader: ExtractTextPlugin.extract('style', `css?modules${DEBUG ? '&localIdentName=[name]_[local]_[hash:base64:3]' : '&minimize'}!postcss`),
         exclude: /node_modules/
       }
     ])
@@ -33,13 +33,20 @@ var webpackServerConfig = merge({}, webpackConfig, {
     new webpack.DefinePlugin({ __BROWSER__: false }),
     new ExtractTextPlugin(paths.styleSheet, { allChunks: true })
   ).concat(DEBUG ? [] : [
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
+      output: {
+        comments: false
+      },
       compress: {
         screw_ie8: true, // eslint-disable-line camelcase
         warnings: false
       }
-    })
+    }),
   ]),
   node: {
     __dirname: false,

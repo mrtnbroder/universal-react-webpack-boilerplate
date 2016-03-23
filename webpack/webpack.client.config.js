@@ -21,7 +21,7 @@ var webpackClientConfig = merge({}, webpackConfig, {
       'react',
       'react-dom',
       'react-redux',
-      'react-router',
+      'react-router/es6',
       'redux',
       'redux-actions',
       'redux-promise-middleware',
@@ -34,16 +34,10 @@ var webpackClientConfig = merge({}, webpackConfig, {
     path: paths.publicDir
   },
   module: {
-    loaders: webpackConfig.module.loaders.concat(DEBUG ? [
+    loaders: webpackConfig.module.loaders.concat([
       {
         test: /\.css$/,
-        loader: 'style!css-loader?modules!postcss',
-        exclude: /node_modules/
-      }
-    ] : [
-      {
-        test: /\.css$/,
-        loader: 'css/locals?modules!postcss',
+        loader: `style!css?modules${DEBUG ? '&localIdentName=[name]_[local]_[hash:base64:3]' : ''}!postcss`,
         exclude: /node_modules/
       }
     ])
@@ -59,8 +53,15 @@ var webpackClientConfig = merge({}, webpackConfig, {
       name: config.inlineName,
       filename: `${config.inlineName}.js`
     }),
+    new webpack.LoaderOptionsPlugin({
+      minimize: true,
+      debug: false
+    }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
+      output: {
+        comments: false
+      },
       compress: {
         screw_ie8: true, // eslint-disable-line camelcase
         warnings: false
