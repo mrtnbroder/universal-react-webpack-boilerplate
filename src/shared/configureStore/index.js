@@ -1,13 +1,14 @@
 
 import promiseMiddleware from 'redux-promise-middleware'
 import { createStore, applyMiddleware, compose } from 'redux'
+import rootReducer from '../modules'
 
 export default (initalState = {}) => {
   const middleware = [promiseMiddleware()]
   const store = compose(
     applyMiddleware(...middleware),
     __BROWSER__ ? window.devToolsExtension ? window.devToolsExtension() : (f) => f : (f) => f
-  )(createStore)((state = initalState) => state)
+  )(createStore)(rootReducer, initalState)
 
   // if (module.hot)
   //   // Enable Webpack hot module replacement for reducers

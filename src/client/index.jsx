@@ -1,13 +1,13 @@
 
 import configureStore from 'configureStore'
-import GroundControl from 'ground-control'
+import { Provider } from 'react-redux'
 import React from 'react'
-import { route } from '../views/app'
+import { routes } from '../views/app'
 import { Router, browserHistory } from 'react-router/es6'
 import { render } from 'react-dom'
 
 if (__DEV__) {
-  const Perf = require('react/lib/ReactPerf')
+  const Perf = require('react/lib/ReactDefaultPerf')
   // const a11y = require('react-a11y')
 
   // Export React and Performance Utility for debugging
@@ -16,14 +16,18 @@ if (__DEV__) {
   // a11y(React)
 }
 
-const store = configureStore(__INITIAL_STATE__)
-const rootEl = document.getElementById('app')
+function main() {
+  const store = configureStore(__INITIAL_STATE__)
+  const rootEl = document.getElementById('app')
 
-render(
-  <Router
-    history={browserHistory}
-    render={(props) => (<GroundControl {...props} store={store}/>)}>
-    {route}
-  </Router>,
-  rootEl
-)
+  render(
+    <Provider store={store}>
+      <Router history={browserHistory}>
+        {routes}
+      </Router>
+    </Provider>,
+    rootEl
+  )
+}
+
+main()

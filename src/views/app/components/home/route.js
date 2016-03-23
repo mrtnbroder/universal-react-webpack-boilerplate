@@ -1,8 +1,8 @@
 
-// import { update } from './update'
-import { view } from './view'
+import { update as reducer } from './update'
+import { view as component } from './view'
 
 export const route = {
-  component: view,
-  // reducer: update,
+  component,
+  reducer
 }

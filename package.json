@@ -22,7 +22,6 @@
     "body-parser": "^1.15.0",
     "compression": "^1.6.1",
     "express": "^4.13.4",
-    "ground-control": "^0.5.0",
     "react": "^0.14.7",
     "react-dom": "^0.14.7",
     "react-redux": "^4.4.1",

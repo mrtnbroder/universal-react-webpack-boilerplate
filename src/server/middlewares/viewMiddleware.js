@@ -6,9 +6,9 @@
 import configureStore from 'configureStore'
 import Html from '../components/Html'
 import React from 'react'
-import { route } from '../../views/app'
-import GroundControl, { loadStateOnServer } from 'ground-control'
-import { match } from 'react-router/es6'
+import { routes } from '../../views/app'
+import { Provider } from 'react-redux'
+import { RouterContext, match } from 'react-router/es6'
 import { renderToString } from 'react-dom/server'
 
 export default (app) => {
@@ -16,41 +16,29 @@ export default (app) => {
   app.get('*', handleRequests)
 
   function handleRequests(req, res) {
-    match({ routes: route, location: req.url }, (
-      err,
-      redirect,
-      renderProps
-    ) => {
-      const store = configureStore()
+    match({ routes, location: req.url }, (err, redirect, renderProps) => {
+      if (err)
+        res.status(500).send(err.message)
+      else if (redirect)
+        res.status(302).redirect(redirect.pathname + redirect.search)
+      else {
+        const store = configureStore()
+        const html = renderHtml(renderProps, store)
 
-      loadStateOnServer({ props: renderProps, store }, (
-        loadDataErr,
-        loadDataRedirectLocation,
-        initialData
-      ) => {
-        if (loadDataErr)
-          res.status(500).send(loadDataErr.message)
-        else if (loadDataRedirectLocation)
-          res.status(302).redirect(loadDataRedirectLocation.pathname + loadDataRedirectLocation.search)
-        else {
-          const html = renderHtml(renderProps, store, initialData)
-
-          res.status(200).send(html)
-        }
-      })
+        res.status(200).send(html)
+      }
     })
   }
 
-  function renderHtml(nextProps, store, initialData) {
+  function renderHtml(nextProps, store) {
+    const initalState = store.getState()
     const provider = (
-      <GroundControl
-        initialData={initialData}
-        store={store}
-        {...nextProps}
-        />
+      <Provider store={store}>
+        <RouterContext {...nextProps}/>
+      </Provider>
     )
     const content = renderToString(provider)
 
-    return Html.renderToStaticMarkup({ content, initialData })
+    return Html.renderToStaticMarkup({ content, initalState })
   }
 }

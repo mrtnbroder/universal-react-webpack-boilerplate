@@ -12,7 +12,7 @@ export default class Html extends Component {
   static propTypes = {
     app: PT.string.isRequired,
     content: PT.string.isRequired,
-    initialData: PT.object.isRequired,
+    initalState: PT.object.isRequired,
     inline: DEBUG ? PT.bool : PT.string,
     vendor: PT.string.isRequired
   }
@@ -46,7 +46,7 @@ export default class Html extends Component {
   }
 
   render() {
-    const { app, content, inline, vendor, initialData } = this.props
+    const { app, content, inline, vendor, initalState } = this.props
 
     return (
       <html
@@ -79,7 +79,7 @@ export default class Html extends Component {
           <meta content='true' name='HandheldFriendly'/>
           <meta content='320' name='MobileOptimized'/>
 
-        <link rel='stylesheet' href='/style.css'/>
+          <link href='/style.css' rel='stylesheet'/>
 
         </head>
         <body>
@@ -88,7 +88,7 @@ export default class Html extends Component {
           </div>
 
           {inline && <script dangerouslySetInnerHTML={{ __html: inline }}/>}
-          <script dangerouslySetInnerHTML={{ __html: `window.__INITIAL_STATE__=${JSON.stringify(initialData.initialState)}` }}/>
+          <script dangerouslySetInnerHTML={{ __html: `window.__INITIAL_STATE__=${JSON.stringify(initalState)}` }}/>
           <script src={vendor}/>
           <script src={app}/>
         </body>

@@ -1,23 +1,21 @@
 
 import React, { PropTypes as PT } from 'react'
 import { Link } from 'react-router/es6'
-import { actions } from '../../update'
+import { actions } from 'modules/todos'
 
-export const view = ({ data: model, children, dispatch, ...props }) => {
+export const view = ({ todos, children, dispatch, ...props }) => {
   return (
     <div {...props}>
       <h2>FrontPage</h2>
       <button onClick={() => dispatch(actions.getTodos())}>Fetch Todos</button>
       <Link to='/about'>About</Link>
       <ul>
-        {/*model.todos.map((t) => <li key={t.id}>{t.title}</li>)*/}
+        {todos.todos.map((t) => <li key={t.id}>{t.title}</li>)}
       </ul>
       {children}
     </div>
   )
 }
-
-// view.childContextTypes = { data: PT.object }
 
 view.propTypes = {
   children: PT.any,
