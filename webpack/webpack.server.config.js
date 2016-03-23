@@ -1,17 +1,17 @@
 /* eslint-disable no-undefined, object-shorthand */
 
-var webpack = require('webpack')
-var config = require('../config/config')
-var merge = require('lodash.merge')
-var paths = require('../config/paths')
-var ExtractTextPlugin = require('extract-text-webpack-plugin')
-var webpackConfig = require('./webpack.config.js')
-var DEBUG = config.DEBUG
+const webpack = require('webpack')
+const config = require('../config/config')
+const merge = require('lodash.merge')
+const paths = require('../config/paths')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const webpackConfig = require('./webpack.config.js')
+const DEBUG = config.DEBUG
 
 //
 // Server Config
 // -----------------------------------------------------------------------------
-var webpackServerConfig = merge({}, webpackConfig, {
+const webpackServerConfig = merge({}, webpackConfig, {
   name: 'server',
   target: 'node',
   entry: './src/server',

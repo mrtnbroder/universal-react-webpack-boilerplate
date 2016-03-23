@@ -1,18 +1,18 @@
 /* eslint-disable no-undefined, object-shorthand */
 
-var config = require('../config/config')
-var merge = require('lodash.merge')
-var paths = require('../config/paths')
-var StatsWriterPlugin = require('webpack-stats-plugin').StatsWriterPlugin
-var webpack = require('webpack')
-var webpackConfig = require('./webpack.config.js')
-var DEBUG = config.DEBUG
-var filename = DEBUG ? '[name].js' : '[name].[chunkhash].js'
+const config = require('../config/config')
+const merge = require('lodash.merge')
+const paths = require('../config/paths')
+const StatsWriterPlugin = require('webpack-stats-plugin').StatsWriterPlugin
+const webpack = require('webpack')
+const webpackConfig = require('./webpack.config.js')
+const DEBUG = config.DEBUG
+const filename = DEBUG ? '[name].js' : '[name].[chunkhash].js'
 
 //
 // Client Config
 // -----------------------------------------------------------------------------
-var webpackClientConfig = merge({}, webpackConfig, {
+const webpackClientConfig = merge({}, webpackConfig, {
   name: 'browser',
   target: 'web',
   entry: {
