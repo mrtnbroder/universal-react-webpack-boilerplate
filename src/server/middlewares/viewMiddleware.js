@@ -6,10 +6,11 @@
 import configureStore from 'configureStore'
 import Html from '../components/Html'
 import React from 'react'
-import { routes } from '../../views/app'
+import { route as routes } from '../../Application'
 import { Provider } from 'react-redux'
 import { RouterContext, match } from 'react-router/es6'
 import { renderToString } from 'react-dom/server'
+import reducers from '../../shared/modules'
 
 export default (app) => {
   // match everything else
@@ -22,7 +23,7 @@ export default (app) => {
       else if (redirect)
         res.status(302).redirect(redirect.pathname + redirect.search)
       else {
-        const store = configureStore()
+        const store = configureStore(reducers)()
         const html = renderHtml(renderProps, store)
 
         res.status(200).send(html)
