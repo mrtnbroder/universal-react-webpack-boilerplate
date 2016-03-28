@@ -1,10 +1,13 @@
 
 import configureStore from 'configureStore'
-import { Provider } from 'react-redux'
+import GroundControl from 'ground-control'
 import React from 'react'
-import { routes } from '../views/app'
-import { Router, browserHistory } from 'react-router/es6'
+import reducers from '../shared/modules'
+// import ReduxResolve from './ReduxResolve'
+// import { Provider } from 'react-redux'
 import { render } from 'react-dom'
+import { route as routes } from '../Application'
+import { Router, browserHistory } from 'react-router/es6'
 
 if (__DEV__) {
   const Perf = require('react/lib/ReactDefaultPerf')
@@ -16,16 +19,16 @@ if (__DEV__) {
   // a11y(React)
 }
 
-function main() {
-  const store = configureStore(__INITIAL_STATE__)
+const onRender = (store) => (props) => <GroundControl store={store} reducers={reducers} {...props}/>
+
+const main = () => {
+  const store = configureStore(reducers)(__INITIAL_STATE__)
   const rootEl = document.getElementById('app')
 
   render(
-    <Provider store={store}>
-      <Router history={browserHistory}>
-        {routes}
-      </Router>
-    </Provider>,
+    <Router history={browserHistory} render={onRender(store)}>
+      {routes}
+    </Router>,
     rootEl
   )
 }

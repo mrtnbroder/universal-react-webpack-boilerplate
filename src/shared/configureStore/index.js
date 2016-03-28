@@ -1,9 +1,9 @@
 
 import promiseMiddleware from 'redux-promise-middleware'
-import { createStore, applyMiddleware, compose } from 'redux'
-import rootReducer from '../modules'
+import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 
-export default (initalState = {}) => {
+export default (reducers = {}) => (initalState = {}) => {
+  const rootReducer = combineReducers(reducers)
   const middleware = [promiseMiddleware()]
   const store = compose(
     applyMiddleware(...middleware),
