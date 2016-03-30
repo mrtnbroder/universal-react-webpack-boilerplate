@@ -3,7 +3,7 @@ import React, { PropTypes as PT } from 'react'
 import { Link } from 'react-router/es6'
 import { actions } from './update'
 
-export const view = ({ data: model, children, dispatch, ...props }) => {
+export const view = ({ model, children, dispatch, ...props }) => {
   console.log('dashboard', model)
   return (
     <div {...props}>

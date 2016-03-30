@@ -5,13 +5,15 @@ import { connect } from 'react-redux'
 import { bindActionCreators } from 'redux'
 import { actions } from 'modules/todos'
 
-export const component = ({ children, fetchTodos, ...props}) => {
-  console.log('profile', props)
+export const component = ({ children, fetchTodos, ...props }) => {
   return (
     <div {...props}>
       <h2>Profile</h2>
       <button onClick={fetchTodos}>Change Name</button>
       <Link to='/'>Index</Link>
+      <ul>
+        {props.todos.todos.map((todo) => <li>{todo.title}</li>)}
+      </ul>
       {children}
     </div>
   )
@@ -22,12 +24,7 @@ component.propTypes = {
   fetchTodos: PT.func.isRequired
 }
 
-const mapStateToProps = (state) => {
-  console.log("state", state);
-
-  return { todos: state.todos }
-}
-
+const mapStateToProps = ({ todos }) => ({ todos })
 const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchTodos: actions.fetchTodos }, dispatch)
 
 export const view = connect(mapStateToProps, mapDispatchToProps)(component)
