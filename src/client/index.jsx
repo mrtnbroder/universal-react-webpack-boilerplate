@@ -3,7 +3,7 @@ import configureStore from 'configureStore'
 import GroundControl from 'ground-control'
 import React from 'react'
 import reducers from '../shared/modules'
-// import ReduxResolve from './ReduxResolve'
+import ReduxResolve from './ReduxResolve'
 // import { Provider } from 'react-redux'
 import { render } from 'react-dom'
 import { route as routes } from '../Application'
@@ -19,7 +19,13 @@ if (__DEV__) {
   // a11y(React)
 }
 
-const onRender = (store) => (props) => <GroundControl store={store} reducers={reducers} {...props}/>
+const onRender = (store) => (props) => (
+  <ReduxResolve
+    reducers={reducers}
+    store={store}
+    {...props}
+    />
+)
 
 const main = () => {
   const store = configureStore(reducers)(__INITIAL_STATE__)

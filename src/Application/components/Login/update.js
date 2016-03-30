@@ -5,20 +5,20 @@ import { initalModel } from './model'
 // TYPES
 
 export const types = {
-  MODIFY: 'MODIFY'
+  UPDATE: 'UPDATE'
 }
 
 // ACTIONS
 
 export const actions = {
-  modify: (payload) => ({ type: types.MODIFY, payload })
+  update: () => ({ type: types.UPDATE })
 }
 
 // UPDATE
 
 export const update = handleActions({
 
-  [`${types.MODIFY}`]: (state, { payload }) => {
+  [`${types.UPDATE}`]: (state, { payload }) => {
     return {
       ...state,
       ...payload

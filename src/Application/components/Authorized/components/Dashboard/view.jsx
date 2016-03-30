@@ -8,8 +8,8 @@ export const view = ({ data: model, children, dispatch, ...props }) => {
   return (
     <div {...props}>
       <h2>Dashboard</h2>
-      <button onClick={() => dispatch(actions.modify())}>Change Name</button>
-      <Link to='/'>Index</Link>
+      <button onClick={() => dispatch(actions.modify({ forename: 'Hans', lastname: 'Jürgen' }))}>Change Name</button>
+      <Link to='/authorized/profile'>Profile</Link>
       {children}
     </div>
   )
