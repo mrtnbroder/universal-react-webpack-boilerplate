@@ -7,7 +7,7 @@ import { getNestedState } from './nestedState'
 import { connect } from 'react-redux'
 
 const NAMESPACE = 'reduxresolve'
-const STORE_INIT = '@@reduxresolve/INIT'
+// const STORE_INIT = '@@reduxresolve/INIT'
 
 const render = (props) => {
   const { store } = props
@@ -39,28 +39,21 @@ const nestReducers = (routes) => (state, action) => {
   }, null)
 }
 
-const mkReducers = ({ store, routes, reducers }, init = false) => {
-  // const routes = normalizeRoutes(initalRoutes)
+const mkReducers = ({ store, routes, reducers }) => {
   const routeReducers = routes.map(getReducerOfRoute)
   const nestedReducer = nestReducers(routeReducers)
   const rootReducer = combineReducers({ ...reducers, [NAMESPACE]: nestedReducer })
 
   store.replaceReducer(rootReducer)
-  // if (init) store.dispatch({ type: STORE_INIT, state: store.getState() })
 }
 
 const handleOnRouteChange = ({ location: prevLocation }, nextProps) => {
   const { location: nextLocation } = nextProps
+  const pathChanged = prevLocation.pathname !== nextLocation.pathname
+  const searchChanged = prevLocation.search !== nextLocation.search
 
-  if (prevLocation.pathname !== nextLocation.pathname ||
-      prevLocation.search !== nextLocation.search)
-    mkReducers(nextProps)
+  if (pathChanged || searchChanged) mkReducers(nextProps)
 }
-
-// const normalizeRoutes = (routes) => routes.map((route) => {
-//   if (!route.reducer) route.reducer = identityReducer
-//   return route
-// })
 
 class ReduxResolve extends Component {
 
@@ -81,7 +74,8 @@ class ReduxResolve extends Component {
   constructor(props, ...rest) {
     super(props, ...rest)
 
-    mkReducers(props, true)
+    mkReducers(props)
+    // props.store.dispatch({ type: STORE_INIT, state: props.store.getState() })
   }
 
   getChildContext() {
