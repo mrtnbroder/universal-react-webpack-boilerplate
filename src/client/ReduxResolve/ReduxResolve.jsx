@@ -3,6 +3,7 @@ import React, { PropTypes as PT, Component } from 'react'
 import baseCreateElement from './createElement'
 import { combineReducers } from 'redux'
 import { RouterContext } from 'react-router/es6'
+import { getNestedState } from './nestedState'
 import { connect } from 'react-redux'
 
 const NAMESPACE = 'reduxresolve'
@@ -24,11 +25,13 @@ const identityReducer = (state = {}) => state
 
 const createShape = (self, child) => ({ self, child })
 
-const nestReducers = (routes) => (state, action) => {
-  const currentState = action.state || createShape()
-  const { self: prevSelf } = currentState
+const validShape = (shape) => (shape && shape.self && shape.child) ? shape : false
 
-  return routes.reduceRight((prev, routeReducer = identityReducer) => {
+const nestReducers = (routes) => (state, action) => {
+  const currentState = validShape(state) || createShape()
+
+  return routes.reduceRight((prev, routeReducer = identityReducer, depth) => {
+    const { self: prevSelf } = getNestedState(currentState, depth)
     const reducer = combineReducers(createShape(routeReducer, identityReducer))
     const next = reducer(createShape(prevSelf, prev), action)
 
@@ -36,15 +39,22 @@ const nestReducers = (routes) => (state, action) => {
   }, null)
 }
 
-const mkReducers = ({ store, routes, reducers }) => {
+const mkReducers = ({ store, routes, reducers }, init = false) => {
   // const routes = normalizeRoutes(initalRoutes)
   const routeReducers = routes.map(getReducerOfRoute)
   const nestedReducer = nestReducers(routeReducers)
   const rootReducer = combineReducers({ ...reducers, [NAMESPACE]: nestedReducer })
-  // debugger
 
   store.replaceReducer(rootReducer)
-  store.dispatch({ type: STORE_INIT, state: store.getState() })
+  // if (init) store.dispatch({ type: STORE_INIT, state: store.getState() })
+}
+
+const handleOnRouteChange = ({ location: prevLocation }, nextProps) => {
+  const { location: nextLocation } = nextProps
+
+  if (prevLocation.pathname !== nextLocation.pathname ||
+      prevLocation.search !== nextLocation.search)
+    mkReducers(nextProps)
 }
 
 // const normalizeRoutes = (routes) => routes.map((route) => {
@@ -55,33 +65,41 @@ const mkReducers = ({ store, routes, reducers }) => {
 class ReduxResolve extends Component {
 
   static propTypes = {
-    // render: PT.func.isRequired,
     routes: PT.array.isRequired,
     location: PT.object.isRequired,
     router: PT.object.isRequired,
     store: PT.object.isRequired,
     params: PT.object.isRequired,
-    // initialData: PT.object.isRequired,
     reducers: PT.object.isRequired,
-    // serializer: PT.func.isRequired,
-    // deserializer: PT.func.isRequired,
     // combineReducers: PT.func,
+  }
+
+  static defaultProps = {
+    reducers: {}
   }
 
   constructor(props, ...rest) {
     super(props, ...rest)
 
-    mkReducers(props)
+    mkReducers(props, true)
   }
 
-  // componentWillReceiveProps(nextProps) {
-  //   mkReducers(nextProps)
-  // }
+  getChildContext() {
+    return { store: this.props.store }
+  }
+
+  componentWillReceiveProps(nextProps) {
+    handleOnRouteChange(this.props, nextProps)
+  }
 
   render() {
     return render(this.props)
   }
 
+}
+
+ReduxResolve.childContextTypes = {
+  store: PT.object.isRequired
 }
 
 export default connect(identityReducer)(ReduxResolve)
