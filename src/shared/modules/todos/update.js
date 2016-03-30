@@ -1,5 +1,5 @@
 
-import { fetchTodos } from 'utils/WebAPIUtil'
+import { fetchTodos as fetchTodosFromAPI } from 'utils/WebAPIUtil'
 import { handleActions } from 'redux-actions'
 import { initalModel } from './model'
 
@@ -9,15 +9,15 @@ export const types = {
   FETCH_TODOS
 }
 
-const getTodos = () => ({
+const fetchTodos = () => ({
   type: types.FETCH_TODOS,
   payload: {
-    promise: fetchTodos()
+    promise: fetchTodosFromAPI()
   }
 })
 
 export const actions = {
-  getTodos
+  fetchTodos
 }
 
 export const update = handleActions({
