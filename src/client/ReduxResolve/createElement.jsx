@@ -1,12 +1,15 @@
 
 import React from 'react'
 
-const createElement = (Component, props) => {
-  // console.log('props', props);
+const createElement = (store) => (Component, props) => {
+  const componentProps = {
+    ...props,
+    dispatch: store.dispatch,
+    model: {},
+  }
+
   return (
-    <Component
-      {...props}
-      />
+    <Component {...componentProps}/>
   )
 }
 
