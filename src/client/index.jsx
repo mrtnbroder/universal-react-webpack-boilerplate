@@ -1,10 +1,8 @@
 
 import configureStore from 'configureStore'
-import GroundControl from 'ground-control'
 import React from 'react'
 import reducers from '../shared/modules'
-import ReduxResolve from './ReduxResolve'
-// import { Provider } from 'react-redux'
+import RouterReducer from 'react-router-route-reducers'
 import { render } from 'react-dom'
 import { route as routes } from '../Application'
 import { Router, browserHistory } from 'react-router/es6'
@@ -20,15 +18,15 @@ if (__DEV__) {
 }
 
 const onRender = (store) => (props) => (
-  <ReduxResolve
+  <RouterReducer
+    {...props}
     reducers={reducers}
     store={store}
-    {...props}
     />
 )
 
 const main = () => {
-  const store = configureStore(reducers)(__INITIAL_STATE__)
+  const store = configureStore(reducers)()
   const rootEl = document.getElementById('app')
 
   render(

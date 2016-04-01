@@ -5,7 +5,7 @@ const fs = require('fs')
 const path = require('path')
 const config = require('../config/config')
 const paths = require('../config/paths')
-const babelrc = JSON.parse(fs.readFileSync(path.join(paths.contextDir, '.babelrc'), 'utf-8'))
+// const babelrc = JSON.parse(fs.readFileSync(path.join(paths.contextDir, '.babelrc'), 'utf-8'))
 const DEBUG = config.DEBUG
 const VERBOSE = false
 
@@ -38,10 +38,10 @@ const webpackConfig = {
         loader: 'babel',
         query: {
           cacheDirectory: true,
-          presets: babelrc.presets,
-          plugins: babelrc.plugins
+          // presets: babelrc.presets,
+          // plugins: babelrc.plugins
         },
-        exclude: /node_modules/
+        exclude: [/node_modules/, /react-router-route-reducers/]
       }
     ]
   },

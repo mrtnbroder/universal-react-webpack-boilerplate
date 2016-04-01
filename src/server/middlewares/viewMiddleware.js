@@ -7,8 +7,8 @@ import configureStore from 'configureStore'
 import Html from '../components/Html'
 import React from 'react'
 import { route as routes } from '../../Application'
-import { Provider } from 'react-redux'
-import { RouterContext, match } from 'react-router/es6'
+import RouterReducer, { loadStateOnServer } from 'react-router-route-reducers'
+import { match } from 'react-router/es6'
 import { renderToString } from 'react-dom/server'
 import reducers from '../../shared/modules'
 
@@ -24,21 +24,20 @@ export default (app) => {
         res.status(302).redirect(redirect.pathname + redirect.search)
       else {
         const store = configureStore(reducers)()
-        const html = renderHtml(renderProps, store)
+        const nextProps = { ...renderProps, reducers, store }
 
-        res.status(200).send(html)
+        loadStateOnServer(nextProps)((initalState) => {
+          const html = renderHtml(nextProps, initalState)
+
+          res.status(200).send(html)
+        })
       }
     })
   }
 
-  function renderHtml(nextProps, store) {
-    const initalState = store.getState()
-    const provider = (
-      <Provider store={store}>
-        <RouterContext {...nextProps}/>
-      </Provider>
-    )
-    const content = renderToString(provider)
+  function renderHtml(nextProps, initalState) {
+    const component = <RouterReducer {...nextProps}/>
+    const content = renderToString(component)
 
     return Html.renderToStaticMarkup({ content, initalState })
   }
