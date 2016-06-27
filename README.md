@@ -1,10 +1,10 @@
-# ![isoreact](http://martinbroder.com/isoreact-logo.svg)
+# ![unireact](http://martinbroder.com/unireact-logo.svg)
 
-[![Build Status](https://travis-ci.org/mrtnbroder/isomorphic-react-webpack-boilerplate.svg?branch=master)](https://travis-ci.org/mrtnbroder/isomorphic-react-webpack-boilerplate)
-![dependency badge](https://david-dm.org/mrtnbroder/isomorphic-react-webpack-boilerplate.svg)
-[![devDependency Status](https://david-dm.org/mrtnbroder/isomorphic-react-webpack-boilerplate/dev-status.svg)](https://david-dm.org/mrtnbroder/isomorphic-react-webpack-boilerplate#info=devDependencies)
+[![Build Status](https://travis-ci.org/mrtnbroder/universal-react-webpack-boilerplate.svg?branch=master)](https://travis-ci.org/mrtnbroder/universal-react-webpack-boilerplate)
+![dependency badge](https://david-dm.org/mrtnbroder/universal-react-webpack-boilerplate.svg)
+[![devDependency Status](https://david-dm.org/mrtnbroder/universal-react-webpack-boilerplate/dev-status.svg)](https://david-dm.org/mrtnbroder/universal-react-webpack-boilerplate#info=devDependencies)
 
-isoreact is an isomorphic react boilerplate that features
+unireact is an universal react boilerplate that features
 an awesome dev environment with hot-reload, a lean dependency tree and the
 ability to quickly bootstrap your own applications.
 
@@ -64,7 +64,7 @@ returns a react element.
 
 ## Dependencies
 
-isoreact is depending several libraries to handle things like async actions, routing, state management etc. Please get to each of them first when you have questions about how to work with them.
+unireact is depending several libraries to handle things like async actions, routing, state management etc. Please get to each of them first when you have questions about how to work with them.
 
 * [express](https://github.com/strongloop/express/)
 * [react](https://github.com/facebook/react)
