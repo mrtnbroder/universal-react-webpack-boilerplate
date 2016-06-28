@@ -33,7 +33,7 @@ export default class Html extends Component {
     const file = fs.readFileSync(`${publicDir}/${statsName}.json`, encoding)
     const stats = JSON.parse(file)
 
-    return stats.assetsByChunkName[name]
+    return `/${stats.assetsByChunkName[name]}`
   }
 
   static getWebpackJsonpInlineScript() {
