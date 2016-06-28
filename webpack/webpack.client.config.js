@@ -21,7 +21,7 @@ const webpackClientConfig = merge({}, webpackConfig, {
       'react',
       'react-dom',
       'react-redux',
-      'react-router/es6',
+      'react-router',
       'redux',
       'redux-actions',
       'redux-promise-middleware'

@@ -1,6 +1,6 @@
 
 import React, { PropTypes as PT } from 'react'
-import { Link } from 'react-router/es6'
+import { Link } from 'react-router'
 import { actions } from './update'
 
 export const view = ({ model, children, dispatch, ...props }) => {

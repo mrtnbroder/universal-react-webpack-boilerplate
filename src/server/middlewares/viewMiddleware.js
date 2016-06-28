@@ -9,7 +9,7 @@ import configureStore from 'configureStore'
 import reducers from '../../shared/modules'
 import { route as routes } from '../../Application'
 import { Provider } from 'react-redux'
-import { RouterContext, match } from 'react-router/es6'
+import { RouterContext, match } from 'react-router'
 import { renderToString } from 'react-dom/server'
 
 export default (app) => {
