@@ -28,8 +28,8 @@ m.viewMiddleware(app)
 // Initialise Express
 // -----------------------------------------------------------------------------
 
-app.listen(port, host, err => {
+app.listen(port, host, (err) => {
   if (err) return console.error('[server.js]: Error: ', err)
 
-  console.log(`${signal} http://%s:%s`, host, port)
+  return console.log(`${signal} http://%s:%s`, host, port)
 })

@@ -3,21 +3,21 @@
 // View Middleware
 //
 
-import configureStore from 'configureStore'
-import Html from '../components/Html'
 import React from 'react'
+import Html from '../components/Html'
+import configureStore from 'configureStore'
+import reducers from '../../shared/modules'
 import { route as routes } from '../../Application'
 import { Provider } from 'react-redux'
 import { RouterContext, match } from 'react-router/es6'
 import { renderToString } from 'react-dom/server'
-import reducers from '../../shared/modules'
 
 export default (app) => {
   // match everything else
   app.get('*', handleRequests)
 
-  function handleRequests(req, res) {
-    match({ routes, location: req.url }, (err, redirect, renderProps) => {
+  function handleRequests({ url: location }, res) {
+    match({ routes, location }, (err, redirect, renderProps) => {
       if (err)
         res.status(500).send(err.message)
       else if (redirect)

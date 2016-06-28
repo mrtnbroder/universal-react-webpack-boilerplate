@@ -18,6 +18,7 @@ function run(fn, options) {
 }
 
 if (process.mainModule.children.length === 0 && process.argv.length > 2) {
+  console.log('process.argv', process.argv)
   delete require.cache[__filename]
   run(require(`./${process.argv[2]}.js`)).catch(err => console.error(err.stack))
 }

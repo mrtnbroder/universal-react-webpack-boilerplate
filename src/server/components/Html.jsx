@@ -1,7 +1,7 @@
 
 import React, { Component, PropTypes as PT } from 'react'
-import { renderToStaticMarkup } from 'react-dom/server'
 import fs from 'fs'
+import { renderToStaticMarkup } from 'react-dom/server'
 import { publicDir } from '../../../config/paths'
 import { DEBUG, appName, vendorName, statsName, inlineName } from '../../../config/config'
 
@@ -13,7 +13,7 @@ export default class Html extends Component {
     app: PT.string.isRequired,
     content: PT.string.isRequired,
     initalState: PT.object.isRequired,
-    inline: DEBUG ? PT.bool : PT.string,
+    inline: DEBUG ? PT.bool.isRequired : PT.string.isRequired,
     vendor: PT.string.isRequired
   }
 

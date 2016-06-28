@@ -38,7 +38,7 @@ const onStdoutData = (server, accept, running) => (data) => {
 
   if (match) {
     server.stdout.removeListener('data', onStdoutData)
-    if (!running) return accept(false)
+    if (!running) accept(false)
   }
 }
 
