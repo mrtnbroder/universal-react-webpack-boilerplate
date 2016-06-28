@@ -7,7 +7,7 @@ export const route = {
   path: '/',
   component,
   indexRoute: {
-    onEnter: ({ location: { pathname} }, replace) => {
+    onEnter: ({ location: { pathname } }, replace) => {
       replace(`${pathname}login`)
     }
   },
