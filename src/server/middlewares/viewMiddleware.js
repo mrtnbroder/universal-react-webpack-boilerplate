@@ -22,12 +22,13 @@ export default (app) => {
         res.status(500).send(err.message)
       else if (redirect)
         res.status(302).redirect(redirect.pathname + redirect.search)
-      else {
+      else if (renderProps) {
         const store = configureStore(reducers)()
         const html = renderHtml(renderProps, store)
 
         res.status(200).send(html)
-      }
+      } else
+        res.status(404).send('404')
     })
   }
 
