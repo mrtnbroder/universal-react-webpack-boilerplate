@@ -1,5 +1,6 @@
 /* eslint-disable no-undefined, object-shorthand */
 
+const path = require('path')
 const webpack = require('webpack')
 const config = require('../config/config')
 const paths = require('../config/paths')
@@ -34,7 +35,8 @@ const webpackConfig = {
         query: {
           cacheDirectory: true
         },
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        include: path.resolve('.')
       }
     ]
   },
