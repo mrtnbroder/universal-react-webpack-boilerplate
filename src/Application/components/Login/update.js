@@ -10,7 +10,7 @@ export const types = {
 
 // ACTIONS
 
-export const actions = {
+export const Actions = {
   update: () => ({ type: types.UPDATE })
 }
 
