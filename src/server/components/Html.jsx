@@ -57,7 +57,7 @@ export default class Html extends Component {
           <meta charSet='utf-8'/>
           <meta content='IE=edge,chrome=1' httpEquiv='X-UA-Compatible'/>
 
-          <title>Isomorphic React Webpack Boilerplate</title>
+          <title>Universal React Webpack Boilerplate</title>
 
           <meta content='' name='description'/>
           <meta content='' name='keywords'/>

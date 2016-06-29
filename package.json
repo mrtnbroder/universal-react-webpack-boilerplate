@@ -1,7 +1,7 @@
 {
-  "name": "isomorphic-react-webpack-boilerplate",
+  "name": "universal-react-webpack-boilerplate",
   "version": "0.0.1",
-  "description": "Isomorphic React Webpack Boilerplate",
+  "description": "Universal React Webpack Boilerplate",
   "main": "build/server/server.js",
   "scripts": {
     "test": "jest",
