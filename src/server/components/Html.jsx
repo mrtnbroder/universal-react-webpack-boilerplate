@@ -1,20 +1,25 @@
 
-import React, { Component, PropTypes as PT } from 'react'
-import fs from 'fs'
-import { renderToStaticMarkup } from 'react-dom/server'
-import { publicDir } from '../../../config/paths'
-import { DEBUG, appName, vendorName, statsName, inlineName } from '../../../config/config'
+import React, { Component, PropTypes } from 'react';
+import fs from 'fs';
+import { renderToStaticMarkup } from 'react-dom/server';
+import { publicDir } from '../../../config/paths';
+import { DEBUG, appName, vendorName, statsName, inlineName } from '../../../config/config';
+import { GoogleAnalytics, Segment, Stripe, Page, TypeformIntegration } from './vendor';
+import './html.css';
 
 const encoding = { encoding: 'utf8' }
 
 export default class Html extends Component {
 
   static propTypes = {
-    app: PT.string.isRequired,
-    content: PT.string.isRequired,
-    initalState: PT.object.isRequired,
-    inline: DEBUG ? PT.bool.isRequired : PT.string.isRequired,
-    vendor: PT.string.isRequired
+    app: PropTypes.string.isRequired,
+    content: PropTypes.string.isRequired,
+    initalState: PropTypes.object.isRequired,
+    inline: DEBUG ? PropTypes.bool.isRequired : PropTypes.string.isRequired,
+    vendor: PropTypes.string.isRequired,
+    googleAnalyticsKey: PropTypes.string.isRequired,
+    segmentKey: PropTypes.string.isRequired,
+    stripeKey: PropTypes.string.isRequired
   }
 
   static defaultProps = {
@@ -46,18 +51,16 @@ export default class Html extends Component {
   }
 
   render() {
-    const { app, content, inline, vendor, initalState } = this.props
+    const { app, content, inline, vendor, initalState, googleAnalyticsKey, segmentKey, stripeKey } = this.props
 
     return (
-      <html
-        className='no-js'
-        lang='en_US'
-        >
-        <head>
-          <meta charSet='utf-8'/>
-          <meta content='IE=edge,chrome=1' httpEquiv='X-UA-Compatible'/>
+      <html className='no-js' lang='en_US'>
+      <head>
+        <meta charSet='utf-8'/>
+        <meta content='IE=edge,chrome=1' httpEquiv='X-UA-Compatible'/>
 
-          <title>Universal React Webpack Boilerplate</title>
+        <title>Universal React Webpack Boilerplate</title>
+        <link href='https://fonts.googleapis.com/css?family=Roboto:400,600|Roboto+Mono:400|Karla:400,700' rel='stylesheet' />
 
           <meta content='' name='description'/>
           <meta content='' name='keywords'/>
@@ -69,29 +72,28 @@ export default class Html extends Component {
           <meta content='notranslate' name='google'/>
 
           {/* Viewport and mobile */}
-          <meta content='width = device-width,
-                         initial-scale = 1,
-                         user-scalable = no,
-                         maximum-scale = 1,
-                         minimum-scale = 1'
-            name='viewport'
-            />
+          <meta content='width = device-width, initial-scale = 1,
+                         user-scalable = no, maximum-scale = 1,
+                         minimum-scale = 1' name='viewport'/>
           <meta content='true' name='HandheldFriendly'/>
           <meta content='320' name='MobileOptimized'/>
 
-          <link href='/style.css' rel='stylesheet'/>
+          <link href='./style.css' rel='stylesheet'/>
+      </head>
+      <body>
+      <div id='app'>
+        <div dangerouslySetInnerHTML={{ __html: content }}/>
+      </div>
 
-        </head>
-        <body>
-          <div id='app'>
-            <div dangerouslySetInnerHTML={{ __html: content }}/>
-          </div>
+      {inline && <script dangerouslySetInnerHTML={{ __html: inline }}/>}
+      <script dangerouslySetInnerHTML={{ __html: `window.__INITIAL_STATE__=${JSON.stringify(initalState)}` }}/>
+      <script src={ vendor } />
+      <script src={ app } />
+      <script src={ googleAnalyticsKey ? <GoogleAnalytics account={googleAnalyticsKey} history={history} /> : null } />
+      <script src={ segmentKey ? <Segment writeKey={segmentKey} history={history} /> : null } />
+      <script src={ stripeKey ? <Stripe stripeKey={stripeKey}/> : null } />
 
-          {inline && <script dangerouslySetInnerHTML={{ __html: inline }}/>}
-          <script dangerouslySetInnerHTML={{ __html: `window.__INITIAL_STATE__=${JSON.stringify(initalState)}` }}/>
-          <script src={vendor}/>
-          <script src={app}/>
-        </body>
+      </body>
       </html>
     )
   }

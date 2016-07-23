@@ -2,16 +2,17 @@
 
 const webpack = require('webpack')
 const config = require('../config/config')
-const merge = require('lodash.merge')
+const merge = require('webpack-merge')
 const paths = require('../config/paths')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
 const webpackConfig = require('./webpack.config.js')
 const DEBUG = config.DEBUG
+const STYLE = paths.styleSheet
 
 //
 // Server Config
 // -----------------------------------------------------------------------------
-const webpackServerConfig = merge({}, webpackConfig, {
+const webpackServerConfig = merge(webpackConfig, {
   name: 'server',
   target: 'node',
   entry: './src/server',
@@ -24,14 +25,14 @@ const webpackServerConfig = merge({}, webpackConfig, {
     loaders: webpackConfig.module.loaders.concat([
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style', `css?modules${DEBUG ? '&localIdentName=[name]_[local]_[hash:base64:3]' : '&minimize'}!postcss`),
+        loader: ExtractTextPlugin.extract({ fallbackLoader: 'style-loader', loader: DEBUG ? 'css?modules&localIdentName=[name]_[local]_[hash:base64:3]!postcss' : 'css?modules&minimize!postcss' }),
         exclude: /node_modules/
       }
     ])
-  },
+  }, // paths.styleSheet, { allChunks: true }
   plugins: webpackConfig.plugins.concat(
     new webpack.DefinePlugin({ __BROWSER__: false }),
-    new ExtractTextPlugin(paths.styleSheet, { allChunks: true })
+    new ExtractTextPlugin({ filename: 'public/style.css', disable: false, allChunks: true })
   ).concat(DEBUG ? [] : [
     new webpack.LoaderOptionsPlugin({
       minimize: true,

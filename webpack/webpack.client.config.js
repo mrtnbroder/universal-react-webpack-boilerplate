@@ -1,7 +1,7 @@
 /* eslint-disable no-undefined, object-shorthand */
 
 const config = require('../config/config')
-const merge = require('lodash.merge')
+const merge = require('webpack-merge')
 const paths = require('../config/paths')
 const StatsWriterPlugin = require('webpack-stats-plugin').StatsWriterPlugin
 const webpack = require('webpack')
@@ -12,7 +12,7 @@ const filename = DEBUG ? '[name].js' : '[name].[chunkhash].js'
 //
 // Client Config
 // -----------------------------------------------------------------------------
-const webpackClientConfig = merge({}, webpackConfig, {
+const webpackClientConfig = merge(webpackConfig, {
   name: 'browser',
   target: 'web',
   entry: {
@@ -36,7 +36,7 @@ const webpackClientConfig = merge({}, webpackConfig, {
     loaders: webpackConfig.module.loaders.concat([
       {
         test: /\.css$/,
-        loader: `style!css?modules${DEBUG ? '&localIdentName=[name]_[local]_[hash:base64:3]' : ''}!postcss`,
+        loader: `style!css?modules${ DEBUG ? '&localIdentName=[name]_[local]_[hash:base64:3]' : '' }!postcss`,
         exclude: /node_modules/
       }
     ])
