@@ -1,5 +1,5 @@
 {
-  "presets": ["es2015-webpack", "react"],
+  "presets": ["es2015-native-modules", "react"],
   "plugins": [
     "kneden",
     "transform-function-bind",

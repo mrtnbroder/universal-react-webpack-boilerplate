@@ -4,22 +4,22 @@ function format(time) {
 }
 
 function run(fn, options) {
-  const task = typeof fn.default === 'undefined' ? fn : fn.default
-  const start = new Date()
+  const task = typeof fn.default === 'undefined' ? fn : fn.default;
+  const start = new Date();
 
-  console.log(`[${format(start)}] Starting '${task.name}'...`)
+  console.log(`[${format(start)}] Starting '${task.name}'...`);
 
   return task(options).then(() => {
-    const end = new Date()
-    const time = end.getTime() - start.getTime()
+    const end = new Date();
+    const time = end.getTime() - start.getTime();
 
     console.log(`[${format(end)}] Finished '${task.name}' after ${time} ms`)
   })
 }
 
 if (process.mainModule.children.length === 0 && process.argv.length > 2) {
-  delete require.cache[__filename]
-  run(require(`./${process.argv[2]}.js`)).catch(err => console.error(err.stack))
+  delete require.cache[__filename];
+  run(require(`./${process.argv[2]}.js`)).catch((err) => console.error(err.stack))
 }
 
-module.exports = run
+module.exports = run;
