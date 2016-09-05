@@ -7,6 +7,8 @@ import { DEBUG, appName, vendorName, statsName, inlineName } from '../../../conf
 
 const encoding = { encoding: 'utf8' }
 
+import './html.css'
+
 export default class Html extends Component {
 
   static propTypes = {

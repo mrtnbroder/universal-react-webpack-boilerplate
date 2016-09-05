@@ -1,11 +1,11 @@
 
+import { Router, browserHistory } from 'react-router/es6'
+import { Provider } from 'react-redux'
 import React from 'react'
 import configureStore from 'configureStore'
 import reducers from '../shared/modules'
-import { Provider } from 'react-redux'
 import { render } from 'react-dom'
 import { route as routes } from '../Application'
-import { Router, browserHistory } from 'react-router'
 
 if (__DEV__) {
   const Perf = require('react/lib/ReactPerf')
@@ -18,7 +18,7 @@ if (__DEV__) {
 }
 
 const main = () => {
-  const store = configureStore(reducers)(__INITIAL_STATE__)
+  const store = configureStore(reducers)(/*__INITIAL_STATE__*/)
   const rootEl = document.getElementById('app')
 
   render(

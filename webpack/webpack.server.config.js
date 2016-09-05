@@ -24,14 +24,14 @@ const webpackServerConfig = merge({}, webpackConfig, {
     loaders: webpackConfig.module.loaders.concat([
       {
         test: /\.css$/,
-        loader: ExtractTextPlugin.extract('style', `css?modules${DEBUG ? '&localIdentName=[name]_[local]_[hash:base64:3]' : '&minimize'}!postcss`),
+        loader: ExtractTextPlugin.extract({ fallbackLoader: 'style', loader: `css?modules${DEBUG ? '&localIdentName=[name]_[local]_[hash:base64:3]' : '&minimize'}!postcss` }),
         exclude: /node_modules/
       }
     ])
   },
   plugins: webpackConfig.plugins.concat(
     new webpack.DefinePlugin({ __BROWSER__: false }),
-    new ExtractTextPlugin(paths.styleSheet, { allChunks: true })
+    new ExtractTextPlugin({ filename: paths.styleSheet, disable: false, allChunks: true })
   ).concat(DEBUG ? [] : [
     new webpack.LoaderOptionsPlugin({
       minimize: true,
