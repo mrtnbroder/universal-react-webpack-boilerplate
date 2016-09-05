@@ -28,3 +28,4 @@ node_modules
 build
 _tmp
 public
+.DS_Store
