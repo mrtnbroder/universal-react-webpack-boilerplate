@@ -1,6 +1,6 @@
 
+import { applyMiddleware, combineReducers, compose, createStore } from 'redux'
 import promiseMiddleware from 'redux-promise-middleware'
-import { createStore, applyMiddleware, combineReducers, compose } from 'redux'
 
 export default (reducers = {}) => (initalState = {}) => {
   const rootReducer = combineReducers(reducers)
@@ -9,14 +9,6 @@ export default (reducers = {}) => (initalState = {}) => {
     applyMiddleware(...middleware),
     __BROWSER__ ? window.devToolsExtension ? window.devToolsExtension() : (f) => f : (f) => f
   )(createStore)(rootReducer, initalState)
-
-  if (module.hot)
-    // Enable Webpack hot module replacement for reducers
-    module.hot.accept('../modules', () => {
-      const nextReducer = require('../modules')
-
-      store.replaceReducer(nextReducer)
-    })
 
   return store
 }

@@ -33,7 +33,8 @@ const webpackConfig = {
         test: /\.(js|jsx)$/,
         loader: 'babel',
         query: {
-          cacheDirectory: true
+          cacheDirectory: true,
+          plugins: DEBUG ? ['react-hot-loader/babel'] : []
         },
         exclude: /node_modules/,
         include: path.resolve('.')

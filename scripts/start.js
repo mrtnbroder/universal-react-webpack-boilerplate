@@ -27,26 +27,9 @@ const onPluginDone = (b) => new Promise((accept) => b.plugin('done', accept))
 const createHotMiddlewares = (compilers) => compilers.filter(onlyBrowserCompiler).map(webpackHotMiddleware)
 const onlyBrowserCompiler = (compiler) => onlyBrowser(compiler.options)
 const onlyBrowser = (x) => x.target === 'web'
-const onlyBabel = (x) => x.loader === 'babel'
-const addTransformQuery = () => {
-  const query = {
-    plugins: [
-      ['react-transform', {
-        transforms: [{
-          transform: 'react-transform-hmr',
-          imports: ['react'],
-          locals: ['module']
-        }]
-      }]
-    ]
-  }
-
-  return (x) => x.query = query
-}
 const addHotMiddleware = (c) => {
-  c.entry[config.appName] = ['webpack-hot-middleware/client', c.entry[config.appName]]
+  c.entry[config.appName] = ['react-hot-loader/patch', 'webpack-hot-middleware/client', c.entry[config.appName]]
   c.plugins.push(new webpack.HotModuleReplacementPlugin())
-  c.module.loaders.filter(onlyBabel).forEach(addTransformQuery())
 }
 const startBrowserSync = (middlewares, bundler, restartServer) =>
   () => new Promise((accept) => {

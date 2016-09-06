@@ -1,5 +1,6 @@
 
 import { Router, browserHistory } from 'react-router/es6'
+import { AppContainer } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 import React from 'react'
 import configureStore from 'configureStore'
@@ -9,26 +10,27 @@ import { route as routes } from '../Application'
 
 if (__DEV__) {
   const Perf = require('react/lib/ReactPerf')
-  // const a11y = require('react-a11y')
 
   // Export React and Performance Utility for debugging
   window.React = React
   window.Perf = Perf
-  // a11y(React)
 }
 
-const main = () => {
-  const store = configureStore(reducers)(/*__INITIAL_STATE__*/)
-  const rootEl = document.getElementById('app')
+const store = configureStore(reducers)(__INITIAL_STATE__)
+const rootEl = document.getElementById('app')
 
+const main = () => {
   render(
-    <Provider store={store}>
-      <Router history={browserHistory}>
-        {routes}
-      </Router>
-    </Provider>,
+    <AppContainer>
+      <Provider store={store}>
+        <Router history={browserHistory} routes={routes}/>
+      </Provider>
+    </AppContainer>,
     rootEl
   )
 }
+
+if (module.hot)
+  module.hot.accept(main)
 
 main()
