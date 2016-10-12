@@ -14,14 +14,23 @@ const GLOBALS = {
 
 const plugins = [
   new webpack.NoErrorsPlugin(),
-  new webpack.DefinePlugin(GLOBALS)
+  new webpack.DefinePlugin(GLOBALS),
+  new webpack.LoaderOptionsPlugin({
+    minimize: !DEBUG,
+    debug: DEBUG,
+    options: {
+      context: paths.contextDir,
+      postcss: [
+        require('autoprefixer')({ browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'IE 10'] })
+      ]
+    }
+  })
 ]
 
 const webpackConfig = {
   cache: DEBUG,
   context: paths.contextDir,
   bail: !DEBUG,
-  debug: DEBUG,
   devtool: DEBUG ? 'eval' : undefined,
   output: {
     publicPath: '/',
@@ -41,13 +50,9 @@ const webpackConfig = {
       }
     ]
   },
-  postcss: [
-    require('autoprefixer')({ browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'IE 10'] }),
-  ],
   resolve: {
     modules: ['shared', 'node_modules'],
     extensions: [
-      '',
       '.web.js',
       '.js',
       '.json',
@@ -55,17 +60,17 @@ const webpackConfig = {
     ]
   },
   stats: {
-    // assets: VERBOSE,
+    assets: false,
     cached: VERBOSE,
     cachedAssets: VERBOSE,
     children: VERBOSE,
     chunkModules: VERBOSE,
     chunks: VERBOSE,
     colors: true,
-    // context: VERBOSE,
+    context: false,
     hash: VERBOSE,
     modules: VERBOSE,
-    reasons: VERBOSE,
+    reasons: true,
     source: VERBOSE,
     timings: true,
     version: VERBOSE,

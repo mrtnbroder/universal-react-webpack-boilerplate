@@ -1,5 +1,6 @@
 /* eslint-disable no-undefined, object-shorthand */
 
+const path = require('path')
 const config = require('../config/config')
 const merge = require('lodash.merge')
 const paths = require('../config/paths')
@@ -37,7 +38,8 @@ const webpackClientConfig = merge({}, webpackConfig, {
       {
         test: /\.css$/,
         loader: `style!css?modules${DEBUG ? '&localIdentName=[name]_[local]_[hash:base64:3]' : ''}!postcss`,
-        exclude: /node_modules/
+        exclude: /node_modules/,
+        include: path.resolve('.')
       }
     ])
   },
@@ -51,10 +53,6 @@ const webpackClientConfig = merge({}, webpackConfig, {
     new webpack.optimize.CommonsChunkPlugin({
       name: config.inlineName,
       filename: `${config.inlineName}.js`
-    }),
-    new webpack.LoaderOptionsPlugin({
-      minimize: true,
-      debug: false
     }),
     new webpack.optimize.UglifyJsPlugin({
       sourceMap: false,
