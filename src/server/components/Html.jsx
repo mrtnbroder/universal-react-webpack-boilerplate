@@ -1,9 +1,10 @@
 
-import React, { Component, PropTypes as PT } from 'react'
+import { DEBUG, appName, inlineName, statsName, vendorName } from '../../../config/config'
+import React, { PropTypes as PT, PureComponent } from 'react'
 import fs from 'fs'
-import { renderToStaticMarkup } from 'react-dom/server'
 import { publicDir } from '../../../config/paths'
-import { DEBUG, appName, vendorName, statsName, inlineName } from '../../../config/config'
+import { renderToStaticMarkup } from 'react-dom/server'
+import { version } from '../../../package.json'
 
 const encoding = { encoding: 'utf8' }
 

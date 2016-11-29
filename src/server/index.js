@@ -1,9 +1,9 @@
 /* eslint-disable no-console */
 
-import express from 'express'
-import compression from 'compression'
 import * as m from './middlewares'
 import { DEBUG, host, port, signal } from '../../config/config'
+import compression from 'compression'
+import express from 'express'
 
 const app = express()
 
