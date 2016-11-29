@@ -1,5 +1,5 @@
 
-import { Router, browserHistory } from 'react-router/es6'
+import { Router, browserHistory } from 'react-router'
 import { AppContainer } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 import React from 'react'
@@ -9,11 +9,8 @@ import { render } from 'react-dom'
 import { route as routes } from '../Application'
 
 if (__DEV__) {
-  const Perf = require('react/lib/ReactPerf')
-
   // Export React and Performance Utility for debugging
   window.React = React
-  window.Perf = Perf
 }
 
 const store = configureStore(reducers)(__INITIAL_STATE__)
@@ -30,7 +27,6 @@ const main = () => {
   )
 }
 
-if (module.hot)
-  module.hot.accept(main)
+if (module.hot) module.hot.accept(main)
 
 main()
