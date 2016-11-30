@@ -4,27 +4,10 @@ import React, { PropTypes as PT, PureComponent } from 'react'
 import fs from 'fs'
 import { publicDir } from '../../../config/paths'
 import { renderToStaticMarkup } from 'react-dom/server'
-import { version } from '../../../package.json'
 
-const encoding = { encoding: 'utf8' }
+import './html.css' // eslint-disable-line sort-imports
 
-import './html.css'
-
-export default class Html extends Component {
-
-  static propTypes = {
-    app: PT.string.isRequired,
-    content: PT.string.isRequired,
-    initalState: PT.object.isRequired,
-    inline: DEBUG ? PT.bool.isRequired : PT.string.isRequired,
-    vendor: PT.string.isRequired
-  }
-
-  static defaultProps = {
-    app: Html.getScript(appName),
-    vendor: Html.getScript(vendorName),
-    inline: Html.getWebpackJsonpInlineScript()
-  }
+class Html extends PureComponent {
 
   static getDoctype() {
     return '<!doctype html>'
@@ -33,15 +16,17 @@ export default class Html extends Component {
   static getScript(name) {
     if (DEBUG) return `/${name}.js`
 
-    const file = fs.readFileSync(`${publicDir}/${statsName}.json`, encoding)
+    const file = fs.readFileSync(`${publicDir}/${statsName}.json`)
     const stats = JSON.parse(file)
 
-    return `/${stats.assetsByChunkName[name]}`
+    return name === 'app' && !DEBUG
+      ? `/${stats.assetsByChunkName[name][0]}`
+      : `/${stats.assetsByChunkName[name]}`
   }
 
   static getWebpackJsonpInlineScript() {
     if (DEBUG) return false
-    return fs.readFileSync(`${publicDir}/${inlineName}.js`, encoding)
+    return fs.readFileSync(`${publicDir}/${inlineName}.js`)
   }
 
   static renderToStaticMarkup(props) {
@@ -49,7 +34,7 @@ export default class Html extends Component {
   }
 
   render() {
-    const { app, content, inline, vendor, initalState } = this.props
+    const { app, content, initalState, inline, vendor } = this.props
 
     return (
       <html
@@ -82,16 +67,33 @@ export default class Html extends Component {
           <meta content='true' name='HandheldFriendly'/>
           <meta content='320' name='MobileOptimized'/>
 
-          <link href='/style.css' rel='stylesheet'/>
+          <link href='/apple-icon-57x57.png' rel='apple-touch-icon' sizes='57x57'/>
+          <link href='/apple-icon-60x60.png' rel='apple-touch-icon' sizes='60x60'/>
+          <link href='/apple-icon-72x72.png' rel='apple-touch-icon' sizes='72x72'/>
+          <link href='/apple-icon-76x76.png' rel='apple-touch-icon' sizes='76x76'/>
+          <link href='/apple-icon-114x114.png' rel='apple-touch-icon' sizes='114x114'/>
+          <link href='/apple-icon-120x120.png' rel='apple-touch-icon' sizes='120x120'/>
+          <link href='/apple-icon-144x144.png' rel='apple-touch-icon' sizes='144x144'/>
+          <link href='/apple-icon-152x152.png' rel='apple-touch-icon' sizes='152x152'/>
+          <link href='/apple-icon-180x180.png' rel='apple-touch-icon' sizes='180x180'/>
+          <link href='/android-icon-192x192.png' rel='icon' sizes='192x192' type='image/png'/>
+          <link href='/favicon-32x32.png' rel='icon' sizes='32x32' type='image/png'/>
+          <link href='/favicon-96x96.png' rel='icon' sizes='96x96' type='image/png'/>
+          <link href='/favicon-16x16.png' rel='icon' sizes='16x16' type='image/png'/>
 
+          <meta content='#ffffff' name='msapplication-TileColor'/>
+          <meta content='/ms-icon-144x144.png' name='msapplication-TileImage'/>
+          <meta content='#ffffff' name='theme-color'/>
+
+          <link href='/style.css' rel='stylesheet'/>
         </head>
         <body>
           <div id='app'>
             <div dangerouslySetInnerHTML={{ __html: content }}/>
           </div>
 
+          <script dangerouslySetInnerHTML={{ __html: `window.__INITAL_STATE__ = ${JSON.stringify(initalState)}` }}/>
           {inline && <script dangerouslySetInnerHTML={{ __html: inline }}/>}
-          <script dangerouslySetInnerHTML={{ __html: `window.__INITIAL_STATE__=${JSON.stringify(initalState)}` }}/>
           <script src={vendor}/>
           <script src={app}/>
         </body>
@@ -99,3 +101,19 @@ export default class Html extends Component {
     )
   }
 }
+
+Html.propTypes = {
+  app: PT.string.isRequired,
+  content: PT.string.isRequired,
+  initalState: PT.object.isRequired,
+  vendor: PT.string.isRequired,
+  inline: DEBUG ? PT.bool : PT.string,
+}
+
+Html.defaultProps = {
+  app: Html.getScript(appName),
+  vendor: Html.getScript(vendorName),
+  inline: Html.getWebpackJsonpInlineScript(),
+}
+
+export default Html
