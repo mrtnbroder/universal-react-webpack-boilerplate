@@ -1,11 +1,9 @@
 /* eslint-disable no-undefined, object-shorthand */
 
-const path = require('path')
 const webpack = require('webpack')
 const config = require('../config/config')
 const paths = require('../config/paths')
-const DEBUG = config.DEBUG
-const VERBOSE = false
+const { DEBUG } = config
 
 const GLOBALS = {
   '__DEV__': DEBUG,
@@ -21,34 +19,45 @@ const plugins = [
     options: {
       context: paths.contextDir,
       postcss: [
-        require('autoprefixer')({ browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'IE 10'] })
-      ]
-    }
-  })
+        require('autoprefixer')({ browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'IE 10'] }),
+      ],
+    },
+  }),
 ]
+
+exports.styleLoader = 'style-loader'
+exports.postcssLoader = 'postcss-loader'
+exports.cssLoader = {
+  loader: 'css-loader',
+  query: {
+    localIdentName: DEBUG ? '[name]_[local]_[hash:base64:3]' : '[hash:base64:5]',
+    minimize: !DEBUG,
+    modules: true,
+    sourceMap: DEBUG,
+  },
+}
 
 const webpackConfig = {
   cache: DEBUG,
   context: paths.contextDir,
   bail: !DEBUG,
-  devtool: DEBUG ? 'eval' : undefined,
+  devtool: DEBUG ? 'cheap-eval-source-map' : undefined,
   output: {
     publicPath: '/',
-    path: paths.publicDir
+    path: paths.publicDir,
   },
   module: {
     loaders: [
       {
         test: /\.(js|jsx)$/,
-        loader: 'babel',
+        loader: 'babel-loader',
         query: {
           cacheDirectory: true,
-          plugins: DEBUG ? ['react-hot-loader/babel'] : []
+          plugins: DEBUG ? ['react-hot-loader/babel'] : [],
         },
         exclude: /node_modules/,
-        include: path.resolve('.')
-      }
-    ]
+      },
+    ],
   },
   resolve: {
     modules: ['shared', 'node_modules'],
@@ -56,26 +65,11 @@ const webpackConfig = {
       '.web.js',
       '.js',
       '.json',
-      '.jsx'
-    ]
+      '.jsx',
+    ],
   },
-  stats: {
-    assets: false,
-    cached: VERBOSE,
-    cachedAssets: VERBOSE,
-    children: VERBOSE,
-    chunkModules: VERBOSE,
-    chunks: VERBOSE,
-    colors: true,
-    context: false,
-    hash: VERBOSE,
-    modules: VERBOSE,
-    reasons: true,
-    source: VERBOSE,
-    timings: true,
-    version: VERBOSE,
-  },
-  plugins: plugins
+  stats: 'errors-only',
+  plugins: plugins,
 }
 
-module.exports = webpackConfig
+exports.webpackConfig = webpackConfig
