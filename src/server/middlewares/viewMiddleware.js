@@ -3,14 +3,14 @@
 // View Middleware
 //
 
-import React from 'react'
+import { RouterContext, match } from 'react-router'
 import Html from '../components/Html'
+import { Provider } from 'react-redux'
+import React from 'react'
 import configureStore from 'configureStore'
 import reducers from '../../shared/modules'
-import { route as routes } from '../../Application'
-import { Provider } from 'react-redux'
-import { RouterContext, match } from 'react-router'
 import { renderToString } from 'react-dom/server'
+import { route as routes } from '../../Application'
 
 export default (app) => {
   // match everything else

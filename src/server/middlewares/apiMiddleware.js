@@ -3,9 +3,9 @@
 // API Middleware
 //
 
-import express from 'express'
-import bodyParser from 'body-parser'
 import * as resources from '../resources'
+import bodyParser from 'body-parser'
+import express from 'express'
 
 const API_URL = '/api/v1'
 
