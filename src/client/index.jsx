@@ -13,7 +13,7 @@ if (__DEV__) {
   window.React = React
 }
 
-const store = configureStore(reducers)(__INITIAL_STATE__)
+const store = configureStore(reducers)(window.__INITIAL_STATE__)
 const rootEl = document.getElementById('app')
 
 const main = () => {
