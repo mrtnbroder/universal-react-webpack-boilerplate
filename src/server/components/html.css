@@ -1,11 +1,5 @@
 
 body {
   background: #fff;
-}
-
-.bla {
-  background-color: red;
-  transform: rotate(0deg);
-  display: flex;
-  justify-content: center;
+  font-family: 'Gotham', sans-serif;
 }
