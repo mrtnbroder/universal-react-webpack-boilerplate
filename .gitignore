@@ -29,3 +29,4 @@ build
 _tmp
 public
 .DS_Store
+yarn.lock
