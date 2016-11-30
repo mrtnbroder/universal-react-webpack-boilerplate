@@ -1,12 +1,12 @@
 {
-  "presets": [["es2015", { loose: true, modules: false }], "react"],
+  "presets": [
+    ["es2015", { "loose": true, "modules": false }],
+    "react"
+  ],
   "plugins": [
-    "kneden",
-    "transform-function-bind",
-    "transform-class-constructor-call",
-    "transform-class-properties",
+    "async-to-promises",
     "transform-export-extensions",
-    "syntax-trailing-function-commas",
-    "transform-object-rest-spread"
+    ["transform-object-rest-spread", { "useBuiltIns": true }],
+    ["transform-runtime", { "polyfill": false, "regenerator": false }]
   ]
 }
