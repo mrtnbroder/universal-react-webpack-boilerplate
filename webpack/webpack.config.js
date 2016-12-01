@@ -12,17 +12,7 @@ const GLOBALS = {
 
 const plugins = [
   new webpack.NoErrorsPlugin(),
-  new webpack.DefinePlugin(GLOBALS),
-  new webpack.LoaderOptionsPlugin({
-    minimize: !DEBUG,
-    debug: DEBUG,
-    options: {
-      context: paths.contextDir,
-      postcss: [
-        require('autoprefixer')({ browsers: ['> 1%', 'last 2 versions', 'Firefox ESR', 'IE 10'] }),
-      ],
-    },
-  }),
+  new webpack.DefinePlugin(GLOBALS)
 ]
 
 exports.styleLoader = 'style-loader'

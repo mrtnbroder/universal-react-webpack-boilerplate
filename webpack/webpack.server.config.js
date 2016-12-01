@@ -3,10 +3,9 @@
 const webpack = require('webpack')
 const merge = require('lodash.merge')
 const paths = require('../config/paths')
-const ExtractTextPlugin = require('extract-text-webpack-plugin')
-const { webpackConfig, styleLoader, cssLoader, postcssLoader } = require('./webpack.config.js')
+const { webpackConfig, cssLoader, postcssLoader } = require('./webpack.config.js')
 
-const extractCSS = new ExtractTextPlugin({ filename: paths.styleSheet, allChunks: true })
+const cssLoaderServer = Object.assign({}, cssLoader, { loader: 'css-loader/locals' })
 
 //
 // Server Config
@@ -23,13 +22,12 @@ const webpackServerConfig = merge({}, webpackConfig, {
   module: {
     loaders: webpackConfig.module.loaders.concat([{
       test: /\.css$/,
-      loader: extractCSS.extract({ fallbackLoader: styleLoader, loader: [cssLoader, postcssLoader] }),
+      loaders: [cssLoaderServer, postcssLoader],
       exclude: /node_modules/,
     }]),
   },
   plugins: webpackConfig.plugins.concat(
-    new webpack.DefinePlugin({ __BROWSER__: false }),
-    extractCSS
+    new webpack.DefinePlugin({ __BROWSER__: false })
   ),
   node: {
     __dirname: false,
