@@ -5,8 +5,6 @@ import fs from 'fs'
 import { publicDir } from '../../../config/paths'
 import { renderToStaticMarkup } from 'react-dom/server'
 
-import './html.css' // eslint-disable-line sort-imports
-
 class Html extends PureComponent {
 
   static getDoctype() {
@@ -85,7 +83,7 @@ class Html extends PureComponent {
           <meta content='/ms-icon-144x144.png' name='msapplication-TileImage'/>
           <meta content='#ffffff' name='theme-color'/>
 
-          <link href='/style.css' rel='stylesheet'/>
+          {!DEBUG && <link href='/style.css' rel='stylesheet'/>}
         </head>
         <body>
           <div id='app'>
