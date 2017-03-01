@@ -1,7 +1,7 @@
 /* eslint-disable no-console */
 
 import * as m from './middlewares'
-import { DEBUG, host, port, signal } from '../../config/config'
+import { HOST, PORT, isDev, signal } from '../../webpack/env'
 import compression from 'compression'
 import express from 'express'
 
@@ -15,7 +15,7 @@ const app = express()
 app.disable('x-powered-by')
 
 // Compression
-if (!DEBUG) app.use(compression())
+if (!isDev) app.use(compression())
 
 // I. Static Assets
 m.staticMiddleware(app)
@@ -28,8 +28,8 @@ m.viewMiddleware(app)
 // Initialise Express
 // -----------------------------------------------------------------------------
 
-app.listen(port, host, (err) => {
+app.listen(PORT, HOST, (err) => {
   if (err) return console.error('[server.js]: Error: ', err)
 
-  return console.log(`${signal} http://%s:%s`, host, port)
+  return console.log(`${signal} http://%s:%s`, HOST, PORT)
 })

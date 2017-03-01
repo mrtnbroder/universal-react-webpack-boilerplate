@@ -7,6 +7,9 @@
     "async-to-promises",
     "transform-export-extensions",
     ["transform-object-rest-spread", { "useBuiltIns": true }],
-    ["transform-runtime", { "polyfill": false, "regenerator": false }]
+    ["transform-runtime", { "polyfill": false, "regenerator": false }],
+    ["module-resolver", {
+      "root": ["./src/shared"]
+    }]
   ]
 }

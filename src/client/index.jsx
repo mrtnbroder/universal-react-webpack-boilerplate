@@ -2,11 +2,12 @@
 import { Router, browserHistory } from 'react-router'
 import { AppContainer } from 'react-hot-loader'
 import { Provider } from 'react-redux'
+import { render } from 'react-dom'
 import React from 'react'
 import configureStore from 'configureStore'
-import reducers from '../shared/modules'
-import { render } from 'react-dom'
+
 import { route as routes } from '../Application'
+import reducers from 'modules'
 
 if (__DEV__) {
   // Export React and Performance Utility for debugging

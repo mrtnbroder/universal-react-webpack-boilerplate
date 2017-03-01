@@ -1,16 +1,13 @@
-/* eslint-disable no-undefined, object-shorthand */
 
-const config = require('../config/config')
-const merge = require('lodash.merge')
-const paths = require('../config/paths')
-const StatsWriterPlugin = require('webpack-stats-plugin').StatsWriterPlugin
+const { isDev, appName, inlineName, outputPath, statsName, cssName, vendorName } = require('./env')
+const { webpackConfig, styleLoader, cssLoader, postcssLoader } = require('./webpack.config')
+const { StatsWriterPlugin } = require('webpack-stats-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const merge = require('lodash.merge')
 const webpack = require('webpack')
-const { webpackConfig, styleLoader, cssLoader, postcssLoader } = require('./webpack.config.js')
-const { DEBUG } = config
-const filename = DEBUG ? '[name].js' : '[name].[chunkhash].js'
 
-const extractCSS = new ExtractTextPlugin({ filename: paths.styleSheet, allChunks: true })
+const filename = isDev ? '[name].js' : '[name].[chunkhash].js'
+const extractCSS = new ExtractTextPlugin({ filename: cssName, allChunks: true })
 
 //
 // Client Config
@@ -19,28 +16,18 @@ const webpackClientConfig = merge({}, webpackConfig, {
   name: 'browser',
   target: 'web',
   entry: {
-    [config.appName]: './src/client',
-    [config.vendorName]: [
-      'react',
-      'react-dom',
-      'react-redux',
-      'react-router',
-      'redux',
-      'redux-actions',
-      'redux-promise-middleware',
-      'redux-thunk',
-    ],
+    [appName]: './src/client/index.jsx',
   },
   output: {
     chunkFilename: filename,
-    filename: filename,
-    path: paths.publicDir,
+    filename,
+    path: outputPath,
   },
   module: {
-    loaders: webpackConfig.module.loaders.concat([
+    rules: webpackConfig.module.rules.concat([
       {
         test: /\.css$/,
-        loaders: DEBUG
+        use: isDev
           ? [styleLoader, cssLoader, postcssLoader]
           : extractCSS.extract([cssLoader, postcssLoader]),
         exclude: /node_modules/,
@@ -48,26 +35,32 @@ const webpackClientConfig = merge({}, webpackConfig, {
     ]),
   },
   plugins: webpackConfig.plugins.concat(
-    new webpack.DefinePlugin({ __BROWSER__: true }),
     new webpack.optimize.CommonsChunkPlugin({
-      name: config.vendorName,
-      filename: filename,
+      name: vendorName,
+      filename,
+      minChunks: (module) => /node_modules/.test(module.resource),
     })
-  ).concat(DEBUG ? [] : [
+  ).concat(isDev ? [] : [
     extractCSS,
     new webpack.optimize.CommonsChunkPlugin({
-      name: config.inlineName,
-      filename: `${config.inlineName}.js`,
+      name: inlineName,
+      filename: `${inlineName}.js`,
     }),
-    new StatsWriterPlugin({ filename: `${config.statsName}.json` }),
+    new StatsWriterPlugin({ filename: `${statsName}.json` }),
     new webpack.optimize.UglifyJsPlugin({
-      sourceMap: false,
+      sourceMap: true,
+      compress: {
+        screw_ie8: true, // React doesn't support IE8
+        warnings: false,
+        unused: true,
+        dead_code: true,
+      },
+      mangle: {
+        screw_ie8: true,
+      },
       output: {
         comments: false,
-      },
-      compress: {
-        screw_ie8: true, // eslint-disable-line camelcase
-        warnings: false,
+        screw_ie8: true,
       },
     }),
   ]),

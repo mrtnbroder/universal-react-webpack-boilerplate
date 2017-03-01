@@ -1,9 +1,7 @@
-/* eslint-disable no-undefined, object-shorthand */
 
-const webpack = require('webpack')
 const merge = require('lodash.merge')
-const paths = require('../config/paths')
-const { webpackConfig, cssLoader, postcssLoader } = require('./webpack.config.js')
+const { distPath } = require('./env')
+const { webpackConfig, cssLoader, postcssLoader } = require('./webpack.config')
 
 const cssLoaderServer = Object.assign({}, cssLoader, { loader: 'css-loader/locals' })
 
@@ -17,18 +15,15 @@ const webpackServerConfig = merge({}, webpackConfig, {
   output: {
     filename: 'server.js',
     libraryTarget: 'commonjs2',
-    path: paths.buildDir,
+    path: distPath,
   },
   module: {
-    loaders: webpackConfig.module.loaders.concat([{
+    rules: webpackConfig.module.rules.concat([{
       test: /\.css$/,
-      loaders: [cssLoaderServer, postcssLoader],
+      use: [cssLoaderServer, postcssLoader],
       exclude: /node_modules/,
     }]),
   },
-  plugins: webpackConfig.plugins.concat(
-    new webpack.DefinePlugin({ __BROWSER__: false })
-  ),
   node: {
     __dirname: false,
     __filename: false,

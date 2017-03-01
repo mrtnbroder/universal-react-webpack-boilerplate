@@ -13,10 +13,8 @@
   },
   "globals": {
     "__DEV__": true,
-    "__BROWSER__": true,
     "__INITIAL_STATE__": true,
     "google": true,
-    "jest": true
   },
   "parserOptions": {
     "ecmaVersion": 6,
@@ -151,7 +149,7 @@
     "block-spacing": [2, "always"],
     "brace-style": [2, "1tbs", { "allowSingleLine": true }],
     "callback-return": 2,
-    "camelcase": 2,
+    "camelcase": [2, { "properties": "never" }],
     "comma-dangle": 0,
     "comma-spacing": [2, { "before": false, "after": true }],
     "comma-style": [2, "last"],

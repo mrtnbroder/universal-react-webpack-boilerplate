@@ -4,7 +4,7 @@
 //
 
 import { RouterContext, match } from 'react-router'
-import Html from '../components/Html'
+import Html from '../components/Html.jsx'
 import { Provider } from 'react-redux'
 import React from 'react'
 import configureStore from 'configureStore'

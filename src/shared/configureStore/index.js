@@ -9,6 +9,6 @@ export default (reducers = {}) => (initalState = {}) => {
 
   return compose(
     applyMiddleware(...middleware),
-    __BROWSER__ ? window.devToolsExtension ? window.devToolsExtension() : (f) => f : (f) => f
+    typeof window === 'object' ? window.devToolsExtension ? window.devToolsExtension() : (f) => f : (f) => f
   )(createStore)(rootReducer, initalState)
 }

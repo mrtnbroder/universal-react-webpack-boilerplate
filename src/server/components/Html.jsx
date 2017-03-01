@@ -1,8 +1,7 @@
 
-import { DEBUG, appName, inlineName, statsName, vendorName } from '../../../config/config'
+import { appName, inlineName, isDev, outputPath, statsName, vendorName } from '../../../webpack/env'
 import React, { PropTypes as PT, PureComponent } from 'react'
 import fs from 'fs'
-import { publicDir } from '../../../config/paths'
 import { renderToStaticMarkup } from 'react-dom/server'
 
 class Html extends PureComponent {
@@ -12,19 +11,19 @@ class Html extends PureComponent {
   }
 
   static getScript(name) {
-    if (DEBUG) return `/${name}.js`
+    if (isDev) return `/${name}.js`
 
-    const file = fs.readFileSync(`${publicDir}/${statsName}.json`)
+    const file = fs.readFileSync(`${outputPath}/${statsName}.json`)
     const stats = JSON.parse(file)
 
-    return name === 'app' && !DEBUG
+    return name === 'app' && !isDev
       ? `/${stats.assetsByChunkName[name][0]}`
       : `/${stats.assetsByChunkName[name]}`
   }
 
   static getWebpackJsonpInlineScript() {
-    if (DEBUG) return false
-    return fs.readFileSync(`${publicDir}/${inlineName}.js`)
+    if (isDev) return false
+    return fs.readFileSync(`${outputPath}/${inlineName}.js`)
   }
 
   static renderToStaticMarkup(props) {
@@ -83,7 +82,7 @@ class Html extends PureComponent {
           <meta content='/ms-icon-144x144.png' name='msapplication-TileImage'/>
           <meta content='#ffffff' name='theme-color'/>
 
-          {!DEBUG && <link href='/style.css' rel='stylesheet'/>}
+          {!isDev && <link href='/style.css' rel='stylesheet'/>}
         </head>
         <body>
           <div id='app'>
@@ -105,7 +104,7 @@ Html.propTypes = {
   content: PT.string.isRequired,
   initalState: PT.object.isRequired,
   vendor: PT.string.isRequired,
-  inline: DEBUG ? PT.bool : PT.string,
+  inline: isDev ? PT.bool : PT.string,
 }
 
 Html.defaultProps = {

@@ -1,12 +1,12 @@
 
-const config = require('../config/config')
+const { signal } = require('../webpack/env')
+const { spawn } = require('child_process')
 const path = require('path')
-const spawn = require('child_process').spawn
 const webpackConfig = require('../webpack')
 
-const output = webpackConfig.find((x) => x.target === 'node').output
+const { output } = webpackConfig.find((x) => x.target === 'node')
 const serverFile = path.join(output.path, output.filename)
-const IS_RUNNING = new RegExp(config.signal, 'g')
+const IS_RUNNING = new RegExp(signal, 'g')
 
 function runServer() {
   const pool = []
