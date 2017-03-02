@@ -4,12 +4,13 @@
 //
 
 import { Provider } from 'react-redux'
-import { renderToStaticMarkup } from '../components/Html.jsx'
-import { renderToString } from 'react-dom/server'
-import { route as routes } from '../../Application'
+import { renderToStaticMarkup, renderToString } from 'react-dom/server'
 import { RouterContext, match } from 'react-router'
+import { createElement } from 'react'
+
+import { route as routes } from '../../Application'
 import configureStore from 'configureStore'
-import React from 'react'
+import Html from '../components/Html.jsx'
 import reducers from '../../shared/modules'
 
 export default (app) => {
@@ -35,12 +36,15 @@ export default (app) => {
   function renderHtml(nextProps, store) {
     const initalState = store.getState()
     const provider = (
-      <Provider store={store}>
-        <RouterContext {...nextProps}/>
-      </Provider>
+      createElement(Provider, { store },
+        createElement(RouterContext, nextProps)
+      )
     )
     const content = renderToString(provider)
+    const markup = renderToStaticMarkup(
+      createElement(Html, { content, initalState })
+    )
 
-    return renderToStaticMarkup({ content, initalState })
+    return `<!doctype html>${markup}`
   }
 }

@@ -18,8 +18,8 @@ const signal = exports.signal = 'server is running at'
  *  WEBPACK
  */
 
-// style.css
-const cssName = exports.cssName = 'style.css'
+// styles.css
+const cssName = exports.cssName = 'styles'
 // app.js
 const appName = exports.appName = 'app'
 // vendor.js

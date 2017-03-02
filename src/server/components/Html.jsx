@@ -1,6 +1,5 @@
 
-import { appName, inlineName, isDev, outputPath, statsName, vendorName } from '../../../webpack/env'
-import { renderToStaticMarkup as renderStatic } from 'react-dom/server'
+import { appName, cssName, inlineName, isDev, outputPath, statsName, vendorName } from '../../../webpack/env'
 import React, { PropTypes as PT } from 'react'
 import fs from 'fs'
 
@@ -10,23 +9,23 @@ export const getScript = (name) => {
   const file = fs.readFileSync(`${outputPath}/${statsName}.json`)
   const stats = JSON.parse(file)
 
-  return name === 'app' && !isDev
-    ? `/${stats.assetsByChunkName[name][0]}`
-    : `/${stats.assetsByChunkName[name]}`
+  return name === appName && !isDev
+    ? `/${stats.assetsByChunkName[appName][0]}`
+    : name === cssName && !isDev
+      ? `/${stats.assetsByChunkName[appName][1]}`
+      : `/${stats.assetsByChunkName[name]}`
 }
 
-export const getWebpackJsonpInlineScript = () => {
-  if (isDev) return false
-  return fs.readFileSync(`${outputPath}/${inlineName}.js`)
-}
-
-export const renderToStaticMarkup = (props) => `<!doctype html>${renderStatic(<Html {...props}/>)}`
+export const getWebpackJsonpInlineScript = () => isDev
+  ? false
+  : fs.readFileSync(`${outputPath}/${inlineName}.js`)
 
 const Html = ({
   app,
   content,
   initalState,
   inline,
+  styles,
   vendor,
 }) => (
   <html
@@ -77,7 +76,7 @@ const Html = ({
       <meta content='/ms-icon-144x144.png' name='msapplication-TileImage'/>
       <meta content='#ffffff' name='theme-color'/>
 
-      {!isDev && <link href='/style.css' rel='stylesheet'/>}
+      {!isDev && <link href={styles} rel='stylesheet'/>}
     </head>
     <body>
       <div id='app'>
@@ -96,14 +95,16 @@ Html.propTypes = {
   app: PT.string.isRequired,
   content: PT.string.isRequired,
   initalState: PT.object.isRequired,
+  inline: isDev ? PT.bool : PT.string.isRequired,
+  styles: isDev ? PT.bool : PT.string.isRequired,
   vendor: PT.string.isRequired,
-  inline: isDev ? PT.bool : PT.string,
 }
 
 Html.defaultProps = {
   app: getScript(appName),
-  vendor: getScript(vendorName),
   inline: getWebpackJsonpInlineScript(),
+  styles: getScript(cssName),
+  vendor: getScript(vendorName),
 }
 
 export default Html

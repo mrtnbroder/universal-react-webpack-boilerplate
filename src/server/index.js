@@ -15,7 +15,11 @@ const app = express()
 app.disable('x-powered-by')
 
 // Compression
-if (!isDev) app.use(compression())
+if (isDev) {
+  app.enable('trust proxy')
+} else {
+  app.use(compression())
+}
 
 // I. Static Assets
 m.staticMiddleware(app)

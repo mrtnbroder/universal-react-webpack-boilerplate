@@ -1,5 +1,5 @@
 
-const { isDev, appName, inlineName, outputPath, statsName, cssName, vendorName } = require('./env')
+const { appName, cssName, inlineName, isDev, statsName, vendorName } = require('./env')
 const { webpackConfig, styleLoader, cssLoader, postcssLoader } = require('./webpack.config')
 const { StatsWriterPlugin } = require('webpack-stats-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -7,7 +7,10 @@ const merge = require('lodash.merge')
 const webpack = require('webpack')
 
 const filename = isDev ? '[name].js' : '[name].[chunkhash].js'
-const extractCSS = new ExtractTextPlugin({ filename: cssName, allChunks: true })
+const extractCSS = new ExtractTextPlugin({
+  filename: `${cssName}.[contenthash].css`,
+  allChunks: true
+})
 
 //
 // Client Config
@@ -21,7 +24,6 @@ const webpackClientConfig = merge({}, webpackConfig, {
   output: {
     chunkFilename: filename,
     filename,
-    path: outputPath,
   },
   module: {
     rules: webpackConfig.module.rules.concat([
