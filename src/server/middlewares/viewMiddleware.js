@@ -3,14 +3,14 @@
 // View Middleware
 //
 
-import { RouterContext, match } from 'react-router'
-import Html from '../components/Html.jsx'
 import { Provider } from 'react-redux'
-import React from 'react'
-import configureStore from 'configureStore'
-import reducers from '../../shared/modules'
+import { renderToStaticMarkup } from '../components/Html.jsx'
 import { renderToString } from 'react-dom/server'
 import { route as routes } from '../../Application'
+import { RouterContext, match } from 'react-router'
+import configureStore from 'configureStore'
+import React from 'react'
+import reducers from '../../shared/modules'
 
 export default (app) => {
   // match everything else
@@ -41,6 +41,6 @@ export default (app) => {
     )
     const content = renderToString(provider)
 
-    return Html.renderToStaticMarkup({ content, initalState })
+    return renderToStaticMarkup({ content, initalState })
   }
 }
