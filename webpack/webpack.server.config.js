@@ -1,6 +1,6 @@
 
 const merge = require('lodash.merge')
-const { distPath } = require('./env')
+const { distPath, srcPath } = require('./env')
 const { webpackConfig, cssLoader, postcssLoader } = require('./webpack.config')
 
 const cssLoaderServer = Object.assign({}, cssLoader, { loader: 'css-loader/locals' })
@@ -21,7 +21,7 @@ const webpackServerConfig = merge({}, webpackConfig, {
     rules: webpackConfig.module.rules.concat([{
       test: /\.css$/,
       use: [cssLoaderServer, postcssLoader],
-      exclude: /node_modules/,
+      include: srcPath,
     }]),
   },
   node: {

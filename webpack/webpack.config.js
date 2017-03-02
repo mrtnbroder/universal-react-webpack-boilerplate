@@ -1,5 +1,5 @@
 
-const { isDev, contextPath, outputPath } = require('./env')
+const { isDev, contextPath, outputPath, srcPath } = require('./env')
 const webpack = require('webpack')
 
 const GLOBALS = {
@@ -38,9 +38,9 @@ exports.cssLoader = {
 }
 
 const webpackConfig = {
+  bail: !isDev,
   cache: isDev,
   context: contextPath,
-  bail: !isDev,
   devtool: isDev && 'cheap-eval-source-map',
   output: {
     publicPath: '/',
@@ -54,7 +54,7 @@ const webpackConfig = {
         options: {
           cacheDirectory: true,
         },
-        exclude: /node_modules/,
+        include: srcPath,
       },
     ],
   },

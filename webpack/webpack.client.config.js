@@ -1,5 +1,5 @@
 
-const { appName, cssName, inlineName, isDev, statsName, vendorName } = require('./env')
+const { appName, cssName, inlineName, isDev, statsName, vendorName, srcPath } = require('./env')
 const { webpackConfig, styleLoader, cssLoader, postcssLoader } = require('./webpack.config')
 const { StatsWriterPlugin } = require('webpack-stats-plugin')
 const ExtractTextPlugin = require('extract-text-webpack-plugin')
@@ -32,7 +32,7 @@ const webpackClientConfig = merge({}, webpackConfig, {
         use: isDev
           ? [styleLoader, cssLoader, postcssLoader]
           : extractCSS.extract([cssLoader, postcssLoader]),
-        exclude: /node_modules/,
+        include: srcPath,
       },
     ]),
   },

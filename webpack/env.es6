@@ -36,3 +36,4 @@ export const statsName = 'stats'
 export const contextPath = path.join(__dirname, '..')
 export const distPath = path.join(contextPath, 'build')
 export const outputPath = path.join(distPath, 'public')
+export const srcPath = path.join(contextPath, 'src')
