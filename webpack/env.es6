@@ -12,7 +12,7 @@ export const PORT = process.env.PORT || 8080
 // webpack and server host
 export const HOST = process.env.HOST || 'localhost'
 
-export const signal = 'server is running at'
+export const signal = 'express.js is listening on'
 
 /**
  *  WEBPACK

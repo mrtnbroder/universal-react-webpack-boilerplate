@@ -19,7 +19,7 @@ const webpackClientConfig = merge({}, webpackConfig, {
   name: 'browser',
   target: 'web',
   entry: {
-    [appName]: './src/client/index.jsx',
+    [appName]: './src/client',
   },
   output: {
     chunkFilename: filename,

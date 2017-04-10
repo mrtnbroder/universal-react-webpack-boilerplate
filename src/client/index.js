@@ -3,7 +3,7 @@ import { Router, browserHistory } from 'react-router'
 import { AppContainer } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 import { render } from 'react-dom'
-import React from 'react'
+import React, { createElement } from 'react'
 import configureStore from 'configureStore'
 
 import { route as routes } from '../Application'
@@ -19,11 +19,11 @@ const rootEl = document.getElementById('app')
 
 const main = () => {
   render(
-    <AppContainer>
-      <Provider store={store}>
-        <Router history={browserHistory} routes={routes}/>
-      </Provider>
-    </AppContainer>,
+    createElement(AppContainer, null,
+      createElement(Provider, { store },
+        createElement(Router, { history: browserHistory, routes })
+      )
+    ),
     rootEl
   )
 }

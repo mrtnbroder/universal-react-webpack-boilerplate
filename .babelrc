@@ -9,7 +9,8 @@
     ["transform-object-rest-spread", { "useBuiltIns": true }],
     ["transform-runtime", { "polyfill": false, "regenerator": false }],
     ["module-resolver", {
-      "root": ["./src/shared"]
+      "root": ["./src/shared"],
+      "extensions": [".js", ".jsx", ".es", ".es6"]
     }]
   ]
 }
