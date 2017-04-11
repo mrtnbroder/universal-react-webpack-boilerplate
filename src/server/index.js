@@ -22,11 +22,11 @@ if (isDev) {
 }
 
 // I. Static Assets
-m.staticMiddleware(app)
+app.use(m.staticMiddleware)
 // II. API
-m.apiMiddleware(app)
+app.use(m.apiMiddleware)
 // III. Views
-m.viewMiddleware(app)
+app.use(m.viewMiddleware)
 
 //
 // Initialise Express

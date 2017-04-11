@@ -9,7 +9,4 @@ import express from 'express'
 const MAX_AGE = isDev ? 0 : '1 year'
 const staticCache = { maxAge: MAX_AGE, etag: true, lastModified: false }
 
-export default (app) => {
-  // root dir assets
-  app.use(express.static(outputPath, staticCache))
-}
+export default express.static(outputPath, staticCache)
