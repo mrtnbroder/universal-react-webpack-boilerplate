@@ -1,30 +1,18 @@
 
 import React, { PropTypes as PT } from 'react'
 import { Link } from 'react-router'
-import { connect } from 'react-redux'
-import { bindActionCreators } from 'redux'
-import { actions } from 'modules/todos'
 
-export const component = ({ children, fetchTodos, ...props }) => {
+export const view = ({ children }) => {
   return (
-    <div {...props}>
+    <div>
       <h2>Profile</h2>
-      <button onClick={fetchTodos}>Change Name</button>
+      <button>Change Name</button>
       <Link to='/'>Index</Link>
-      <ul>
-        {props.todos.todos.map((todo) => <li>{todo.title}</li>)}
-      </ul>
       {children}
     </div>
   )
 }
 
-component.propTypes = {
+view.propTypes = {
   children: PT.any,
-  fetchTodos: PT.func.isRequired
 }
-
-const mapStateToProps = ({ todos }) => ({ todos })
-const mapDispatchToProps = (dispatch) => bindActionCreators({ fetchTodos: actions.fetchTodos }, dispatch)
-
-export const view = connect(mapStateToProps, mapDispatchToProps)(component)

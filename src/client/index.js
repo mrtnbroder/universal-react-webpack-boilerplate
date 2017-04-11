@@ -1,12 +1,12 @@
 
+import React, { createElement } from 'react'
 import { Router, browserHistory } from 'react-router'
 import { AppContainer } from 'react-hot-loader'
 import { Provider } from 'react-redux'
 import { render } from 'react-dom'
-import React, { createElement } from 'react'
-import configureStore from 'configureStore'
 
 import { route as routes } from '../Application'
+import configureStore from 'configureStore'
 import reducers from 'modules'
 
 if (__DEV__) {

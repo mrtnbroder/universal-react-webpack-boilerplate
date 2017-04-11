@@ -1,7 +1,7 @@
 
 import { route as authorizedRoute } from './components/Authorized'
-import { view as component } from './view.jsx'
 import { route as loginRoute } from './components/Login'
+import { view as component } from './view.jsx'
 
 export const route = {
   path: '/',

@@ -1,14 +1,12 @@
 
 import React, { PropTypes as PT } from 'react'
 import { Link } from 'react-router'
-import { actions } from './update'
 
-export const view = ({ model, children, dispatch, ...props }) => {
-  console.log('authorized', model)
+export const view = ({ children }) => {
   return (
-    <div {...props}>
+    <div>
       <h2>Authorized</h2>
-      <button onClick={() => dispatch(actions.increment())}>Fetch Todos</button>
+      <button>Fetch Todos</button>
       <Link to='/authorized/dashboard'>Dashboard</Link>
       {children}
     </div>
