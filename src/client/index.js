@@ -6,8 +6,7 @@ import { Provider } from 'react-redux'
 import { render } from 'react-dom'
 
 import { route as routes } from '../Application'
-import configureStore from 'configureStore'
-import reducers from 'modules'
+import reducers, { configureStore } from 'store'
 
 if (__DEV__) {
   // Export React and Performance Utility for debugging

@@ -9,9 +9,8 @@ import { RouterContext, match } from 'react-router'
 import { createElement } from 'react'
 
 import { route as routes } from '../../Application'
-import configureStore from 'configureStore'
+import reducers, { configureStore } from '../../shared/store'
 import Html from '../components/Html.jsx'
-import reducers from '../../shared/modules'
 
 function handleRequests({ url: location }, res) {
   match({ routes, location }, (err, redirect, renderProps) => {
